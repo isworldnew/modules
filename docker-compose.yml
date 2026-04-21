@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  classification-module:
+    build: classification-module/
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./classification-module/models:/app/models
+      - ./classification-module/config:/app/config
