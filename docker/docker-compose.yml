@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  entry-record-storage:
+    image: minio/minio:latest
+    container_name: entry-record-storage
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - ./env/entry-record-storage.env
+    volumes:
+      - ./volume/entry-record-storage:/data
+    restart: unless-stopped
+
+  entry-record-storage-initializer:
+    image: minio/mc:latest
+    container_name: entry-record-storage-initializer
+    depends_on:
+      - entry-record-storage
+    env_file:
+      - ./env/entry-record-storage.env
+    volumes:
+      - ./init/entry-record-storage.bash:/entry-record-storage.bash
+    entrypoint: >
+      /bin/sh -c "
+      chmod +x /entry-record-storage.bash;
+      /entry-record-storage.bash;
+      "
