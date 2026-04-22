@@ -54,7 +54,7 @@ def load_model():
     num_features = model.fc.in_features
     model.fc = nn.Sequential(
         nn.Dropout(DROPOUT),
-        nn.Linear(num_features, 2)
+        nn.Linear(num_features, 2) // вот тут подтянуть количество классов из config.json
     )
 
     checkpoint = torch.load(MODEL_PATH, map_location=DEVICE)

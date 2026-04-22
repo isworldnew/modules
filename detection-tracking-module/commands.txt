@@ -1,0 +1,9 @@
+docker build . -t dm-img
+
+docker run -it --rm `
+  -v ./videos:/app/videos `
+  -v ./models:/app/models `
+  -v ./jsons:/app/jsons `
+  -v ./crops:/app/crops `
+  -v ./config:/app/config `
+--name dt-container dm-img
