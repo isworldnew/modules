@@ -2,6 +2,27 @@ version: "3.8"
 
 services:
 
+  # брокер сообщений между общим хранилищем видеозаписей и [модулями детекции и трекинга]
+  # можно ещё kafka-ui добавить
+  record-storage-broker:
+    image: apache/kafka:3.7.0
+    container_name: record-storage-broker
+    hostname: record-storage-broker
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    env_file:
+      - ./env/record-storage-broker.env
+    volumes:
+      - ./volume/record-storage-broker/data:/var/lib/kafka/data
+    # healthcheck:
+    #   test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 30s
+    restart: unless-stopped
+
   # общее хранилище, в которое попадают все записи с камер
   entry-record-storage:
     image: minio/minio:latest
@@ -12,15 +33,34 @@ services:
       - "9001:9001"
     env_file:
       - ./env/entry-record-storage.env
+    environment:
+      MINIO_ROOT_USER: ivan-student
+      MINIO_ROOT_PASSWORD: ivan-student
+      MINIO_BUCKETS: records
+      MINIO_NOTIFY_KAFKA_ENABLE: on
+      MINIO_NOTIFY_KAFKA_BROKERS: record-storage-broker:9092
+      MINIO_NOTIFY_KAFKA_TOPIC: video-upload-events
+      MINIO_NOTIFY_KAFKA_QUEUE_DIR: /tmp/kafka-queue
+      MINIO_NOTIFY_KAFKA_QUEUE_LIMIT: 10000
     volumes:
       - ./volume/entry-record-storage:/data
+      - ./volume/spare-record-storage-broker:/tmp/kafka-queue
     restart: unless-stopped
+    depends_on:
+      - record-storage-broker
+      # record-storage-broker:
+      #   condition: service_healthy
 
   entry-record-storage-initializer:
     image: minio/mc:latest
     container_name: entry-record-storage-initializer
     depends_on:
       - entry-record-storage
+      - record-storage-broker
+      # entry-record-storage:
+      #   condition: service_started
+      # record-storage-broker:
+      #   condition: service_healthy
     env_file:
       - ./env/entry-record-storage.env
     volumes:
@@ -55,6 +95,35 @@ services:
     depends_on:
       - track-storage
 
+  # хранилище изображений, вырезанных из видео по трекам
+  crop-storage:
+    image: minio/minio:latest
+    container_name: crop-storage
+    command: server /data --console-address ":9001"
+    ports:
+      - "9002:9000"
+      - "9003:9001"
+    env_file:
+      - ./env/crop-storage.env
+    volumes:
+      - ./volume/crop-storage:/data
+    restart: unless-stopped
+
+  crop-storage-initializer:
+    image: minio/mc:latest
+    container_name: crop-storage-initializer
+    depends_on:
+      - crop-storage
+    env_file:
+      - ./env/crop-storage.env
+    volumes:
+      - ./init/crop-storage.bash:/crop-storage.bash
+    entrypoint: >
+      /bin/sh -c "
+      chmod +x /crop-storage.bash;
+      /crop-storage.bash;
+      "
+
   detection-tracking-module:
     build:
       context: ./module/detection-tracking-module
@@ -64,9 +133,37 @@ services:
       - "6000:5000"
     depends_on:
       - track-storage
+      - crop-storage
     environment:
       - MONGO_URI=mongodb://ivan-student:ivan-student@track-storage:27017/?authSource=admin
       - YOLO_CONFIG_DIR=/app/config
     volumes:
       - ./module/detection-tracking-module/uploads:/app/uploads
       - ./module/detection-tracking-module/models:/app/models
+
+  entry-record-storage-post-init:
+    image: minio/mc:latest
+    container_name: entry-record-storage-post-init
+    environment:
+      MINIO_ROOT_USER: ivan-student
+      MINIO_ROOT_PASSWORD: ivan-student
+    depends_on:
+      entry-record-storage-initializer:
+        condition: service_completed_successfully
+    volumes:
+      - ./volume/spare-record-storage-broker:/tmp/kafka-queue
+    entrypoint: >
+      /bin/sh -c "
+        echo '=== Ждём entry-record-storage-initializer... ===';
+        sleep 5;
+
+        echo '=== Добавляем bucket notifications для Kafka... ===';
+        mc alias set local http://entry-record-storage:9000 \"$MINIO_ROOT_USER\" \"$MINIO_ROOT_PASSWORD\" 2>/dev/null &&
+        mc event add local/records arn:minio:sqs::1:kafka --event put --event complete-multipart-upload;
+
+        echo '=== Текущие правила уведомлений: ===';
+        mc event list local/records;
+
+        echo '=== init DONE; контейнер самоубивается ===';
+      "
+    restart: "no"

@@ -7,3 +7,4 @@ torch==2.2.2+cpu
 torchvision==0.17.2+cpu
 lap==0.5.12
 gunicorn==21.2.0
+minio==7.2.5
