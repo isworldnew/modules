@@ -54,3 +54,19 @@ services:
       - ./env/track-storage-ui.env
     depends_on:
       - track-storage
+
+  detection-tracking-module:
+    build:
+      context: ./module/detection-tracking-module
+    container_name: detection-tracking-module
+    restart: unless-stopped
+    ports:
+      - "6000:5000"
+    depends_on:
+      - track-storage
+    environment:
+      - MONGO_URI=mongodb://ivan-student:ivan-student@track-storage:27017/?authSource=admin
+      - YOLO_CONFIG_DIR=/app/config
+    volumes:
+      - ./module/detection-tracking-module/uploads:/app/uploads
+      - ./module/detection-tracking-module/models:/app/models

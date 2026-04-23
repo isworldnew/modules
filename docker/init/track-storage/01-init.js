@@ -1,8 +1,6 @@
 db = db.getSiblingDB('track-storage');
 
-db.createCollection('tracks');
-db.createCollection('analytics');
-db.createCollection('events');
+db.createCollection('detected-persons');
 
 db.createUser({
   user: 'ivan-storage',
