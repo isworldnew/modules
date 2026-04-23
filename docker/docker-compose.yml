@@ -1,6 +1,8 @@
 version: "3.8"
 
 services:
+
+  # общее хранилище, в которое попадают все записи с камер
   entry-record-storage:
     image: minio/minio:latest
     container_name: entry-record-storage
@@ -28,3 +30,27 @@ services:
       chmod +x /entry-record-storage.bash;
       /entry-record-storage.bash;
       "
+
+  # хранилище выявленных треков
+  track-storage:
+    image: mongo:latest
+    container_name: track-storage
+    restart: always
+    env_file:
+      - ./env/track-storage.env
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./volume/track-storage:/data/db
+      - ./init/track-storage:/docker-entrypoint-initdb.d:ro
+
+  track-storage-ui:
+    image: mongo-express:latest
+    container_name: track-storage-ui
+    restart: always
+    ports:
+      - "7017:8081"
+    env_file:
+      - ./env/track-storage-ui.env
+    depends_on:
+      - track-storage
