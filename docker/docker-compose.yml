@@ -21,8 +21,8 @@ services:
       - record-storage-broker-zookeeper
     env_file:
       - ./env/record-storage-broker.env
-    volumes:
-      - ./volume/record-storage-broker/data:/var/lib/kafka/data
+    # volumes:
+    #   - ./volume/record-storage-broker/data:/var/lib/kafka/data
     ports:
       - "9092:9092"
       - "29092:29092"
@@ -65,9 +65,11 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
-    environment:
-      - KAFKA_BOOTSTRAP_SERVERS=record-storage-broker:9092
-      - KAFKA_TOPIC=video-upload-events
+    # environment:
+    #   - KAFKA_BOOTSTRAP_SERVERS=record-storage-broker:9092
+    #   - KAFKA_TOPIC=video-upload-events
+    env_file:
+      - ./service/notification-service/notification-service.env
     depends_on:
       - record-storage-broker
       - entry-record-storage
