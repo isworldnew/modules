@@ -4,18 +4,28 @@ services:
 
   # брокер сообщений между общим хранилищем видеозаписей и [модулями детекции и трекинга]
   # можно ещё kafka-ui добавить
+  record-storage-broker-zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    container_name: record-storage-broker-zookeeper
+    hostname: record-storage-broker-zookeeper
+    env_file:
+      - ./env/record-storage-broker-zookeeper.env
+    ports:
+      - "2181:2181"
+
   record-storage-broker:
-    image: apache/kafka:3.7.0
+    image: confluentinc/cp-kafka:7.4.4
     container_name: record-storage-broker
     hostname: record-storage-broker
-    ports:
-      - "9092:9092"
-      - "9093:9093"
+    depends_on:
+      - record-storage-broker-zookeeper
     env_file:
       - ./env/record-storage-broker.env
     volumes:
       - ./volume/record-storage-broker/data:/var/lib/kafka/data
-    restart: unless-stopped
+    ports:
+      - "9092:9092"
+      - "29092:29092"
 
   # общее хранилище, в которое попадают все записи с камер
   entry-record-storage:
