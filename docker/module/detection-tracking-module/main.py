@@ -316,37 +316,62 @@ def process_video(video_path, original_filename):
 # API
 # =========================
 
-@app.route("/detect/next", methods=["POST"])
-def detect_next():
+# @app.route("/detect/next", methods=["POST"])
+# def detect_next():
 
-    if "file" not in request.files:
-        return jsonify({"message": "No file"}), 400
+#     if "file" not in request.files:
+#         return jsonify({"message": "No file"}), 400
 
-    file = request.files["file"]
+#     file = request.files["file"]
 
-    if not file.filename.lower().endswith(".mp4"):
-        return jsonify({"message": "Only .mp4 allowed"}), 400
+#     if not file.filename.lower().endswith(".mp4"):
+#         return jsonify({"message": "Only .mp4 allowed"}), 400
 
-    video_id = str(uuid.uuid4())
-    filename = f"{video_id}.mp4"
-    path = os.path.join(UPLOAD_DIR, filename)
+#     video_id = str(uuid.uuid4())
+#     filename = f"{video_id}.mp4"
+#     path = os.path.join(UPLOAD_DIR, filename)
 
-    save_stream(file, path)
+#     save_stream(file, path)
 
-    threading.Thread(
-        target=process_video,
-        args=(path, file.filename),
-        daemon=True
-    ).start()
+#     threading.Thread(
+#         target=process_video,
+#         args=(path, file.filename),
+#         daemon=True
+#     ).start()
 
-    return jsonify({
-        "message": "accepted",
-        "video_id": video_id
-    }), 200
+#     return jsonify({
+#         "message": "accepted",
+#         "video_id": video_id
+#     }), 200
 
 
 # =========================
 # RUN
+# =========================
+
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000)
+
+# --- ВЕСЬ ТВОЙ КОД БЕЗ ИЗМЕНЕНИЙ ДО КОНЦА process_video ---
+
+# (вставляешь свой оригинальный main.py БЕЗ /detect/next)
+
+# =========================
+# KAFKA START
+# =========================
+
+from kafka_consumer import start_consumer
+import threading
+
+def start_kafka():
+    t = threading.Thread(target=start_consumer, daemon=True)
+    t.start()
+
+start_kafka()
+
+
+# =========================
+# RUN (Flask просто живёт)
 # =========================
 
 if __name__ == "__main__":

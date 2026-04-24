@@ -143,9 +143,13 @@ services:
     depends_on:
       - track-storage
       - crop-storage
-    environment:
-      - MONGO_URI=mongodb://ivan-student:ivan-student@track-storage:27017/?authSource=admin
-      - YOLO_CONFIG_DIR=/app/config
+      - record-storage-broker
+      - entry-record-storage
+    # environment:
+    #   - MONGO_URI=mongodb://ivan-student:ivan-student@track-storage:27017/?authSource=admin
+    #   - YOLO_CONFIG_DIR=/app/config
+    env_file:
+      - ./module/detection-tracking-module/detection-tracking-module.env
     volumes:
       - ./module/detection-tracking-module/uploads:/app/uploads
       - ./module/detection-tracking-module/models:/app/models

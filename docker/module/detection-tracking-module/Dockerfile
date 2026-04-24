@@ -33,6 +33,7 @@ RUN pip install --upgrade pip \
 # App
 # =========================
 COPY main.py .
+COPY kafka_consumer.py .
 COPY models/ ./models/
 
 # =========================
