@@ -202,12 +202,12 @@ services:
 
 
   # база для метаданных регистратора инцидентов
-  accident-database:
+  accident_database:
     image: postgres:15
     container_name: accident-database
     host_name: accident-database
     env_file:
-      - ./env/accident-database.env
+      - ./env/accident_database.env
     volumes:
       - ./volume/accident-database:/var/lib/postgresql/data/
     healthcheck:
@@ -267,7 +267,7 @@ services:
   #   container_name: accident-recorder-service
   #   hostname: accident-recorder-service
   #   env_file:
-  #     - ./service/accident-recorder-service/accident-recorder-service.env
+  #     - ./service/accident-recorder-service/accident_recorder_service.env
   #   ports:
   #    - "8888:8080"
   #   restart: on-failure
