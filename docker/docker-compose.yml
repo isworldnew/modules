@@ -192,7 +192,22 @@ services:
 
 
   # модуль классификации наличия жилета
-  # classification-module:
+  classification-module:
+    build:
+      context: ./module/classification-module
+    container_name: classification-module
+    restart: unless-stopped
+    ports:
+      - "6001:5000"  
+    env_file:
+      - ./module/classification-module/classification-module.env
+    depends_on:
+      - detection-broker
+      - accident-broker
+      - crop-storage
+    volumes:
+      - ./module/classification-module/config:/app/config
+      - ./module/classification-module/models:/app/models
 
 
   # брокер сообщений между [модулями классификации] и [регистратором инцидентов]
