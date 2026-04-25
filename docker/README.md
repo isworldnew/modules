@@ -33,5 +33,4 @@ mc event add local/records arn:minio:sqs::1:webhook --event put
 ```bash
 mc event list local/records
 >> arn:minio:sqs::1:webhook   s3:ObjectCreated:*   Filter:
-mc cp /etc/hosts local/records/test.txt
 ```
