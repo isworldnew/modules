@@ -199,4 +199,46 @@ services:
     ports:
       - "9094:9092"
       - "29094:29092"
+
+
+  # база для метаданных регистратора инцидентов
+  accident-database:
+
+  accident-database-ui:
   
+
+
+  # хранилище видеозаписей регистратора инцидентов
+  accident-storage:
+    image: minio/minio:latest
+    container_name: accident-storage
+    command: server /data --console-address ":9001"
+    ports:
+      - "9004:9000"
+      - "9005:9001"
+    env_file:
+      - ./env/accident-storage.env
+    volumes:
+      - ./volume/accident-storage:/data
+    restart: unless-stopped
+
+  accident-storage-initializer:
+    image: minio/mc:latest
+    container_name: accident-storage-initializer
+    depends_on:
+      - accident-storage
+      - accident-broker
+      - accident-database
+    env_file:
+      - ./env/accident-storage.env
+    volumes:
+      - ./init/accident-storage.bash:/accident-storage.bash
+    entrypoint: >
+      /bin/sh -c "
+      chmod +x /accident-storage.bash;
+      /accident-storage.bash;
+      "
+  
+
+  # сервис регистратор инцидентов
+  accident-recorder-service:
