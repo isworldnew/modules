@@ -133,6 +133,7 @@ services:
       /crop-storage.bash;
       "
 
+  # модуль формирования треков передвижения людей
   detection-tracking-module:
     build:
       context: ./module/detection-tracking-module
@@ -153,3 +154,25 @@ services:
     volumes:
       - ./module/detection-tracking-module/uploads:/app/uploads
       - ./module/detection-tracking-module/models:/app/models
+
+  # брокер сообщений между [модулями детекции и трекинга] и [модулями классификации]
+  detection-broker-zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    container_name: detection-broker-zookeeper
+    hostname: detection-broker-zookeeper
+    env_file:
+      - ./env/detection-broker-zookeeper.env
+    ports:
+      - "2182:2181"
+
+  detection-broker:
+    image: confluentinc/cp-kafka:7.4.4
+    container_name: detection-broker
+    hostname: detection-broker
+    depends_on:
+      - detection-broker-zookeeper
+    env_file:
+      - ./env/detection-broker.env
+    ports:
+      - "9093:9092"
+      - "29093:29092"

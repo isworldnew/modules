@@ -19,6 +19,8 @@ from pymongo import MongoClient
 from minio import Minio
 from bson import ObjectId
 
+from kafka_producer import send_detection_message, init_detection_producer, close_detection_producer
+
 # =========================
 # CONFIG
 # =========================
@@ -302,6 +304,8 @@ def process_video(video_path, original_filename):
 
         print(f"[CROPS] person {object_id}: {saved} saved")
 
+        send_detection_message(object_id, saved)
+
     print(f"[DONE] {video_path} → {len(finished)} persons")
 
     # =========================
@@ -367,8 +371,15 @@ def start_kafka():
     t = threading.Thread(target=start_consumer, daemon=True)
     t.start()
 
+init_detection_producer()
 start_kafka()
 
+import atexit
+
+def cleanup():
+    close_detection_producer()
+
+atexit.register(cleanup)
 
 # =========================
 # RUN (Flask просто живёт)
