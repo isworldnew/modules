@@ -203,9 +203,29 @@ services:
 
   # база для метаданных регистратора инцидентов
   accident-database:
+    image: postgres:15
+    container_name: accident-database
+    host_name: accident-database
+    env_file:
+      - ./env/accident-database.env
+    volumes:
+      - ./volume/accident-database:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+    ports:
+      - "5432:5432"
 
   accident-database-ui:
-  
+    image: dpage/pgadmin4:latest
+    container_name: accident-database-ui
+    hostname: accident-database-ui
+    env_file:
+      - ./env/accident-database-ui.env
+    ports:
+      - "5050:80"
 
 
   # хранилище видеозаписей регистратора инцидентов
@@ -241,4 +261,13 @@ services:
   
 
   # сервис регистратор инцидентов
-  accident-recorder-service:
+  # accident-recorder-service:
+  #   build:
+  #     context: ./module/accident-recorder-service
+  #   container_name: accident-recorder-service
+  #   hostname: accident-recorder-service
+  #   env_file:
+  #     - ./service/accident-recorder-service/accident-recorder-service.env
+  #   ports:
+  #    - "8888:8080"
+  #   restart: on-failure
