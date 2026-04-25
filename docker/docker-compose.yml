@@ -205,7 +205,7 @@ services:
   accident_database:
     image: postgres:15
     container_name: accident-database
-    host_name: accident-database
+    hostname: accident-database
     env_file:
       - ./env/accident_database.env
     volumes:
@@ -232,6 +232,7 @@ services:
   accident-storage:
     image: minio/minio:latest
     container_name: accident-storage
+    hostname: accident-storage
     command: server /data --console-address ":9001"
     ports:
       - "9004:9000"
@@ -245,10 +246,11 @@ services:
   accident-storage-initializer:
     image: minio/mc:latest
     container_name: accident-storage-initializer
+    hostname: accident-storage-initializer
     depends_on:
       - accident-storage
       - accident-broker
-      - accident-database
+      - accident_database
     env_file:
       - ./env/accident-storage.env
     volumes:

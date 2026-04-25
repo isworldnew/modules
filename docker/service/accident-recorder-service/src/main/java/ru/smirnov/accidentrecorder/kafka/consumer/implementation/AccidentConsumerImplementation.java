@@ -23,9 +23,9 @@ public class AccidentConsumerImplementation implements AccidentConsumer {
     }
 
     @Override
-    @KafkaListener(topics = "${}", groupId = "${}")
+    @KafkaListener(topics = "${spring.kafka.topic.accidents.name}", groupId = "${spring.kafka.consumer.accidents.group-id}")
     public void consume(String jsonMessage) {
-
+        System.out.println(jsonMessage);
     }
 
 }
