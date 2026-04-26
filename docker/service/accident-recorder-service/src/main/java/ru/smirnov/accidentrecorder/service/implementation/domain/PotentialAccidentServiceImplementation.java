@@ -7,6 +7,7 @@ import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.file.abstraction.RecordProcessor;
+import ru.smirnov.accidentrecorder.mapper.abstraction.PotentialAccidentMapper;
 import ru.smirnov.accidentrecorder.message.AccidentMessage;
 import ru.smirnov.accidentrecorder.repository.domain.PotentialAccidentRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentService;
@@ -30,6 +31,7 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
     private final RecordProcessor recordProcessor;
 
     private final PotentialAccidentRepository potentialAccidentRepository;
+    private final PotentialAccidentMapper potentialAccidentMapper;
 
 
     @Autowired
@@ -39,7 +41,8 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
             EntryRecordStorageClient entryRecordStorageClient,
             AccidentStorageClient accidentStorageClient,
             RecordProcessor recordProcessor,
-            PotentialAccidentRepository potentialAccidentRepository
+            PotentialAccidentRepository potentialAccidentRepository,
+            PotentialAccidentMapper potentialAccidentMapper
     ) {
         this.accidentIgnoringCriteria = accidentIgnoringCriteria;
         this.detectedPersonService = detectedPersonService;
@@ -47,6 +50,7 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
         this.accidentStorageClient = accidentStorageClient;
         this.recordProcessor = recordProcessor;
         this.potentialAccidentRepository = potentialAccidentRepository;
+        this.potentialAccidentMapper = potentialAccidentMapper;
     }
 
     @Override
@@ -89,10 +93,9 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
             DetectedPerson detectedPerson,
             String recordReference
     ) {
-        PotentialAccident potentialAccident = new PotentialAccident();
-
-
-
+        PotentialAccident potentialAccident = this.potentialAccidentMapper.bunchOfDataToPotentialAccidentEntity(
+                accidentMessage, detectedPerson, recordReference
+        );
         this.potentialAccidentRepository.save(potentialAccident);
         return potentialAccident;
     }
