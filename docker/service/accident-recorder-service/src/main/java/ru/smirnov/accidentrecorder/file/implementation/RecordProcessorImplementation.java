@@ -10,10 +10,12 @@ import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.entity.mongo.Track;
 import ru.smirnov.accidentrecorder.file.abstraction.RecordProcessor;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+
+import org.bytedeco.ffmpeg.global.avcodec;
 
 import static org.bytedeco.opencv.global.opencv_imgproc.rectangle;
 
@@ -21,7 +23,7 @@ import static org.bytedeco.opencv.global.opencv_imgproc.rectangle;
 @Component
 public class RecordProcessorImplementation implements RecordProcessor {
 
-    private static final Scalar GREEN = new Scalar(0, 255, 0, 0);
+    private static final Scalar RED = new Scalar(255, 0, 0, 0);
     private static final int RECTANGLE_THICKNESS = 2;
 
     @Override
@@ -42,71 +44,86 @@ public class RecordProcessorImplementation implements RecordProcessor {
 
         log.info("Processing video segment: {}s - {}s, tracks count: {}", startTime, endTime, tracks.size());
 
-        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(originalRecord)) {
-            grabber.start();
+        Path tempInputFile = null;
+        Path tempOutputFile = null;
 
-            double fps = grabber.getFrameRate();
-            int width = grabber.getImageWidth();
-            int height = grabber.getImageHeight();
+        try {
+            // Создаем временные файлы вместо работы с потоками напрямую
+            tempInputFile = Files.createTempFile("input_", ".mp4");
+            tempOutputFile = Files.createTempFile("output_", ".mp4");
 
-            log.debug("Video info: fps={}, width={}, height={}", fps, width, height);
-
-            // Устанавливаем позицию на начало нужного отрезка
-            long startTimestamp = (long) (startTime * 1_000_000);
-            grabber.setTimestamp(startTimestamp);
-
-            // Подготавливаем выходной поток
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(outputStream, width, height);
-            recorder.setVideoCodec(grabber.getVideoCodec());
-            recorder.setFormat("mp4");
-            recorder.setFrameRate(fps);
-            recorder.start();
-
-            Frame frame;
-            long currentTimestampMicros;
-            double currentTimeSec;
-            int frameCount = 0;
-
-            while ((frame = grabber.grabImage()) != null) {
-                currentTimestampMicros = grabber.getTimestamp();
-                currentTimeSec = currentTimestampMicros / 1_000_000.0;
-
-                // Проверяем, не вышли ли за пределы нужного отрезка
-                if (currentTimeSec > endTime) {
-                    log.debug("Reached end time: {} > {}", currentTimeSec, endTime);
-                    break;
-                }
-
-                // Находим или интерполируем трек для текущего времени
-                Track currentTrack = getTrackForTime(tracks, currentTimeSec);
-                if (currentTrack != null) {
-                    // Рисуем bounding box на кадре
-                    Mat mat = convertFrameToMat(frame);
-                    if (mat != null) {
-                        drawBoundingBox(mat, currentTrack, width, height);
-                        // Конвертируем обработанный Mat обратно во Frame
-                        frame = convertMatToFrame(mat);
-                    }
-                }
-
-                // Записываем кадр (с bounding box или без)
-                recorder.record(frame);
-                frameCount++;
+            // Копируем InputStream во временный файл
+            try (FileOutputStream fos = new FileOutputStream(tempInputFile.toFile())) {
+                originalRecord.transferTo(fos);
             }
 
-            // Завершаем запись
-            recorder.stop();
-            grabber.stop();
+            // Используем FFmpegFrameGrabber с файлом
+            try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(tempInputFile.toFile())) {
+                grabber.start();
 
-            log.info("Processing completed. Processed {} frames, output size: {} bytes",
-                    frameCount, outputStream.size());
+                double fps = grabber.getFrameRate();
+                int width = grabber.getImageWidth();
+                int height = grabber.getImageHeight();
 
-            return new ByteArrayInputStream(outputStream.toByteArray());
+                log.debug("Video info: fps={}, width={}, height={}", fps, width, height);
 
+                // Вычисляем кадры для startTime и endTime
+                int startFrame = (int) Math.round(startTime * fps);
+                int endFrame = (int) Math.round(endTime * fps);
+
+                // Устанавливаем позицию на начало
+                grabber.setVideoFrameNumber(startFrame);
+
+                // Используем FFmpegFrameRecorder с файлом (не с потоком)
+                try (FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(tempOutputFile.toFile(), width, height)) {
+                    recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
+                    recorder.setFormat("mp4");
+                    recorder.setFrameRate(fps);
+                    recorder.start();
+
+                    Frame frame;
+                    int frameCount = 0;
+                    int currentFrame = startFrame;
+
+                    while ((frame = grabber.grabImage()) != null && currentFrame <= endFrame) {
+                        double currentTimeSec = currentFrame / fps;
+
+                        // Находим или интерполируем трек для текущего времени
+                        Track currentTrack = getTrackForTime(tracks, currentTimeSec);
+                        if (currentTrack != null) {
+                            Mat mat = convertFrameToMat(frame);
+                            if (mat != null) {
+                                drawBoundingBox(mat, currentTrack, width, height);
+                                frame = convertMatToFrame(mat);
+                            }
+                        }
+
+                        recorder.record(frame);
+                        frameCount++;
+                        currentFrame++;
+                    }
+
+                    recorder.stop();
+                    grabber.stop();
+
+                    log.info("Processing completed. Processed {} frames", frameCount);
+
+                    // Читаем результат во временный файл
+                    byte[] resultBytes = Files.readAllBytes(tempOutputFile);
+                    return new ByteArrayInputStream(resultBytes);
+                }
+            }
         } catch (Exception e) {
             log.error("Failed to process video: {}", e.getMessage(), e);
             return null;
+        } finally {
+            // Очищаем временные файлы
+            try {
+                if (tempInputFile != null) Files.deleteIfExists(tempInputFile);
+                if (tempOutputFile != null) Files.deleteIfExists(tempOutputFile);
+            } catch (IOException e) {
+                log.warn("Failed to delete temp files: {}", e.getMessage());
+            }
         }
     }
 
@@ -139,12 +156,10 @@ public class RecordProcessorImplementation implements RecordProcessor {
             }
         }
 
-        // Если есть оба трека - интерполируем
         if (before != null && after != null && before != after) {
             return interpolateTrack(before, after, timeSec);
         }
 
-        // Если есть только один трек - используем его
         if (before != null) {
             return before;
         }
@@ -168,9 +183,6 @@ public class RecordProcessorImplementation implements RecordProcessor {
         interpolated.setCy(cy);
         interpolated.setW(w);
         interpolated.setH(h);
-
-        log.trace("Interpolated track at time={}: cx={}, cy={}, w={}, h={}",
-                timeSec, cx, cy, w, h);
 
         return interpolated;
     }
@@ -208,7 +220,7 @@ public class RecordProcessorImplementation implements RecordProcessor {
         int x2 = (int) Math.min(videoWidth, cx + w / 2.0);
         int y2 = (int) Math.min(videoHeight, cy + h / 2.0);
 
-        rectangle(mat, new Point(x1, y1), new Point(x2, y2), GREEN, RECTANGLE_THICKNESS, 0, 0);
+        rectangle(mat, new Point(x1, y1), new Point(x2, y2), RED, RECTANGLE_THICKNESS, 0, 0);
 
         log.trace("Drew bounding box: ({},{}) to ({},{})", x1, y1, x2, y2);
     }
