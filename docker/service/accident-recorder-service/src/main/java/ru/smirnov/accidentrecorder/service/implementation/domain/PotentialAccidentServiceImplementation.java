@@ -38,7 +38,11 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
 
         DetectedPerson detectedPerson = this.detectedPersonService.findDetectedPersonById(accidentMessage.getObjectId());
 
-        System.out.println(detectedPerson);
+        // запросить видос из MinIO
+        // обрезать видео и добавить bounding boxes по треку
+
+        // сохранить видос (возможно стоит имя задать просто UUID)
+        // сохранить инцидент в БД
 
     }
 

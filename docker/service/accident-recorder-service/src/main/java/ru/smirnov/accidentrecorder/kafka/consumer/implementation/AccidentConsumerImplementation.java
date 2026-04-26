@@ -29,7 +29,7 @@ public class AccidentConsumerImplementation implements AccidentConsumer {
     @SneakyThrows
     public void consume(String jsonMessage) {
         AccidentMessage accidentMessage = this.objectMapper.readValue(jsonMessage, AccidentMessage.class);
-        System.out.println(accidentMessage);
+        this.potentialAccidentService.processPotentialAccident(accidentMessage);
     }
 
 }

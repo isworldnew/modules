@@ -246,7 +246,7 @@ def process_video(video_path, original_filename):
 
             if pid not in active:
                 active[pid] = {
-                    "video": original_filename,
+                    "video": "records/" + original_filename,
                     "person_id": pid,
                     "start_time": time_sec,
                     "end_time": time_sec,
