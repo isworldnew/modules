@@ -1,14 +1,14 @@
-FROM maven:3.8.5-openjdk-17 AS assembly
+FROM maven:3.9.6-eclipse-temurin-21 AS assembly
 
 WORKDIR /accident-recorder
 
-COPY accident-recorder-service/pom.xml .
+COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-COPY accident-recorder-service/src ./src
+COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 
 WORKDIR /accident-recorder
 COPY --from=assembly /accident-recorder/target/accidentrecorder-0.0.1-SNAPSHOT.jar .

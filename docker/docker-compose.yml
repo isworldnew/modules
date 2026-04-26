@@ -263,13 +263,13 @@ services:
   
 
   # сервис регистратор инцидентов
-  # accident-recorder-service:
-  #   build:
-  #     context: ./module/accident-recorder-service
-  #   container_name: accident-recorder-service
-  #   hostname: accident-recorder-service
-  #   env_file:
-  #     - ./service/accident-recorder-service/accident_recorder_service.env
-  #   ports:
-  #    - "8888:8080"
-  #   restart: on-failure
+  accident-recorder-service:
+    build:
+      context: ./service/accident-recorder-service
+    container_name: accident-recorder-service
+    hostname: accident-recorder-service
+    env_file:
+      - ./service/accident-recorder-service/accident_recorder_service.env
+    ports:
+     - "8888:8080"
+    restart: on-failure
