@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
+import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.file.abstraction.RecordProcessor;
 import ru.smirnov.accidentrecorder.message.AccidentMessage;
+import ru.smirnov.accidentrecorder.repository.domain.PotentialAccidentRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentService;
 import ru.smirnov.accidentrecorder.service.abstraction.minio.AccidentStorageClient;
 import ru.smirnov.accidentrecorder.service.abstraction.minio.EntryRecordStorageClient;
@@ -27,6 +29,8 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
 
     private final RecordProcessor recordProcessor;
 
+    private final PotentialAccidentRepository potentialAccidentRepository;
+
 
     @Autowired
     public PotentialAccidentServiceImplementation(
@@ -34,18 +38,20 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
             DetectedPersonService detectedPersonService,
             EntryRecordStorageClient entryRecordStorageClient,
             AccidentStorageClient accidentStorageClient,
-            RecordProcessor recordProcessor
+            RecordProcessor recordProcessor,
+            PotentialAccidentRepository potentialAccidentRepository
     ) {
         this.accidentIgnoringCriteria = accidentIgnoringCriteria;
         this.detectedPersonService = detectedPersonService;
         this.entryRecordStorageClient = entryRecordStorageClient;
         this.accidentStorageClient = accidentStorageClient;
         this.recordProcessor = recordProcessor;
+        this.potentialAccidentRepository = potentialAccidentRepository;
     }
 
     @Override
     // @Transactional
-    public void processPotentialAccident(AccidentMessage accidentMessage) {
+    public void processPotentialAccidentMessage(AccidentMessage accidentMessage) {
 
         if (this.accidentIgnoringCriteria.ignore(
                 accidentMessage.getVestClassificationResult(),
@@ -74,7 +80,21 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
         );
 
         // сохранить инцидент в БД
+        this.createPotentialAccidentRecord(accidentMessage, detectedPerson, fileName);
+    }
 
+    @Transactional
+    private PotentialAccident createPotentialAccidentRecord(
+            AccidentMessage accidentMessage,
+            DetectedPerson detectedPerson,
+            String recordReference
+    ) {
+        PotentialAccident potentialAccident = new PotentialAccident();
+
+
+
+        this.potentialAccidentRepository.save(potentialAccident);
+        return potentialAccident;
     }
 
 }

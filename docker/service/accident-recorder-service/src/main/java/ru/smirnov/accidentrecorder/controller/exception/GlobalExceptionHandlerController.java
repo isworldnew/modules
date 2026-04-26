@@ -8,7 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.smirnov.accidentrecorder.dto.response.ExceptionResponse;
-import ru.smirnov.accidentrecorder.exception.DetectedPersonNotFoundException;
+import ru.smirnov.accidentrecorder.exception.NotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandlerController {
 
-    @ExceptionHandler({DetectedPersonNotFoundException.class})
+    @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<ExceptionResponse> handleNotFoundException(Exception ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ExceptionResponse(ex.getMessage())
