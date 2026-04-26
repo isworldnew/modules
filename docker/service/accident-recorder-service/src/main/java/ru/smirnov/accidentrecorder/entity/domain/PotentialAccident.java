@@ -41,7 +41,7 @@ public class PotentialAccident {
     @Column(name = "supposed_accuracy", columnDefinition = "NUMERIC(20, 18)", nullable = false)
     private BigDecimal supposedAccuracy;
 
-    @Column(name = "record_reference", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "record_reference", columnDefinition = "TEXT", nullable = true)
     private String recordReference;
 
     @Enumerated(EnumType.STRING)

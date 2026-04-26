@@ -10,7 +10,8 @@ services:
       - ./env/zookeeper.env
     ports:
       - "2181:2181"
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # брокер сообщений между общим хранилищем видеозаписей и [модулями детекции и трекинга]
   # можно ещё kafka-ui добавить
@@ -25,7 +26,8 @@ services:
     ports:
       - "9092:9092"
       - "29092:29092"
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # общее хранилище, в которое попадают все записи с камер
   entry-record-storage:
@@ -40,6 +42,8 @@ services:
     volumes:
       - ./volume/entry-record-storage:/data
     restart: unless-stopped
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   entry-record-storage-initializer:
     image: minio/mc:latest
@@ -56,7 +60,8 @@ services:
       chmod +x /entry-record-storage.bash;
       /entry-record-storage.bash;
       "
-  
+    networks:
+      - hi-vis-vest-usage-control-system-network  
 
   # вспомогательный сервис, в который MinIO будет слать уведомления: эдакая обёртка над Kafka
   notification-service:
@@ -77,7 +82,8 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # хранилище выявленных треков
   track-storage:
@@ -91,6 +97,8 @@ services:
     volumes:
       - ./volume/track-storage:/data/db
       - ./init/track-storage:/docker-entrypoint-initdb.d:ro
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   track-storage-ui:
     image: mongo-express:latest
@@ -102,7 +110,8 @@ services:
       - ./env/track-storage-ui.env
     depends_on:
       - track-storage
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # хранилище изображений, вырезанных из видео по трекам
   crop-storage:
@@ -117,6 +126,8 @@ services:
     volumes:
       - ./volume/crop-storage:/data
     restart: unless-stopped
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   crop-storage-initializer:
     image: minio/mc:latest
@@ -132,7 +143,8 @@ services:
       chmod +x /crop-storage.bash;
       /crop-storage.bash;
       "
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # модуль формирования треков передвижения людей
   detection-tracking-module:
@@ -152,7 +164,8 @@ services:
     volumes:
       - ./module/detection-tracking-module/uploads:/app/uploads
       - ./module/detection-tracking-module/models:/app/models
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # брокер сообщений между [модулями детекции и трекинга] и [модулями классификации]
   detection-broker:
@@ -166,7 +179,8 @@ services:
     ports:
       - "9093:9092"
       - "29093:29092"
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # модуль классификации наличия жилета
   classification-module:
@@ -185,7 +199,8 @@ services:
     volumes:
       - ./module/classification-module/config:/app/config
       - ./module/classification-module/models:/app/models
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # брокер сообщений между [модулями классификации] и [регистратором инцидентов]
   accident-broker:
@@ -199,7 +214,8 @@ services:
     ports:
       - "9094:9092"
       - "29094:29092"
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # база для метаданных регистратора инцидентов
   accident_database:
@@ -217,6 +233,8 @@ services:
       timeout: 5s
     ports:
       - "5432:5432"
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   accident-database-ui:
     image: dpage/pgadmin4:latest
@@ -226,7 +244,8 @@ services:
       - ./env/accident-database-ui.env
     ports:
       - "5050:80"
-
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # хранилище видеозаписей регистратора инцидентов
   accident-storage:
@@ -242,6 +261,8 @@ services:
     volumes:
       - ./volume/accident-storage:/data
     restart: unless-stopped
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   accident-storage-initializer:
     image: minio/mc:latest
@@ -260,7 +281,8 @@ services:
       chmod +x /accident-storage.bash;
       /accident-storage.bash;
       "
-  
+    networks:
+      - hi-vis-vest-usage-control-system-network
 
   # сервис регистратор инцидентов
   accident-recorder-service:
@@ -273,3 +295,10 @@ services:
     ports:
      - "8888:8080"
     restart: on-failure
+    networks:
+      - hi-vis-vest-usage-control-system-network
+
+networks:
+  hi-vis-vest-usage-control-system-network:
+    driver: bridge
+    name: hi-vis-vest-usage-control-system-network

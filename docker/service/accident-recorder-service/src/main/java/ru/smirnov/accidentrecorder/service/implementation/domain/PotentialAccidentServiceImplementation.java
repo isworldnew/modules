@@ -5,4 +5,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentS
 
 @Service
 public class PotentialAccidentServiceImplementation implements PotentialAccidentService {
+
+
+
 }
