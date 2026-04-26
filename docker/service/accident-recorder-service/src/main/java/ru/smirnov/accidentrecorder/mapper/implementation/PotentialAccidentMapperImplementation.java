@@ -11,7 +11,9 @@ import ru.smirnov.accidentrecorder.repository.domain.AreaRepository;
 import ru.smirnov.accidentrecorder.repository.domain.CameraRepository;
 import ru.smirnov.accidentrecorder.util.RecordPathUtil;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Component
 public class PotentialAccidentMapperImplementation implements PotentialAccidentMapper {
@@ -46,11 +48,15 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
         );
 
         Long recordStartTimestamp = RecordPathUtil.extractTimestamp(detectedPerson.getRecordReference());
-        potentialAccident.setRecordStartDateTime(OffsetDateTime.parse(String.valueOf(recordStartTimestamp)));
+        potentialAccident.setRecordStartDateTime(
+                OffsetDateTime.ofInstant(Instant.ofEpochSecond(recordStartTimestamp), ZoneOffset.UTC)
+        );
 
         // [accident_datetime]: [record_start_datetime] + startTime из detectedPerson
         Long accidentDateTime = recordStartTimestamp + Double.valueOf(detectedPerson.getStartTime()).longValue();
-        potentialAccident.setAccidentDateTime(OffsetDateTime.parse(String.valueOf(accidentDateTime)));
+        potentialAccident.setAccidentDateTime(
+                OffsetDateTime.ofInstant(Instant.ofEpochSecond(accidentDateTime), ZoneOffset.UTC)
+        );
 
         potentialAccident.setSupposedAccuracy(accidentMessage.getAverageConfidence());
 

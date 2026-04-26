@@ -23,7 +23,7 @@ import static org.bytedeco.opencv.global.opencv_imgproc.rectangle;
 @Component
 public class RecordProcessorImplementation implements RecordProcessor {
 
-    private static final Scalar RED = new Scalar(255, 0, 0, 0);
+    private static final Scalar RED = new Scalar(0, 0, 255, 0);
     private static final int RECTANGLE_THICKNESS = 2;
 
     @Override

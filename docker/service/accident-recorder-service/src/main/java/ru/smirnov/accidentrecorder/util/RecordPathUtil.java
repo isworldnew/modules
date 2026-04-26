@@ -13,7 +13,9 @@ public class RecordPathUtil {
 
 
     public static Long extractAreaId(String recordReference) {
-        String areaDescriptor = recordReference.split("_")[0];
+        System.out.println(recordReference);
+        String fileName = recordReference.split("/")[1];
+        String areaDescriptor = fileName.split("_")[0];
         return Long.valueOf(areaDescriptor.substring(AREA.length()));
     }
 
