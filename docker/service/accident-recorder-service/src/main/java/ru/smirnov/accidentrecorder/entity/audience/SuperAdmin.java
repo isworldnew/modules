@@ -1,4 +1,4 @@
-package ru.smirnov.accidentrecorder.entity.audience;
-
-public class SuperAdmin {
-}
+//package ru.smirnov.accidentrecorder.entity.audience;
+//
+//public class SuperAdmin {
+//}

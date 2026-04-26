@@ -1,8 +1,9 @@
-package ru.smirnov.accidentrecorder.util;
+package ru.smirnov.accidentrecorder.service.implementation.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.smirnov.accidentrecorder.message.VestClassification;
+import ru.smirnov.accidentrecorder.service.abstraction.util.AccidentIgnoringCriteria;
 
 @Component
 public class AccidentIgnoringCriteriaImplementation implements AccidentIgnoringCriteria {

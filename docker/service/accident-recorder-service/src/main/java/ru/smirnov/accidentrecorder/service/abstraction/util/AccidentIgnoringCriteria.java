@@ -1,4 +1,4 @@
-package ru.smirnov.accidentrecorder.util;
+package ru.smirnov.accidentrecorder.service.abstraction.util;
 
 import ru.smirnov.accidentrecorder.message.VestClassification;
 

@@ -14,7 +14,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentS
 import ru.smirnov.accidentrecorder.service.abstraction.minio.AccidentStorageClient;
 import ru.smirnov.accidentrecorder.service.abstraction.minio.EntryRecordStorageClient;
 import ru.smirnov.accidentrecorder.service.abstraction.mongo.DetectedPersonService;
-import ru.smirnov.accidentrecorder.util.AccidentIgnoringCriteria;
+import ru.smirnov.accidentrecorder.service.abstraction.util.AccidentIgnoringCriteria;
 
 import java.io.InputStream;
 import java.util.UUID;
