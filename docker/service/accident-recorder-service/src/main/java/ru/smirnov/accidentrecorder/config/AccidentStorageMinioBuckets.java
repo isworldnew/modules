@@ -3,13 +3,13 @@ package ru.smirnov.accidentrecorder.config;
 import lombok.Getter;
 
 @Getter
-public enum MinioBuckets {
+public enum AccidentStorageMinioBuckets {
 
     ACCIDENTS("accidents");
 
     private final String bucketName;
 
-    MinioBuckets(String bucketName) {
+    AccidentStorageMinioBuckets(String bucketName) {
         this.bucketName = bucketName;
     }
 
