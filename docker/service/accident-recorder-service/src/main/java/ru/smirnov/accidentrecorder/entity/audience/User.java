@@ -3,7 +3,6 @@ package ru.smirnov.accidentrecorder.entity.audience;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.UserStatus;
 
