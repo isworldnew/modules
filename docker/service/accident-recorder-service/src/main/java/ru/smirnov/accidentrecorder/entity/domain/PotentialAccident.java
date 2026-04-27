@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentStatus;
 
@@ -29,7 +30,8 @@ public class PotentialAccident {
     @JsonBackReference
     private Camera camera;
 
-    @Column(name = "upload_date_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(name = "upload_date_time", /*columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",*/ nullable = false)
+    @ColumnDefault("CURRENT_TIMESTAMP")
     private OffsetDateTime uploadDateTime = OffsetDateTime.now();
 
     // время начала видеозаписи (timestamp из названия)
