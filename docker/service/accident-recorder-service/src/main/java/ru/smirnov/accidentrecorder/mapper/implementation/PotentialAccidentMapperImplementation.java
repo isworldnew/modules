@@ -100,11 +100,11 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
 
         SafetyOfficerResponse safetyOfficerResponse = new SafetyOfficerResponse();
 
-        safetyOfficerResponse.setId(accidentResponse.getSafetyOfficer().getId());
-        safetyOfficerResponse.setEmail(accidentResponse.getSafetyOfficer().getEmail());
-        safetyOfficerResponse.setLastname(accidentResponse.getSafetyOfficer().getLastname());
-        safetyOfficerResponse.setFirstname(accidentResponse.getSafetyOfficer().getFirstname());
-        safetyOfficerResponse.setParentname(accidentResponse.getSafetyOfficer().getParentname());
+        safetyOfficerResponse.setId(potentialAccident.getSafetyOfficer().getId());
+        safetyOfficerResponse.setEmail(potentialAccident.getSafetyOfficer().getUsername());
+        safetyOfficerResponse.setLastname(potentialAccident.getSafetyOfficer().getLastname());
+        safetyOfficerResponse.setFirstname(potentialAccident.getSafetyOfficer().getFirstname());
+        safetyOfficerResponse.setParentname(potentialAccident.getSafetyOfficer().getParentname());
 
         accidentResponse.setSafetyOfficer(safetyOfficerResponse);
 
