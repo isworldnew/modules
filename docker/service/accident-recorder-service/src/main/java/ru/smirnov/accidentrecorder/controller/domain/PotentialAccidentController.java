@@ -2,6 +2,7 @@ package ru.smirnov.accidentrecorder.controller.domain;
 
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentS
 import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextService;
 import ru.smirnov.accidentrecorder.validation.annotation.AccidentStatusLabel;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
@@ -45,10 +47,12 @@ public class PotentialAccidentController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER')")
     public List<AccidentShortcutResponse> getAccidentShortcutsByStatus(
-            @NotBlank @AccidentStatusLabel @RequestParam(name = "status") String status
+            @NotBlank @AccidentStatusLabel @RequestParam(name = "status") String status,
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)OffsetDateTime dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)OffsetDateTime dateTo
     ) {
         DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
-        return this.potentialAccidentService.getAccidentShortcutsByStatus(tokenData, status);
+        return this.potentialAccidentService.getAccidentShortcutsByStatus(tokenData, status, dateFrom, dateTo);
     }
 
 }

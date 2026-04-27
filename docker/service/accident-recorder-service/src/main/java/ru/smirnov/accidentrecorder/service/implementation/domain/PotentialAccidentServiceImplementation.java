@@ -1,6 +1,7 @@
 package ru.smirnov.accidentrecorder.service.implementation.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
@@ -21,6 +22,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.util.AccidentIgnoringCrit
 import ru.smirnov.accidentrecorder.service.abstraction.util.SafetyOfficerAppointmentCriteria;
 
 import java.io.InputStream;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -117,7 +119,35 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
     }
 
     @Override
-    public List<AccidentShortcutResponse> getAccidentShortcutsByStatus(DataForToken tokenData, String status) {
-        return null;
+    public List<AccidentShortcutResponse> getAccidentShortcutsByStatus(
+            DataForToken tokenData,
+            String status,
+            OffsetDateTime dateFrom,
+            OffsetDateTime dateTo
+    ) {
+        if (dateFrom == null && dateTo == null) {
+            dateTo = OffsetDateTime.now();
+            dateFrom = dateTo.minusDays(3);
+        }
+
+        Role role = Role.valueOf(tokenData.getRole());
+
+        // если SAFETY_OFFICER, то только те, которые назначены на него
+        if (role == Role.SAFETY_OFFICER)
+            return this.potentialAccidentRepository.getPotentialAccidentShortcutsBySafetyOfficerId(
+                    status.toUpperCase(),
+                    tokenData.getUserId(),
+                    dateFrom,
+                    dateTo
+            );
+
+        // если ADMIN или SUPERADMIN: возвращаем все
+        else
+            return this.potentialAccidentRepository.getPotentialAccidentShortcuts(
+                    status.toUpperCase(),
+                    dateFrom,
+                    dateTo
+            );
+
     }
 }

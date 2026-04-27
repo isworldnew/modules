@@ -5,14 +5,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-@Data @NoArgsConstructor
-public class AccidentShortcutResponse {
+public interface AccidentShortcutResponse {
 
-    private Long id;
+    Long id();
 
-    private String areaName;
+    String areaName();
 
-    private String status;
+    String status();
 
-    private OffsetDateTime uploadDateTime;
+    OffsetDateTime uploadDateTime();
 }
