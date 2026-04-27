@@ -15,6 +15,12 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
+    private String username;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     private Role role;
@@ -23,10 +29,12 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'ENABLED'", nullable = false)
     private UserStatus status = UserStatus.ENABLED;
 
-    // почта
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String firstname;
 
-    // пароль
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String lastname;
 
-    // фио
-
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String parentname;
 }

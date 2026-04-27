@@ -3,6 +3,7 @@ package ru.smirnov.accidentrecorder.controller.exception;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,7 +17,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandlerController {
 
-    @ExceptionHandler({NotFoundException.class})
+    @ExceptionHandler({NotFoundException.class, UsernameNotFoundException.class})
     public ResponseEntity<ExceptionResponse> handleNotFoundException(Exception ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ExceptionResponse(ex.getMessage())

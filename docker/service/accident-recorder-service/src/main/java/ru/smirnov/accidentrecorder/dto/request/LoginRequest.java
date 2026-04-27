@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
 
     // TODO: добавить валидатор под regex почты
-    private String email;
+    @NotBlank
+    private String username;
 
     @NotBlank
     @Size(min = 10, message = "Password's size should be >= 10")

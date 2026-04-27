@@ -1,8 +1,9 @@
 package ru.smirnov.accidentrecorder.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
+@Data @AllArgsConstructor
 public class JwtResponse {
 
     private String accessToken;

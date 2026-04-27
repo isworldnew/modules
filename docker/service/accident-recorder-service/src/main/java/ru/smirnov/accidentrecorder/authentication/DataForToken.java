@@ -11,7 +11,9 @@ import java.util.List;
 @Data @Builder @Setter
 public class DataForToken implements UserDetails {
 
-    private String email;
+//    private String email;
+
+    private String username;
 
     private String password;
 
@@ -23,10 +25,10 @@ public class DataForToken implements UserDetails {
 
     private String role;
 
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
+//    @Override
+//    public String getUsername() {
+//        return this.email;
+//    }
 
     @Override
     public boolean isEnabled() {
