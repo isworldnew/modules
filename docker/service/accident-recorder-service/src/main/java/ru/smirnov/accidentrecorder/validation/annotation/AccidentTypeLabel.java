@@ -1,6 +1,7 @@
 package ru.smirnov.accidentrecorder.validation.annotation;
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import ru.smirnov.accidentrecorder.validation.validator.AccidentTypeValidator;
 
 import java.lang.annotation.*;
@@ -10,4 +11,10 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = AccidentTypeValidator.class)
 @Documented
 public @interface AccidentTypeLabel {
+
+    String message() default "Invalid accident type";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

@@ -11,9 +11,6 @@ import ru.smirnov.accidentrecorder.validation.annotation.AccidentTypeLabel;
 @Data @NoArgsConstructor
 public class ReportRequest {
 
-    @NotNull @Positive
-    private Long accidentId;
-
     private String description;
 
     @NotBlank @AccidentTypeLabel
