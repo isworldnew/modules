@@ -8,6 +8,9 @@ import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.UserStatus;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data @NoArgsConstructor
@@ -45,5 +48,5 @@ public class User {
         orphanRemoval = true
     )
     @JsonManagedReference
-    private PotentialAccident accident;
+    private List<PotentialAccident> accidents = new ArrayList<>();
 }
