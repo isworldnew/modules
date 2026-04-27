@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
+import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
+import ru.smirnov.accidentrecorder.exception.ForbiddenException;
+import ru.smirnov.accidentrecorder.precondition.abstraction.PotentialAccidentPreconditionService;
 import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
@@ -41,6 +44,8 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
 
     private final SafetyOfficerAppointmentCriteria safetyOfficerAppointmentCriteria;
 
+    private final PotentialAccidentPreconditionService potentialAccidentPreconditionService;
+
 
     @Autowired
     public PotentialAccidentServiceImplementation(
@@ -51,7 +56,8 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
             RecordProcessor recordProcessor,
             PotentialAccidentRepository potentialAccidentRepository,
             PotentialAccidentMapper potentialAccidentMapper,
-            SafetyOfficerAppointmentCriteria safetyOfficerAppointmentCriteria
+            SafetyOfficerAppointmentCriteria safetyOfficerAppointmentCriteria,
+            PotentialAccidentPreconditionService potentialAccidentPreconditionService
     ) {
         this.accidentIgnoringCriteria = accidentIgnoringCriteria;
         this.detectedPersonService = detectedPersonService;
@@ -61,6 +67,7 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
         this.potentialAccidentRepository = potentialAccidentRepository;
         this.potentialAccidentMapper = potentialAccidentMapper;
         this.safetyOfficerAppointmentCriteria = safetyOfficerAppointmentCriteria;
+        this.potentialAccidentPreconditionService = potentialAccidentPreconditionService;
     }
 
     @Override
@@ -147,6 +154,23 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
                     dateFrom,
                     dateTo
             );
+    }
 
+    @Override
+    public AccidentResponse getAccidentById(DataForToken tokenData, Long id) {
+
+        PotentialAccident potentialAccident = this.potentialAccidentPreconditionService.safelyGetPotentialAccidentById(id);
+
+        Role role = Role.valueOf(tokenData.getRole());
+
+        // если SAFETY_OFFICER, то может читать только те, которые назначены на него
+        if (role == Role.SAFETY_OFFICER) {
+            if (!potentialAccident.getSafetyOfficer().getId().equals(tokenData.getUserId()))
+                throw new ForbiddenException("Potential Accident Record with id=" + id + " is not appointed to Safety Officer with id=" + tokenData.getUserId());
+        }
+
+        // если ADMIN или SUPERADMIN - читать могут всё
+
+        return this.potentialAccidentMapper.potentialAccidentEntityToAccidentResponse(potentialAccident);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.smirnov.accidentrecorder.dto.response.ExceptionResponse;
+import ru.smirnov.accidentrecorder.exception.ForbiddenException;
 import ru.smirnov.accidentrecorder.exception.NotFoundException;
 import ru.smirnov.accidentrecorder.exception.SecurityContextException;
 
@@ -32,6 +33,12 @@ public class GlobalExceptionHandlerController {
         );
     }
 
+    @ExceptionHandler({ForbiddenException.class})
+    public ResponseEntity<ExceptionResponse> handleForbiddenExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                new ExceptionResponse(ex.getMessage())
+        );
+    }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {

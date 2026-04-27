@@ -2,6 +2,9 @@ package ru.smirnov.accidentrecorder.mapper.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
+import ru.smirnov.accidentrecorder.dto.response.ReportResponse;
+import ru.smirnov.accidentrecorder.dto.response.SafetyOfficerResponse;
 import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
@@ -16,6 +19,7 @@ import ru.smirnov.accidentrecorder.util.RecordPathUtil;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class PotentialAccidentMapperImplementation implements PotentialAccidentMapper {
@@ -78,6 +82,44 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
         potentialAccident.setSafetyOfficer(safetyOfficer);
 
         return potentialAccident;
+    }
+
+    @Override
+    public AccidentResponse potentialAccidentEntityToAccidentResponse(PotentialAccident potentialAccident) {
+        AccidentResponse accidentResponse = new AccidentResponse();
+
+        accidentResponse.setId(potentialAccident.getId());
+        accidentResponse.setAreaName(potentialAccident.getArea().getName());
+        accidentResponse.setCameraName(potentialAccident.getCamera().getName());
+        accidentResponse.setUploadDateTime(potentialAccident.getUploadDateTime().withOffsetSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT));
+        accidentResponse.setRecordDateTime(potentialAccident.getRecordStartDateTime().withOffsetSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT));
+        accidentResponse.setAccidentDateTime(potentialAccident.getAccidentDateTime().withOffsetSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT));
+        accidentResponse.setSupposedAccuracy(potentialAccident.getSupposedAccuracy());
+        accidentResponse.setRecordReference(potentialAccident.getRecordReference());
+        accidentResponse.setStatus(potentialAccident.getStatus().name());
+
+        SafetyOfficerResponse safetyOfficerResponse = new SafetyOfficerResponse();
+
+        safetyOfficerResponse.setId(accidentResponse.getSafetyOfficer().getId());
+        safetyOfficerResponse.setEmail(accidentResponse.getSafetyOfficer().getEmail());
+        safetyOfficerResponse.setLastname(accidentResponse.getSafetyOfficer().getLastname());
+        safetyOfficerResponse.setFirstname(accidentResponse.getSafetyOfficer().getFirstname());
+        safetyOfficerResponse.setParentname(accidentResponse.getSafetyOfficer().getParentname());
+
+        accidentResponse.setSafetyOfficer(safetyOfficerResponse);
+
+        if (potentialAccident.getReport() != null) {
+            ReportResponse reportResponse = new ReportResponse();
+
+            reportResponse.setId(potentialAccident.getReport().getId());
+            reportResponse.setAccidentType(potentialAccident.getReport().getAccidentType().name());
+            reportResponse.setAccidentInterpretation(potentialAccident.getReport().getAccidentInterpretation().name());
+            reportResponse.setDescription(potentialAccident.getReport().getDescription());
+
+            accidentResponse.setReport(reportResponse);
+        }
+
+        return accidentResponse;
     }
 
 }

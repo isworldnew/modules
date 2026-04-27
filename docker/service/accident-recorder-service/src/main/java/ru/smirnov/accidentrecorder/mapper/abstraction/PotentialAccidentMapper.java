@@ -1,5 +1,6 @@
 package ru.smirnov.accidentrecorder.mapper.abstraction;
 
+import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.message.AccidentMessage;
@@ -10,5 +11,9 @@ public interface PotentialAccidentMapper {
             DetectedPerson detectedPerson,
             String recordReference,
             Long safetyOfficerId
+    );
+
+    AccidentResponse potentialAccidentEntityToAccidentResponse(
+            PotentialAccident potentialAccident
     );
 }

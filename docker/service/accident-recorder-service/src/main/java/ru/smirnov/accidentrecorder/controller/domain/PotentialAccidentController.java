@@ -1,6 +1,8 @@
 package ru.smirnov.accidentrecorder.controller.domain;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
+import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
 import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentService;
 import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextService;
@@ -42,7 +45,7 @@ public class PotentialAccidentController {
         return this.potentialAccidentService.getUnprocessedPotentialAccidentsAmount(tokenData);
     }
 
-    // шорткаты UNPROCESSED или PROCESSED
+    // шорткаты UNPROCESSED или PROCESSED + по диапизону дат
     @GetMapping("/shortcuts")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER')")
@@ -53,6 +56,15 @@ public class PotentialAccidentController {
     ) {
         DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
         return this.potentialAccidentService.getAccidentShortcutsByStatus(tokenData, status, dateFrom, dateTo);
+    }
+
+    // полная информация по инциденту (обработан он или нет)
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER')")
+    public AccidentResponse getAccidentById(@NotNull @Positive @PathVariable("id") Long id) {
+        DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
+        return this.potentialAccidentService.getAccidentById(tokenData, id);
     }
 
 }
