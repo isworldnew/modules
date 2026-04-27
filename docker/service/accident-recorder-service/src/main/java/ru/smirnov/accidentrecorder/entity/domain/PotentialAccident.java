@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentStatus;
 
 import java.math.BigDecimal;
@@ -56,7 +57,9 @@ public class PotentialAccident {
     @JsonManagedReference
     private AccidentReport report;
 
-    // ссылка на safety_officer, потому что назначается уведомление
-    // авторство, будем считать, числится за этим же сотрудником
+    @ManyToOne
+    @JoinColumn(name = "safety_officer_id")
+    @JsonBackReference
+    private User safetyOfficer;
 
 }

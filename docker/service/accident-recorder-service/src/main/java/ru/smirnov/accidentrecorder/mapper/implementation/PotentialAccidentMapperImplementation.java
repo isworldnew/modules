@@ -2,11 +2,13 @@ package ru.smirnov.accidentrecorder.mapper.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.exception.NotFoundException;
 import ru.smirnov.accidentrecorder.mapper.abstraction.PotentialAccidentMapper;
 import ru.smirnov.accidentrecorder.message.AccidentMessage;
+import ru.smirnov.accidentrecorder.repository.audience.UserRepository;
 import ru.smirnov.accidentrecorder.repository.domain.AreaRepository;
 import ru.smirnov.accidentrecorder.repository.domain.CameraRepository;
 import ru.smirnov.accidentrecorder.util.RecordPathUtil;
@@ -20,18 +22,25 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
 
     private final AreaRepository areaRepository;
     private final CameraRepository cameraRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PotentialAccidentMapperImplementation(AreaRepository areaRepository, CameraRepository cameraRepository) {
+    public PotentialAccidentMapperImplementation(
+            AreaRepository areaRepository,
+            CameraRepository cameraRepository,
+            UserRepository userRepository
+    ) {
         this.areaRepository = areaRepository;
         this.cameraRepository = cameraRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public PotentialAccident bunchOfDataToPotentialAccidentEntity(
             AccidentMessage accidentMessage,
             DetectedPerson detectedPerson,
-            String recordReference
+            String recordReference,
+            Long safetyOfficerId
     ) {
         PotentialAccident potentialAccident = new PotentialAccident();
 
@@ -61,6 +70,12 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
         potentialAccident.setSupposedAccuracy(accidentMessage.getAverageConfidence());
 
         potentialAccident.setRecordReference(recordReference);
+
+        User safetyOfficer = this.userRepository.findById(safetyOfficerId).orElseThrow(
+                () -> new NotFoundException("No Safety Officer with id=" + safetyOfficerId)
+        );
+
+        potentialAccident.setSafetyOfficer(safetyOfficer);
 
         return potentialAccident;
     }

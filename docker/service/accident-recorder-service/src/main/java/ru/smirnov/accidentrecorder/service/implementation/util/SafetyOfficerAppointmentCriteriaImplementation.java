@@ -17,7 +17,7 @@ public class SafetyOfficerAppointmentCriteriaImplementation implements SafetyOff
 
     @Override
     public Long appoint() {
-        return 1L;
+        return this.userRepository.getEnabledSafetyOfficerIdentifiers().get(0);
     }
 
 }

@@ -1,10 +1,12 @@
 package ru.smirnov.accidentrecorder.entity.audience;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.UserStatus;
+import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 
 @Entity
 @Table(name = "users")
@@ -36,4 +38,12 @@ public class User {
 
     @Column(columnDefinition = "TEXT", nullable = true)
     private String parentname;
+
+    @OneToMany(
+        mappedBy = "safetyOfficer",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @JsonManagedReference
+    private PotentialAccident accident;
 }

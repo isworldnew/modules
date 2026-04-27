@@ -8,6 +8,7 @@ public interface PotentialAccidentMapper {
     PotentialAccident bunchOfDataToPotentialAccidentEntity(
             AccidentMessage accidentMessage,
             DetectedPerson detectedPerson,
-            String recordReference
+            String recordReference,
+            Long safetyOfficerId
     );
 }

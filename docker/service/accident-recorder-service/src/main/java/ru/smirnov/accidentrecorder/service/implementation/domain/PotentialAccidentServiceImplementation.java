@@ -3,7 +3,10 @@ package ru.smirnov.accidentrecorder.service.implementation.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
+import ru.smirnov.accidentrecorder.dto.response.AccidentShortcutResponse;
+import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.file.abstraction.RecordProcessor;
@@ -15,8 +18,10 @@ import ru.smirnov.accidentrecorder.service.abstraction.minio.AccidentStorageClie
 import ru.smirnov.accidentrecorder.service.abstraction.minio.EntryRecordStorageClient;
 import ru.smirnov.accidentrecorder.service.abstraction.mongo.DetectedPersonService;
 import ru.smirnov.accidentrecorder.service.abstraction.util.AccidentIgnoringCriteria;
+import ru.smirnov.accidentrecorder.service.abstraction.util.SafetyOfficerAppointmentCriteria;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,6 +38,8 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
     private final PotentialAccidentRepository potentialAccidentRepository;
     private final PotentialAccidentMapper potentialAccidentMapper;
 
+    private final SafetyOfficerAppointmentCriteria safetyOfficerAppointmentCriteria;
+
 
     @Autowired
     public PotentialAccidentServiceImplementation(
@@ -42,7 +49,8 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
             AccidentStorageClient accidentStorageClient,
             RecordProcessor recordProcessor,
             PotentialAccidentRepository potentialAccidentRepository,
-            PotentialAccidentMapper potentialAccidentMapper
+            PotentialAccidentMapper potentialAccidentMapper,
+            SafetyOfficerAppointmentCriteria safetyOfficerAppointmentCriteria
     ) {
         this.accidentIgnoringCriteria = accidentIgnoringCriteria;
         this.detectedPersonService = detectedPersonService;
@@ -51,6 +59,7 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
         this.recordProcessor = recordProcessor;
         this.potentialAccidentRepository = potentialAccidentRepository;
         this.potentialAccidentMapper = potentialAccidentMapper;
+        this.safetyOfficerAppointmentCriteria = safetyOfficerAppointmentCriteria;
     }
 
     @Override
@@ -93,11 +102,22 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
             DetectedPerson detectedPerson,
             String recordReference
     ) {
+        Long safetyOfficerId = this.safetyOfficerAppointmentCriteria.appoint();
         PotentialAccident potentialAccident = this.potentialAccidentMapper.bunchOfDataToPotentialAccidentEntity(
-                accidentMessage, detectedPerson, recordReference
+                accidentMessage, detectedPerson, recordReference, safetyOfficerId
         );
         this.potentialAccidentRepository.save(potentialAccident);
         return potentialAccident;
     }
 
+    @Override
+    public Integer getUnprocessedPotentialAccidentsAmount(DataForToken tokenData) {
+        Long safetyOfficerId = tokenData.getUserId();
+        return this.potentialAccidentRepository.countUnprocessedPotentialAccidentsBySafetyOfficerId(safetyOfficerId);
+    }
+
+    @Override
+    public List<AccidentShortcutResponse> getAccidentShortcutsByStatus(DataForToken tokenData, String status) {
+        return null;
+    }
 }

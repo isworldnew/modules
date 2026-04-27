@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.smirnov.accidentrecorder.dto.response.ExceptionResponse;
 import ru.smirnov.accidentrecorder.exception.NotFoundException;
+import ru.smirnov.accidentrecorder.exception.SecurityContextException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,13 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler({NotFoundException.class, UsernameNotFoundException.class})
     public ResponseEntity<ExceptionResponse> handleNotFoundException(Exception ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ExceptionResponse(ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler({SecurityContextException.class})
+    public ResponseEntity<ExceptionResponse> handleUnauthorizedExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                 new ExceptionResponse(ex.getMessage())
         );
     }
