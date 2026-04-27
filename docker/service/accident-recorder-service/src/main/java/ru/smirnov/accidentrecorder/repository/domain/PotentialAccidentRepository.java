@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.smirnov.accidentrecorder.dto.response.AccidentShortcutResponse;
+import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 
 import java.time.OffsetDateTime;
@@ -30,7 +30,7 @@ public interface PotentialAccidentRepository extends JpaRepository<PotentialAcci
                         potential_accidents.id AS id,
                         areas.name AS area_name,
                         potential_accidents.status AS status,
-                        potential_accidents.upload_date_time AS upload_date_time
+                        TO_CHAR(potential_accidents.upload_date_time, 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS upload_date_time
                     FROM potential_accidents
                     LEFT JOIN areas ON potential_accidents.area_id = areas.id
                     WHERE
@@ -56,7 +56,7 @@ public interface PotentialAccidentRepository extends JpaRepository<PotentialAcci
                         potential_accidents.id AS id,
                         areas.name AS area_name,
                         potential_accidents.status AS status,
-                        potential_accidents.upload_date_time AS upload_date_time
+                        TO_CHAR(potential_accidents.upload_date_time, 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS upload_date_time
                     FROM potential_accidents
                     LEFT JOIN areas ON potential_accidents.area_id = areas.id
                     WHERE

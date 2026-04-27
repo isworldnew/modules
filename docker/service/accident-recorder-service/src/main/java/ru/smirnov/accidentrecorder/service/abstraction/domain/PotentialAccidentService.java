@@ -1,7 +1,7 @@
 package ru.smirnov.accidentrecorder.service.abstraction.domain;
 
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
-import ru.smirnov.accidentrecorder.dto.response.AccidentShortcutResponse;
+import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.message.AccidentMessage;
 
 import java.time.OffsetDateTime;

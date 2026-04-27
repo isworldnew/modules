@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
-import ru.smirnov.accidentrecorder.dto.response.AccidentShortcutResponse;
+import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.PotentialAccidentService;
 import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextService;
 import ru.smirnov.accidentrecorder.validation.annotation.AccidentStatusLabel;

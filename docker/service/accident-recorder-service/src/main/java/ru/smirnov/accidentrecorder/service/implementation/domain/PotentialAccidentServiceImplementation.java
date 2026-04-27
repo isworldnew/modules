@@ -1,12 +1,11 @@
 package ru.smirnov.accidentrecorder.service.implementation.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
-import ru.smirnov.accidentrecorder.dto.response.AccidentShortcutResponse;
+import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
