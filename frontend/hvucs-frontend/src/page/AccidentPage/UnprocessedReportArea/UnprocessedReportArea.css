@@ -1,0 +1,29 @@
+@import '../../../variables.css';
+
+.unprocessed-report-area {
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-lg);
+}
+
+.unprocessed-report-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--button-yellow);
+}
+
+.unprocessed-report-content {
+    background-color: #252525;
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.unprocessed-report-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: var(--spacing-xs);
+}

@@ -8,3 +8,47 @@
     width: 100%;
     box-sizing: border-box;
 }
+
+.info-row {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+/* Стили для пустого состояния */
+.accident-area-empty,
+.accident-area-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.accident-area-empty p,
+.accident-area-error p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Плейсхолдер для видео */
+.video-placeholder {
+    margin: var(--spacing-lg) 0;
+    background-color: #0a0a0a;
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-placeholder p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}

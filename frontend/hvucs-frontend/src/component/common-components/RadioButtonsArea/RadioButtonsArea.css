@@ -1,0 +1,19 @@
+@import '../../../variables.css';
+
+.radio-buttons-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.radio-area-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.radio-buttons-group {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}

@@ -1,0 +1,36 @@
+@import '../../../variables.css';
+
+.big-text-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.input-field-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.input-field-textarea {
+    width: 100%;
+    background-color: var(--background-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-md);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.input-field-textarea:focus {
+    outline: none;
+    border-color: var(--button-yellow);
+}
+
+.input-field-textarea::placeholder {
+    color: #6c6c6c;
+}

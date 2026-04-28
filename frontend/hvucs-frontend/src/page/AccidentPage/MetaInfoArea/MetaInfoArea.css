@@ -2,8 +2,8 @@
 
 .meta-info-area {
     margin: var(--spacing-lg) 0;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
 }
 
 .meta-info-grid {
