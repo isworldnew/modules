@@ -3,7 +3,7 @@
  * @param {Function} apiCall - функция, которая принимает accessToken и возвращает Promise с объектом { status, data }
  * @returns {Promise<{ status: number, data: any }>} - результат выполнения запроса
  */
-async function executeWithTokenRefresh(apiCall) {
+export async function executeWithTokenRefresh(apiCall) {
     const getAccessToken = () => localStorage.getItem('accessToken');
     const getRefreshToken = () => localStorage.getItem('refreshToken');
     

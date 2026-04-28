@@ -1,0 +1,28 @@
+@import '../../../../variables.css';
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--border-radius-small);
+    transition: all 0.2s ease;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background-color: var(--background-input);
+    color: var(--text-primary);
+}
+
+.nav-link.active {
+    background-color: var(--background-input);
+    color: var(--button-yellow);
+}
+
+.nav-link-text {
+    flex: 1;
+}

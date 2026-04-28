@@ -50,7 +50,6 @@ export default function LoginForm() {
             return;
         }
         
-        // Валидация прошла успешно - отправляем запрос
         setIsLoading(true);
         
         const loginData = {
@@ -68,13 +67,23 @@ export default function LoginForm() {
             });
             
             if (response.status === 201) {
-                // Успешный вход
+                const data = await response.json();
+                
+                if (data.accessToken && data.refreshToken) {
+                    localStorage.setItem('accessToken', data.accessToken);
+                    localStorage.setItem('refreshToken', data.refreshToken);
+                    console.log('Токены успешно сохранены в localStorage');
+                } else {
+                    console.error('Токены не найдены в ответе сервера');
+                    showErrorModal('Ошибка при получении токенов доступа');
+                    setIsLoading(false);
+                    return;
+                }
+                
                 window.location.href = '/';
             } else if (response.status === 403) {
-                // Неправильный логин или пароль
                 showErrorModal('Неправильно введён логин или пароль');
             } else {
-                // Другая ошибка
                 showErrorModal('Произошла ошибка при входе. Пожалуйста, попробуйте позже.');
             }
         } catch (error) {

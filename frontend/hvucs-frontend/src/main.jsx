@@ -10,6 +10,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './page/LoginPage/LoginPage.jsx';
 import InitPage from "./page/InitPage/InitPage.jsx";
 
+import NotificationsPage from "./page/NotificationsPage/NotificationsPage.jsx";
+
 
 
 createRoot(document.getElementById('root')).render(
@@ -18,6 +20,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<InitPage />}/>
         <Route path='/login' element={<LoginPage />}/>
+        <Route path='/notifications' element={<NotificationsPage />}/>
         
         {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}
         {/* <Route path='/analysis' element={<AnalysisPage />}/> */}
