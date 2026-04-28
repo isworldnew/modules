@@ -29,9 +29,9 @@ public class TokenUtils {
 
     public Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(getSigningKey())
+                .setSigningKey(getSigningKey()) // с использованием секретного ключа
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(token) // автоматически проверяем подпись токена
                 .getBody();
     }
 
