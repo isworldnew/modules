@@ -1,0 +1,13 @@
+:root {
+    --button-yellow: #ffcc00;
+    --button-yellow-hover: #ffdd44;
+    --button-text-dark: #1a1a1a;
+    
+    --background-dark: #2a2a2a;
+    --footer-bg: #808080;
+    --footer-text: #ffffff;
+    
+    --border-radius-small: 8px;
+    --border-radius-medium: 12px;
+    --border-radius-large: 16px;
+}

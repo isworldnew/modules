@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уведомления | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <!-- Боковая панель -->
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link active">
+                        Уведомления
+                        <span class="badge">3</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        Инциденты
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Основной контент -->
+            <main class="main-content">
+                <h1 class="page-title">Уведомления о новых инцидентах</h1>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>От:</label>
+                        <input type="text" placeholder="ДД/ММ/ГГГГ" class="date-input">
+                    </div>
+                    <div class="filter-group">
+                        <label>До:</label>
+                        <input type="text" placeholder="ДД/ММ/ГГГГ" class="date-input">
+                    </div>
+                    <button class="btn btn-yellow">Найти</button>
+                </div>
+
+                <div class="incidents-list">
+                    <!-- Пример блока инцидента. Данные будут подставлены из JSON -->
+                    <div class="incident-card">
+                        <div class="incident-id">#101 | Зона А</div>
+                        <div class="incident-meta">14:30 15/03/2026</div>
+                        <div class="incident-status status-unprocessed">Не обработан</div>
+                    </div>
+                    <div class="incident-card">
+                        <div class="incident-id">#102 | Зона Б</div>
+                        <div class="incident-meta">09:15 15/03/2026</div>
+                        <div class="incident-status status-processed">Обработан</div>
+                    </div>
+                    <div class="incident-card">
+                        <div class="incident-id">#103 | Зона В</div>
+                        <div class="incident-meta">22:45 14/03/2026</div>
+                        <div class="incident-status status-unprocessed">Не обработан</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
