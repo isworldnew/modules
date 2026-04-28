@@ -20,7 +20,9 @@ public class AccidentResponse {
 
     private Double supposedAccuracy;
 
-    private String recordReference;
+    private String recordType;
+
+    private byte[] record;
 
     private String status;
 

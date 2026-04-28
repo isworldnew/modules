@@ -2,6 +2,7 @@ package ru.smirnov.accidentrecorder.mapper.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
 import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
 import ru.smirnov.accidentrecorder.dto.response.ReportResponse;
 import ru.smirnov.accidentrecorder.dto.response.SafetyOfficerResponse;
@@ -14,6 +15,7 @@ import ru.smirnov.accidentrecorder.message.AccidentMessage;
 import ru.smirnov.accidentrecorder.repository.audience.UserRepository;
 import ru.smirnov.accidentrecorder.repository.domain.AreaRepository;
 import ru.smirnov.accidentrecorder.repository.domain.CameraRepository;
+import ru.smirnov.accidentrecorder.service.abstraction.minio.AccidentStorageClient;
 import ru.smirnov.accidentrecorder.util.RecordPathUtil;
 
 import java.time.Instant;
@@ -27,16 +29,19 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
     private final AreaRepository areaRepository;
     private final CameraRepository cameraRepository;
     private final UserRepository userRepository;
+    private final AccidentStorageClient accidentStorageClient;
 
     @Autowired
     public PotentialAccidentMapperImplementation(
             AreaRepository areaRepository,
             CameraRepository cameraRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            AccidentStorageClient accidentStorageClient
     ) {
         this.areaRepository = areaRepository;
         this.cameraRepository = cameraRepository;
         this.userRepository = userRepository;
+        this.accidentStorageClient = accidentStorageClient;
     }
 
     @Override
@@ -95,7 +100,10 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
         accidentResponse.setRecordDateTime(potentialAccident.getRecordStartDateTime().withOffsetSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT));
         accidentResponse.setAccidentDateTime(potentialAccident.getAccidentDateTime().withOffsetSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT));
         accidentResponse.setSupposedAccuracy(potentialAccident.getSupposedAccuracy());
-        accidentResponse.setRecordReference(potentialAccident.getRecordReference());
+        accidentResponse.setRecord(this.accidentStorageClient.getRecordAsBytes(
+                AccidentStorageMinioBuckets.ACCIDENTS.getBucketName(), potentialAccident.getRecordReference())
+        );
+        accidentResponse.setRecordType("video/mp4");
         accidentResponse.setStatus(potentialAccident.getStatus().name());
 
         SafetyOfficerResponse safetyOfficerResponse = new SafetyOfficerResponse();
