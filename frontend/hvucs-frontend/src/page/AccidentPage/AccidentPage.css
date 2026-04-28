@@ -1,0 +1,18 @@
+@import '../../variables.css';
+
+.accident-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.accident-layout {
+    display: flex;
+    flex: 1;
+}
+
+.accident-content {
+    flex: 1;
+    padding: var(--spacing-xl);
+    background-color: var(--background-dark);
+}

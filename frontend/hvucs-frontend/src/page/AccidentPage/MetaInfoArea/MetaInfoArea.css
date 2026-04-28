@@ -1,0 +1,25 @@
+@import '../../../variables.css';
+
+.meta-info-area {
+    margin: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-lg);
+}
+
+.meta-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .meta-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .meta-info-grid {
+        grid-template-columns: 1fr;
+    }
+}

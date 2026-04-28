@@ -1,0 +1,55 @@
+@import '../../../../variables.css';
+
+.meta-info {
+    width: 100%;
+}
+
+.info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.info-status {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.status-processed {
+    background-color: #1b5e20;
+    color: #c8e6c9;
+}
+
+.status-unprocessed {
+    background-color: #b71c1c;
+    color: #ffcdd2;
+}
+
+.status-unknown {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.info-interpretation {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.interpretation-real {
+    color: #ef5350;
+}
+
+.interpretation-false {
+    color: #4caf50;
+}
+
+.interpretation-unknown {
+    color: var(--text-secondary);
+}

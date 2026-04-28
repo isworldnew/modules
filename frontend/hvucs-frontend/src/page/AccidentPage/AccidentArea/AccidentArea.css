@@ -1,0 +1,10 @@
+@import '../../../variables.css';
+
+.accident-area {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    box-sizing: border-box;
+}
