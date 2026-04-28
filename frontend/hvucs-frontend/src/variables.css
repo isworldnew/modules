@@ -5,19 +5,19 @@
     --button-text-dark: #1a1a1a;
     
     /* Фоны */
-    --background-dark: #121212;
-    --background-card: #1e1e1e;
-    --background-input: #2c2c2c;
+    --background-dark: #1e1e1e;  /* Светлее: было #121212 */
+    --background-card: #2a2a2a;   /* Светлее: было #1e1e1e */
+    --background-input: #3a3a3a;  /* Светлее: было #2c2c2c */
     --footer-bg: #d3d3d3;
     --footer-text: #1a1a1a;
     
     /* Цвета текста */
     --text-primary: #ffffff;
-    --text-secondary: #cccccc;
+    --text-secondary: #e0e0e0;    /* Светлее: было #cccccc */
     --text-dark: #1a1a1a;
     
     /* Цвета границ */
-    --border-color: #3a3a3a;
+    --border-color: #4a4a4a;      /* Светлее: было #3a3a3a */
     
     /* Скругления */
     --border-radius-small: 8px;
@@ -25,7 +25,7 @@
     --border-radius-large: 16px;
     
     /* Тени */
-    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);  /* Мягче тень */
     
     /* Отступы */
     --spacing-xs: 0.5rem;

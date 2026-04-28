@@ -1,0 +1,69 @@
+@import '../../../variables.css';
+
+.footer {
+    background-color: #1a1a1a;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.footer-copyright,
+.footer-info {
+    color: #ffffff;
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.8;
+}
+
+.footer-copyright {
+    font-weight: 500;
+}
+
+.footer-info {
+    opacity: 0.6;
+}
+
+/* Стили для ссылки */
+.footer-link {
+    color: var(--button-yellow);
+    text-decoration: none;
+    margin-left: 4px;
+    transition: all 0.2s ease;
+    opacity: 1;
+}
+
+.footer-link:hover {
+    color: var(--button-yellow-hover);
+    text-decoration: underline;
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+    .footer {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xs);
+    }
+    
+    .footer-copyright,
+    .footer-info {
+        font-size: 0.75rem;
+    }
+}

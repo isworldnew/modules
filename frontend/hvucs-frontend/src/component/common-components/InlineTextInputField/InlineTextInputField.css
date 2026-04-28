@@ -48,7 +48,7 @@
 
 /* Для password полей добавляем небольшой отступ */
 .input-field[type="password"] {
-    letter-spacing: 0.3em;
+    letter-spacing: 0.0em;
     font-family: monospace;
 }
 

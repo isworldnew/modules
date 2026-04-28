@@ -1,0 +1,47 @@
+@import '../../../variables.css';
+
+.header {
+    background-color: var(--button-yellow);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.header-logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--button-text-dark);
+    letter-spacing: 1px;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.header-subtitle {
+    font-size: 0.875rem;
+    color: var(--button-text-dark);
+    opacity: 0.8;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+    .header {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .header-logo {
+        font-size: 1.5rem;
+    }
+    
+    .header-subtitle {
+        font-size: 0.75rem;
+    }
+}
