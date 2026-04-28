@@ -4,7 +4,7 @@
  * @returns {string} - значение поля role из payload токена
  * @throws {Error} - если токен невалидный или не содержит поле role
  */
-function extractRoleFromToken(token) {
+export function extractRoleFromToken(token) {
     if (!token || typeof token !== 'string') {
         throw new Error('Token is required and must be a string');
     }
@@ -40,7 +40,7 @@ function extractRoleFromToken(token) {
     }
 }
 
-function extractRoleFromTokenUnicode(token) {
+export function extractRoleFromTokenUnicode(token) {
     if (!token || typeof token !== 'string') {
         throw new Error('Token is required and must be a string');
     }
