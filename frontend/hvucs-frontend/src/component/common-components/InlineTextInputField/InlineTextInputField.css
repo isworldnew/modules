@@ -1,0 +1,57 @@
+@import '../../../variables.css';
+
+.inline-text-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.input-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+.required-star {
+    color: var(--button-yellow);
+    margin-left: 2px;
+}
+
+.input-field {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background-color: var(--background-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--button-yellow);
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+.input-field::placeholder {
+    color: #6c6c6c;
+    opacity: 1;
+}
+
+.input-field:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Для password полей добавляем небольшой отступ */
+.input-field[type="password"] {
+    letter-spacing: 0.3em;
+    font-family: monospace;
+}
+
+.input-field[type="password"]::placeholder {
+    letter-spacing: normal;
+}

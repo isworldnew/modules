@@ -1,3 +1,5 @@
+@import './variables.css';
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,10 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Source Sans 3', 'Montserrat', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     background-color: var(--background-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
 }
 
 #root {
@@ -19,4 +23,63 @@ body {
     background-color: var(--background-dark);
     display: flex;
     flex-direction: column;
+}
+
+/* Утилитарные классы для контейнеров */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+}
+
+/* Общие стили для кнопок */
+.btn {
+    border: none;
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn-yellow {
+    background-color: var(--button-yellow);
+    color: var(--button-text-dark);
+}
+
+.btn-yellow:hover {
+    background-color: var(--button-yellow-hover);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Стили для форм */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.form-group input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background-color: var(--background-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--button-yellow);
 }

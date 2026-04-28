@@ -1,0 +1,53 @@
+@import '../../../variables.css';
+
+.btn {
+    border: none;
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.btn:hover:not(:disabled) {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Если передан hoverColor через атрибут data */
+.btn[data-hover-color]:hover:not(:disabled) {
+    background-color: var(--button-yellow-hover) !important;
+}
+
+/* Дополнительные модификаторы */
+.btn-block {
+    width: 100%;
+    display: flex;
+}
+
+.btn-large {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 1.125rem;
+}
+
+.btn-small {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.875rem;
+}

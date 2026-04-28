@@ -7,7 +7,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
+import LoginPage from './page/LoginPage/LoginPage.jsx';
 import InitPage from "./page/InitPage/InitPage.jsx";
+
 
 
 createRoot(document.getElementById('root')).render(
@@ -15,6 +17,7 @@ createRoot(document.getElementById('root')).render(
     <Router>
       <Routes>
         <Route path='/' element={<InitPage />}/>
+        <Route path='/login' element={<LoginPage />}/>
         
         {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}
         {/* <Route path='/analysis' element={<AnalysisPage />}/> */}

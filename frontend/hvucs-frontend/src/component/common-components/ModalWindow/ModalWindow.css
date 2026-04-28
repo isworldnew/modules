@@ -1,0 +1,84 @@
+@import '../../../variables.css';
+
+/* Затемнение всей страницы */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.2s ease;
+}
+
+/* Контейнер модального окна */
+.modal-container {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-card);
+    width: 90%;
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+}
+
+/* Контент внутри модального окна */
+.modal-content {
+    padding: var(--spacing-xl);
+}
+
+/* Текст сообщения */
+.modal-message {
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-lg);
+    text-align: left;  /* Изменено с center на left */
+    word-wrap: break-word;
+    white-space: pre-wrap;  /* Сохраняет переносы строк из \n */
+}
+
+/* Кнопка закрытия */
+.modal-button {
+    background-color: var(--button-yellow);
+    color: var(--button-text-dark);
+    border: none;
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 120px;
+    display: block;
+    margin: 0 auto;  /* Центрируем кнопку */
+}
+
+.modal-button:hover {
+    background-color: var(--button-yellow-hover);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
