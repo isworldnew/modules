@@ -12,6 +12,7 @@ import InitPage from "./page/InitPage/InitPage.jsx";
 
 import NotificationsPage from "./page/NotificationsPage/NotificationsPage.jsx";
 import AccidentsPage from './page/AccidentsPage/AccidentsPage.jsx';
+import AccidentPage from './page/AccidentPage/AccidentPage.jsx';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/login' element={<LoginPage />}/>
         <Route path='/notifications' element={<NotificationsPage />}/>
         <Route path='/accidents' element={<AccidentsPage />}/>
+        <Route path='/accident/:id' element={<AccidentPage />}/>
         
         {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}
         {/* <Route path='/analysis' element={<AnalysisPage />}/> */}

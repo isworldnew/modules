@@ -1,0 +1,18 @@
+@import '../../../variables.css';
+
+.accident-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 var(--spacing-lg) 0;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .accident-header {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-xs);
+    }
+}

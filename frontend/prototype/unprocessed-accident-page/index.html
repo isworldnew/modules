@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр инцидента (необработан) | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">Уведомления <span class="badge">3</span></a>
+                    <a href="#" class="nav-link">Инциденты</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <h1 class="page-title">Просмотр инцидента</h1>
+
+                <div class="incident-detail">
+                    <h2 class="incident-detail-title">Инцидент #101</h2>
+
+                    <!-- Основная информация -->
+                    <div class="info-row">
+                        <span class="info-label">Зона:</span>
+                        <span class="info-value">Северная площадка</span>
+                        <span class="info-label">Камера:</span>
+                        <span class="info-value">Cam-02</span>
+                    </div>
+
+                    <!-- Видеоплеер -->
+                    <div class="video-player">
+                        <div class="video-placeholder">
+                            <div class="video-controls">
+                                <button class="control-btn">▶</button>
+                                <button class="control-btn">⏸</button>
+                                <input type="range" class="timeline" value="30">
+                                <span class="timecode">00:00 / 00:00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Детальная информация -->
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Уведомление получено:</div>
+                            <div class="info-value">14:30:25, 15/03/2026</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Запись от:</div>
+                            <div class="info-value">14:28:10, 15/03/2026</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Время инцидента:</div>
+                            <div class="info-value">14:28:45, 15/03/2026</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Вероятность инцидента:</div>
+                            <div class="info-value">87.35 %</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Статус:</div>
+                            <div class="info-value status-unprocessed">Не обработан</div>
+                        </div>
+                    </div>
+
+                    <!-- Блок обработки инцидента (report == null) -->
+                    <div class="report-section processing-section">
+                        <h3 class="section-subtitle">Обработка инцидента</h3>
+                        
+                        <!-- Поле для описания -->
+                        <div class="form-group">
+                            <label for="description">Описание инцидента:</label>
+                            <textarea id="description" rows="4" placeholder="Введите описание происшествия..."></textarea>
+                        </div>
+
+                        <!-- Radio-кнопки для интерпретации -->
+                        <div class="form-group">
+                            <label>Интерпретация инцидента:</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="interpretation" value="REAL_ALARM">
+                                    <span class="radio-text real-alarm-text">Предположение модели подтверждено</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="interpretation" value="FALSE_ALARM">
+                                    <span class="radio-text false-alarm-text">Ложное срабатывание</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка обработки -->
+                        <button class="btn btn-yellow btn-process">Обработать инцидент</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

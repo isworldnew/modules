@@ -1,0 +1,19 @@
+@import '../../../variables.css';
+
+.accident-source {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--spacing-xs);
+}
+
+.source-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 400;  /* Тонкий шрифт */
+}
+
+.source-value {
+    color: var(--text-primary);
+    font-weight: 600;  /* Жирный шрифт */
+    font-size: 1rem;
+}
