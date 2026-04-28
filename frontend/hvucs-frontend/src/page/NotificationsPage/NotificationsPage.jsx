@@ -3,6 +3,8 @@ import './NotificationsPage.css';
 import Header from '../../component/common-components/Header/Header.jsx';
 import Footer from '../../component/common-components/Footer/Footer.jsx';
 import SideBar from '../../component/common-components/SideBar/SideBar.jsx';
+import PageName from '../../component/common-components/PageName/PageName.jsx';
+import NotificationArea from './NotificationArea/NotificationArea.jsx';
 
 export default function NotificationsPage() {
     return (
@@ -13,7 +15,8 @@ export default function NotificationsPage() {
                 <SideBar activePage="notifications" />
                 
                 <main className="notifications-content">
-                    {/* Здесь будет контент страницы уведомлений */}
+                    <PageName title="Уведомления о новых инцидентах" />
+                    <NotificationArea />
                 </main>
             </div>
             

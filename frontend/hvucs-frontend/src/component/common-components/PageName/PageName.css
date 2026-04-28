@@ -1,0 +1,30 @@
+@import '../../../variables.css';
+
+.page-name-container {
+    margin-bottom: var(--spacing-xl);
+}
+
+.page-name-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.page-name-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: var(--spacing-xs) 0 0 0;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .page-name-title {
+        font-size: 1.5rem;
+    }
+    
+    .page-name-subtitle {
+        font-size: 0.8rem;
+    }
+}

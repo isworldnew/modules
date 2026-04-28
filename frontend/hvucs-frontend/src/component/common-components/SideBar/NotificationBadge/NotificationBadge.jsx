@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { executeWithTokenRefresh } from '../../../../script/executeWithTokenRefresh.js';
-import './NotificationItem.css';
+import './NotificationBadge.css';
 
-export default function NotificationItem() {
+export default function NotificationBadge() {
     const [unprocessedCount, setUnprocessedCount] = useState(null);
     const intervalRef = useRef(null);
     const isMounted = useRef(true);

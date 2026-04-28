@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import NotificationItem from './NotificationItem/NotificationItem.jsx';
+import NotificationBadge from './NotificationBadge/NotificationBadge.jsx';
 import './SideBar.css';
 
 export default function SideBar({ activePage = 'notifications' }) {
@@ -16,7 +16,7 @@ export default function SideBar({ activePage = 'notifications' }) {
                     onClick={() => handleNavigation('/notifications')}
                 >
                     <span className="nav-link-text">Уведомления</span>
-                    <NotificationItem />
+                    <NotificationBadge />
                 </div>
                 
                 <div 
