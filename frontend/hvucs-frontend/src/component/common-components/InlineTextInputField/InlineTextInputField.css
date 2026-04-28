@@ -46,7 +46,13 @@
     cursor: not-allowed;
 }
 
-/* Для password полей добавляем небольшой отступ */
+/* Стили для поля с маской даты */
+.input-field.date-mask {
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Для password полей */
 .input-field[type="password"] {
     letter-spacing: 0.0em;
     font-family: monospace;

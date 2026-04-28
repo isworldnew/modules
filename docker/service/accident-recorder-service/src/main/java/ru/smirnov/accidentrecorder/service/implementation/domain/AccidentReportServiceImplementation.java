@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.dto.request.ReportRequest;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentInterpretation;
+import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentStatus;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentType;
 import ru.smirnov.accidentrecorder.entity.domain.AccidentReport;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
@@ -44,6 +45,8 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
         accidentReport.setAccidentType(AccidentType.valueOf(dto.getType()));
         accidentReport.setAccidentInterpretation(AccidentInterpretation.valueOf(dto.getInterpretation()));
         accidentReport.setDescription(dto.getDescription());
+
+        potentialAccident.setStatus(AccidentStatus.PROCESSED);
 
         this.accidentReportRepository.save(accidentReport);
 

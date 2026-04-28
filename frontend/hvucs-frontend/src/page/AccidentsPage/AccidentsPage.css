@@ -1,0 +1,49 @@
+@import '../../variables.css';
+
+.accidents-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.accidents-layout {
+    display: flex;
+    flex: 1;
+}
+
+.accidents-content {
+    flex: 1;
+    padding: var(--spacing-xl);
+    background-color: var(--background-dark);
+}
+
+/* Блок фильтров */
+.filters {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-end;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.filter-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+    .accidents-content {
+        padding: var(--spacing-lg);
+    }
+    
+    .filters {
+        gap: var(--spacing-sm);
+    }
+}

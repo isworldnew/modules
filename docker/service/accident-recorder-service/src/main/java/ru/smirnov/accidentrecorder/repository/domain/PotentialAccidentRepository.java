@@ -18,7 +18,10 @@ public interface PotentialAccidentRepository extends JpaRepository<PotentialAcci
                     SELECT
                         COUNT(*)
                     FROM potential_accidents
-                    WHERE potential_accidents.safety_officer_id = :id
+                    WHERE
+                        potential_accidents.safety_officer_id = :id
+                    AND
+                        potential_accidents.status = 'UNPROCESSED'
                     """,
             nativeQuery = true
     )
