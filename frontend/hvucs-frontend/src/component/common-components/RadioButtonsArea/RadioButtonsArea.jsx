@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 import './RadioButtonsArea.css';
 import RadioButton from './RadioButton/RadioButton.jsx';
 
-export default function RadioButtonsArea({ label, options = [] }) {
+const RadioButtonsArea = forwardRef(({ label, options = [] }, ref) => {
     const [selectedValue, setSelectedValue] = useState(null);
     
     const handleRadioChange = (value) => {
@@ -14,7 +14,11 @@ export default function RadioButtonsArea({ label, options = [] }) {
         }
     };
     
-    const getSelectedValue = () => selectedValue;
+    useImperativeHandle(ref, () => ({
+        getSelectedValue: () => selectedValue,
+        setSelectedValue: (value) => setSelectedValue(value),
+        clear: () => setSelectedValue(null)
+    }));
     
     return (
         <div className="radio-buttons-area">
@@ -34,4 +38,8 @@ export default function RadioButtonsArea({ label, options = [] }) {
             </div>
         </div>
     );
-}
+});
+
+RadioButtonsArea.displayName = 'RadioButtonsArea';
+
+export default RadioButtonsArea;

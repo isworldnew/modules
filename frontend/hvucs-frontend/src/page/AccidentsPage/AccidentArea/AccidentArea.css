@@ -1,9 +1,6 @@
 @import '../../../variables.css';
 
-.accident-area {
-    width: 100%;
-}
-
+/* Список инцидентов */
 .accidents-list {
     display: flex;
     flex-direction: column;

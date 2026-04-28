@@ -9,6 +9,7 @@ import MetaInfoArea from '../MetaInfoArea/MetaInfoArea.jsx';
 import ProcessedReportArea from '../ProcessedReportArea/ProcessedReportArea.jsx';
 import UnprocessedReportArea from '../UnprocessedReportArea/UnprocessedReportArea.jsx';
 import ProgressLoader from '../../../component/common-components/ProgressLoader/ProgressLoader.jsx';
+import VideoPlayer from '../VideoPlayer/VideoPlayer.jsx';
 
 export default function AccidentArea() {
     const { id } = useParams();
@@ -106,7 +107,7 @@ export default function AccidentArea() {
     const reportItems = incidentData.report ? [
         { label: "Описание инцидента:", info: incidentData.report.description || "Нет описания", infoType: "description" },
         { label: "Интерпретация инцидента:", info: incidentData.report.accidentInterpretation, infoType: "interpretation" },
-        { label: "Тип инцидента:", info: incidentData.report.accidentType, infoType: "type" }
+        { label: "Тип инцидента:", info: "Отсутствие световозвращающего жилета", infoType: "type" }
     ] : [];
 
     return (
@@ -118,10 +119,10 @@ export default function AccidentArea() {
                 <AccidentSource label="Камера" value={incidentData.cameraName} />
             </div>
             
-            {/* TODO: Видеоплеер будет здесь */}
-            <div className="video-placeholder">
-                <p>Видео будет доступно здесь</p>
-            </div>
+            <VideoPlayer 
+                recordType={incidentData.recordType}
+                record={incidentData.record}
+            />
             
             <MetaInfoArea items={metaInfoItems} />
             

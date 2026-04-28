@@ -90,14 +90,14 @@ export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
         return () => {
             isMounted.current = false;
         };
-    }, []); // Пустой массив - только при монтировании
+    }, []);
 
     // При клике на кнопку (изменении searchTrigger) делаем запрос
     useEffect(() => {
         if (searchTrigger > 0) {
             fetchAccidents();
         }
-    }, [searchTrigger]); // Только при изменении searchTrigger
+    }, [searchTrigger]);
 
     // Отображение ProgressLoader во время загрузки
     if (isLoading) {
@@ -113,20 +113,18 @@ export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
         );
     }
 
-    // Отображение списка инцидентов
+    // Отображение списка инцидентов (без лишней обёртки)
     return (
-        <div className="accident-area">
-            <div className="accidents-list">
-                {accidents.map((accident) => (
-                    <AccidentItem
-                        key={accident.id}
-                        id={accident.id}
-                        areaName={accident.areaName}
-                        uploadDateTime={accident.uploadDateTime}
-                        status={accident.status}
-                    />
-                ))}
-            </div>
+        <div className="accidents-list">
+            {accidents.map((accident) => (
+                <AccidentItem
+                    key={accident.id}
+                    id={accident.id}
+                    areaName={accident.areaName}
+                    uploadDateTime={accident.uploadDateTime}
+                    status={accident.status}
+                />
+            ))}
         </div>
     );
 }
