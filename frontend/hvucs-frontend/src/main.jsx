@@ -14,6 +14,9 @@ import NotificationsPage from "./page/NotificationsPage/NotificationsPage.jsx";
 import AccidentsPage from './page/AccidentsPage/AccidentsPage.jsx';
 import AccidentPage from './page/AccidentPage/AccidentPage.jsx';
 
+import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
+import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
+
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
@@ -23,9 +26,11 @@ createRoot(document.getElementById('root')).render(
         <Route path='/notifications' element={<NotificationsPage />}/>
         <Route path='/accidents' element={<AccidentsPage />}/>
         <Route path='/accident/:id' element={<AccidentPage />}/>
+
+        <Route path='/not-found' element={<NotFoundPage />}/>
+        <Route path='/forbidden' element={<ForbiddenPage />}/>
         
         {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}
-        {/* <Route path='/analysis' element={<AnalysisPage />}/> */}
       </Routes>
     </Router>
   </React.StrictMode>,
