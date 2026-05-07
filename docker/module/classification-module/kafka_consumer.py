@@ -15,7 +15,6 @@ KAFKA_TOPIC = os.getenv("DETECTION_TOPIC", "detected-persons")
 KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID", "classification-group")
 
 def handle_message(message):
-    """Handle incoming Kafka message"""
     try:
         from app import process_classification_message
         import time as time_module
@@ -31,7 +30,6 @@ def handle_message(message):
         
         logger.info(f"[KAFKA] Received message: object_id={object_id}, crops={crops_amount}")
         
-        # Process in separate thread
         thread = threading.Thread(
             target=process_classification_message,
             args=(object_id, crops_amount),
@@ -43,7 +41,6 @@ def handle_message(message):
         logger.error(f"[KAFKA] Error handling message: {e}")
 
 def start_consumer():
-    """Start Kafka consumer with retry logic"""
     attempt = 0
     
     while True:
@@ -60,12 +57,11 @@ def start_consumer():
                 auto_commit_interval_ms=5000,
                 request_timeout_ms=30000,
                 metadata_max_age_ms=60000,
-                max_poll_records=10  # Limit records per poll
+                max_poll_records=10  
             )
             
             logger.info("[KAFKA] Consumer started successfully")
             
-            # Process messages
             for message in consumer:
                 handle_message(message)
             

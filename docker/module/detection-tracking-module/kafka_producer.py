@@ -8,14 +8,12 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configuration for detection broker
 DETECTION_BROKER_SERVERS = os.getenv("DETECTION_BROKER_SERVERS", "detection-broker:9092")
 DETECTION_TOPIC = os.getenv("DETECTION_TOPIC", "detected-persons")
 
 producer = None
 
 def init_detection_producer():
-    """Initialize Kafka producer for detection broker"""
     global producer
     
     max_retries = 10
@@ -59,7 +57,6 @@ def init_detection_producer():
     return False
 
 def send_detection_message(object_id: str, crops_amount: int):
-    """Send message to detection broker about detected person"""
     global producer
     
     if producer is None:
@@ -87,7 +84,6 @@ def send_detection_message(object_id: str, crops_amount: int):
         return False
 
 def close_detection_producer():
-    """Close the producer gracefully"""
     global producer
     if producer:
         producer.flush()

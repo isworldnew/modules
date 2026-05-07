@@ -31,13 +31,11 @@ DROPOUT = 0.5
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# MinIO configuration for crop-storage
 CROP_MINIO_ENDPOINT = os.getenv("CROP_MINIO_ENDPOINT", "crop-storage:9000")
 CROP_MINIO_ACCESS_KEY = os.getenv("CROP_MINIO_ACCESS_KEY", "ivan-student")
 CROP_MINIO_SECRET_KEY = os.getenv("CROP_MINIO_SECRET_KEY", "ivan-student")
 CROP_MINIO_BUCKET = os.getenv("CROP_MINIO_BUCKET", "crops")
 
-# Model lock for thread safety
 model_lock = threading.Lock()
 
 app = Flask(__name__)
@@ -45,7 +43,6 @@ app = Flask(__name__)
 os.makedirs(CONFIG_DIR, exist_ok=True)
 os.makedirs(MODELS_DIR, exist_ok=True)
 
-# MinIO client
 minio_client = Minio(
     CROP_MINIO_ENDPOINT,
     access_key=CROP_MINIO_ACCESS_KEY,
@@ -72,12 +69,11 @@ transform = transforms.Compose([
 ])
 
 def load_model():
-    """Load model with current config"""
     if not os.path.exists(MODEL_PATH) or not os.path.exists(CONFIG_PATH):
         return None
     
     config = load_config()
-    num_classes = len(config) - 1 if "default" in config else len(config)  # exclude default if present
+    num_classes = len(config) - 1 if "default" in config else len(config) 
     
     model = models.resnet34(weights=None)
     num_features = model.fc.in_features
@@ -95,12 +91,10 @@ def load_model():
     return model
 
 def load_config():
-    """Load configuration from file"""
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def download_crop_from_minio(object_name: str) -> Image.Image:
-    """Download a single crop from MinIO"""
     try:
         response = minio_client.get_object(CROP_MINIO_BUCKET, object_name)
         image_data = response.read()
@@ -114,10 +108,8 @@ def download_crop_from_minio(object_name: str) -> Image.Image:
         return None
 
 def get_crops_for_object(object_id: str, expected_count: int) -> list:
-    """Get all crops for a given object_id"""
     crops = []
     
-    # Try to get exact matches with pattern object_id_{index}.jpg
     for i in range(expected_count):
         object_name = f"{object_id}_{i}.jpg"
         image = download_crop_from_minio(object_name)
@@ -126,7 +118,6 @@ def get_crops_for_object(object_id: str, expected_count: int) -> list:
         else:
             logger.warning(f"Crop not found: {object_name}")
     
-    # Alternative: try to list objects with prefix if exact matching didn't work
     if len(crops) == 0:
         try:
             objects = minio_client.list_objects(CROP_MINIO_BUCKET, prefix=object_id, recursive=True)
@@ -140,7 +131,6 @@ def get_crops_for_object(object_id: str, expected_count: int) -> list:
     return crops
 
 def classify_crops(crops: list) -> dict:
-    """Classify a list of crop images and return voting results"""
     if not crops:
         return None
     
@@ -156,7 +146,6 @@ def classify_crops(crops: list) -> dict:
         class_conf_sum = {}
         
         for image in crops:
-            # Transform image
             image_tensor = transform(image).unsqueeze(0).to(DEVICE)
             
             with torch.no_grad():
@@ -170,7 +159,6 @@ def classify_crops(crops: list) -> dict:
                 class_votes[cls] = class_votes.get(cls, 0) + 1
                 class_conf_sum[cls] = class_conf_sum.get(cls, 0) + conf
         
-        # Determine best class by voting
         max_votes = max(class_votes.values())
         top_classes = [cls for cls, v in class_votes.items() if v == max_votes]
         
@@ -190,10 +178,8 @@ def classify_crops(crops: list) -> dict:
         }
 
 def process_classification_message(object_id: str, crops_amount: int):
-    """Process a single classification request"""
     logger.info(f"[CLASSIFY] Processing object_id={object_id}, crops_amount={crops_amount}")
     
-    # Check if model and config are loaded
     if not os.path.exists(MODEL_PATH):
         logger.warning(f"[CLASSIFY] Model not loaded, skipping {object_id}")
         return False
@@ -202,7 +188,6 @@ def process_classification_message(object_id: str, crops_amount: int):
         logger.warning(f"[CLASSIFY] Config not loaded, skipping {object_id}")
         return False
     
-    # Download crops from MinIO
     crops = get_crops_for_object(object_id, crops_amount)
     
     if len(crops) == 0:
@@ -211,14 +196,12 @@ def process_classification_message(object_id: str, crops_amount: int):
     
     logger.info(f"[CLASSIFY] Downloaded {len(crops)}/{crops_amount} crops for {object_id}")
     
-    # Classify the crops
     result = classify_crops(crops)
     
     if result is None:
         logger.error(f"[CLASSIFY] Classification failed for {object_id}")
         return False
     
-    # Prepare and send message to accident broker
     accident_message = {
         "object_id": object_id,
         "class": result["class"],
@@ -235,13 +218,9 @@ def process_classification_message(object_id: str, crops_amount: int):
     
     return success
 
-# =========================
-# REST API Endpoints
-# =========================
 
 @app.route("/config", methods=["POST"])
 def upload_config():
-    """Upload configuration file"""
     if "file" not in request.files:
         return jsonify({"message": "No file provided"}), 400
     
@@ -257,7 +236,6 @@ def upload_config():
 
 @app.route("/models/upload", methods=["POST"])
 def upload_model():
-    """Upload model file"""
     if "file" not in request.files:
         return jsonify({"message": "No file provided"}), 400
     
@@ -273,29 +251,22 @@ def upload_model():
 
 @app.route("/health", methods=["GET"])
 def health():
-    """Health check endpoint"""
     return jsonify({
         "status": "healthy",
         "model_loaded": os.path.exists(MODEL_PATH),
         "config_loaded": os.path.exists(CONFIG_PATH)
     }), 200
 
-# =========================
-# Kafka Setup and Main
-# =========================
 
 def start_kafka():
     """Start Kafka consumer in a separate thread"""
     t = threading.Thread(target=start_consumer, daemon=True)
     t.start()
 
-# Initialize Kafka producer
 init_accident_producer()
 
-# Start Kafka consumer
 start_kafka()
 
-# Cleanup on exit
 import atexit
 
 def cleanup():

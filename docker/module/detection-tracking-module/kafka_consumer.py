@@ -9,7 +9,6 @@ from minio import Minio
 import time
 from kafka.errors import NoBrokersAvailable
 
-# from main import process_video, UPLOAD_DIR, save_stream
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -18,7 +17,6 @@ KAFKA_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS")
 KAFKA_TOPIC = os.getenv("KAFKA_TOPIC")
 KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID", "detection-tracking-group")
 
-# MinIO (entry storage)
 ENTRY_MINIO_ENDPOINT = os.getenv("ENTRY_MINIO_ENDPOINT")
 ENTRY_MINIO_ACCESS_KEY = os.getenv("ENTRY_MINIO_ACCESS_KEY")
 ENTRY_MINIO_SECRET_KEY = os.getenv("ENTRY_MINIO_SECRET_KEY")
@@ -85,7 +83,6 @@ def handle_message(message):
             logger.warning(f"[KAFKA] file missing: {key}")
             return
 
-        # запуск обработки
         threading.Thread(
             target=process_video,
             args=(local_path, key),
@@ -124,17 +121,15 @@ def start_consumer():
                 group_id=KAFKA_GROUP_ID,
                 auto_offset_reset="earliest",
                 enable_auto_commit=True,
-                request_timeout_ms=30000,  # 30 seconds
-                metadata_max_age_ms=60000   # 60 seconds
+                request_timeout_ms=30000,  # 30 секунд
+                metadata_max_age_ms=60000   # 60 секунд
             )
             
             logger.info("[KAFKA] Consumer started successfully")
             
-            # Обработка сообщений
             for message in consumer:
                 handle_message(message)
             
-            # Если цикл прервался (ошибка), продолжаем попытки
             logger.warning("[KAFKA] Consumer loop ended, reconnecting...")
             time.sleep(5)
             

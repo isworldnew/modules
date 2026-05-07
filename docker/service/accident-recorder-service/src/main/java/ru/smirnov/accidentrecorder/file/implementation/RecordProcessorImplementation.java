@@ -48,16 +48,13 @@ public class RecordProcessorImplementation implements RecordProcessor {
         Path tempOutputFile = null;
 
         try {
-            // Создаем временные файлы вместо работы с потоками напрямую
             tempInputFile = Files.createTempFile("input_", ".mp4");
             tempOutputFile = Files.createTempFile("output_", ".mp4");
 
-            // Копируем InputStream во временный файл
             try (FileOutputStream fos = new FileOutputStream(tempInputFile.toFile())) {
                 originalRecord.transferTo(fos);
             }
 
-            // Используем FFmpegFrameGrabber с файлом
             try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(tempInputFile.toFile())) {
                 grabber.start();
 
@@ -67,14 +64,11 @@ public class RecordProcessorImplementation implements RecordProcessor {
 
                 log.debug("Video info: fps={}, width={}, height={}", fps, width, height);
 
-                // Вычисляем кадры для startTime и endTime
                 int startFrame = (int) Math.round(startTime * fps);
                 int endFrame = (int) Math.round(endTime * fps);
 
-                // Устанавливаем позицию на начало
                 grabber.setVideoFrameNumber(startFrame);
 
-                // Используем FFmpegFrameRecorder с файлом (не с потоком)
                 try (FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(tempOutputFile.toFile(), width, height)) {
                     recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
                     recorder.setFormat("mp4");
@@ -88,7 +82,6 @@ public class RecordProcessorImplementation implements RecordProcessor {
                     while ((frame = grabber.grabImage()) != null && currentFrame <= endFrame) {
                         double currentTimeSec = currentFrame / fps;
 
-                        // Находим или интерполируем трек для текущего времени
                         Track currentTrack = getTrackForTime(tracks, currentTimeSec);
                         if (currentTrack != null) {
                             Mat mat = convertFrameToMat(frame);
@@ -108,7 +101,6 @@ public class RecordProcessorImplementation implements RecordProcessor {
 
                     log.info("Processing completed. Processed {} frames", frameCount);
 
-                    // Читаем результат во временный файл
                     byte[] resultBytes = Files.readAllBytes(tempOutputFile);
                     return new ByteArrayInputStream(resultBytes);
                 }
@@ -117,7 +109,6 @@ public class RecordProcessorImplementation implements RecordProcessor {
             log.error("Failed to process video: {}", e.getMessage(), e);
             return null;
         } finally {
-            // Очищаем временные файлы
             try {
                 if (tempInputFile != null) Files.deleteIfExists(tempInputFile);
                 if (tempOutputFile != null) Files.deleteIfExists(tempOutputFile);
@@ -132,14 +123,12 @@ public class RecordProcessorImplementation implements RecordProcessor {
             return null;
         }
 
-        // Сначала ищем точное совпадение
         for (Track track : tracks) {
             if (Math.abs(track.getTime() - timeSec) < 0.01) {
                 return track;
             }
         }
 
-        // Ищем ближайшие треки до и после для интерполяции
         Track before = null;
         Track after = null;
 

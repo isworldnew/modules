@@ -21,9 +21,6 @@ from bson import ObjectId
 
 from kafka_producer import send_detection_message, init_detection_producer, close_detection_producer
 
-# =========================
-# CONFIG
-# =========================
 
 UPLOAD_DIR = "/app/uploads"
 MODEL_PATH = "./models/yolov8n.pt"
@@ -45,21 +42,16 @@ SAVE_EVERY_SEC = 0.5
 
 MAX_CROPS = 30
 
-# =========================
-# INIT
-# =========================
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024 * 1024  # 10GB
 
-# Mongo
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 collection = db[COLLECTION_NAME]
 
-# MinIO
 minio_client = Minio(
     MINIO_ENDPOINT,
     access_key=MINIO_ACCESS_KEY,
@@ -67,12 +59,6 @@ minio_client = Minio(
     secure=False
 )
 
-# YOLO (глобально)
-# model = YOLO(MODEL_PATH)
-
-# =========================
-# HELPERS
-# =========================
 
 def save_stream(file, path):
     with open(path, "wb") as f:
@@ -104,9 +90,6 @@ def bytes_to_stream(data: bytes):
     return BytesIO(data)
 
 
-# =========================
-# CROPPING
-# =========================
 
 def crop_person(video_path, person, object_id):
     cap = cv2.VideoCapture(video_path)
@@ -121,7 +104,6 @@ def crop_person(video_path, person, object_id):
         cap.release()
         return 0
 
-    # ===== выбор кадров (середина трека)
     if len(track) <= MAX_CROPS:
         selected = track
     else:
@@ -139,7 +121,6 @@ def crop_person(video_path, person, object_id):
             if idx < len(trimmed):
                 selected.append(trimmed[idx])
 
-    # ===== получение кадров
     def get_frame(fid):
         cap.set(cv2.CAP_PROP_POS_FRAMES, fid)
         ret, frame = cap.read()
@@ -175,7 +156,6 @@ def crop_person(video_path, person, object_id):
         if crop.size == 0:
             continue
 
-        # blur filter
         gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
         blur = cv2.Laplacian(gray, cv2.CV_64F).var()
 
@@ -195,9 +175,6 @@ def crop_person(video_path, person, object_id):
     return saved
 
 
-# =========================
-# TRACKING
-# =========================
 
 def process_video(video_path, original_filename):
     model = YOLO(MODEL_PATH)
@@ -268,7 +245,6 @@ def process_video(video_path, original_filename):
                     "h": h
                 })
 
-        # close tracks
         to_delete = []
 
         for pid, p in active.items():
@@ -286,15 +262,11 @@ def process_video(video_path, original_filename):
 
         frame_id += 1
 
-    # flush
     for pid, p in active.items():
         duration = p["end_time"] - p["start_time"]
         if duration >= MIN_PERSON_DURATION:
             finished.append(p)
 
-    # =========================
-    # SAVE + CROPS
-    # =========================
 
     for person in finished:
         result = collection.insert_one(person)
@@ -308,61 +280,9 @@ def process_video(video_path, original_filename):
 
     print(f"[DONE] {video_path} → {len(finished)} persons")
 
-    # =========================
-    # CLEANUP
-    # =========================
-
     os.remove(video_path)
     print(f"[DELETE] {video_path}")
 
-
-# =========================
-# API
-# =========================
-
-# @app.route("/detect/next", methods=["POST"])
-# def detect_next():
-
-#     if "file" not in request.files:
-#         return jsonify({"message": "No file"}), 400
-
-#     file = request.files["file"]
-
-#     if not file.filename.lower().endswith(".mp4"):
-#         return jsonify({"message": "Only .mp4 allowed"}), 400
-
-#     video_id = str(uuid.uuid4())
-#     filename = f"{video_id}.mp4"
-#     path = os.path.join(UPLOAD_DIR, filename)
-
-#     save_stream(file, path)
-
-#     threading.Thread(
-#         target=process_video,
-#         args=(path, file.filename),
-#         daemon=True
-#     ).start()
-
-#     return jsonify({
-#         "message": "accepted",
-#         "video_id": video_id
-#     }), 200
-
-
-# =========================
-# RUN
-# =========================
-
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=5000)
-
-# --- ВЕСЬ ТВОЙ КОД БЕЗ ИЗМЕНЕНИЙ ДО КОНЦА process_video ---
-
-# (вставляешь свой оригинальный main.py БЕЗ /detect/next)
-
-# =========================
-# KAFKA START
-# =========================
 
 from kafka_consumer import start_consumer
 import threading
@@ -381,9 +301,6 @@ def cleanup():
 
 atexit.register(cleanup)
 
-# =========================
-# RUN (Flask просто живёт)
-# =========================
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

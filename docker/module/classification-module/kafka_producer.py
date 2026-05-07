@@ -9,14 +9,12 @@ from kafka.errors import NoBrokersAvailable
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configuration for accident broker
 ACCIDENT_BROKER_SERVERS = os.getenv("ACCIDENT_BROKER_SERVERS", "accident-broker:9092")
 ACCIDENT_TOPIC = os.getenv("ACCIDENT_TOPIC", "accident-events")
 
 producer = None
 
 def init_accident_producer():
-    """Initialize Kafka producer for accident broker"""
     global producer
     
     max_retries = 10
@@ -60,7 +58,6 @@ def init_accident_producer():
     return False
 
 def send_accident_message(message: dict) -> bool:
-    """Send message to accident broker"""
     global producer
     
     if producer is None:
@@ -83,7 +80,6 @@ def send_accident_message(message: dict) -> bool:
         return False
 
 def close_accident_producer():
-    """Close the producer gracefully"""
     global producer
     if producer:
         producer.flush()
