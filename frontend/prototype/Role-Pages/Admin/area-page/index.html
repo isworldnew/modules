@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр зоны | Админ-панель | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">Пользователи</a>
+                    <a href="#" class="nav-link">Зоны</a>
+                    <a href="#" class="nav-link">Камеры</a>
+                    <a href="#" class="nav-link">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Просмотр зоны</h1>
+                </div>
+
+                <div class="area-detail-card">
+                    <div class="area-header">
+                        <h2 class="area-name">Северная площадка</h2>
+                        <span class="area-id">ID: 1</span>
+                    </div>
+
+                    <div class="area-info-grid">
+                        <div class="info-block">
+                            <h3 class="info-block-title">Бригадир</h3>
+                            <div class="info-block-content">
+                                <div class="person-chip">
+                                    <span>Алексей Смирнов</span>
+                                    <span class="person-email">a.smirnov@example.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-block">
+                            <h3 class="info-block-title">Сотрудники отдела ТБ</h3>
+                            <div class="info-block-content">
+                                <div class="person-chip">
+                                    <span>Елена Морозова</span>
+                                    <span class="person-email">e.morozova@example.com</span>
+                                </div>
+                                <div class="person-chip">
+                                    <span>Павел Новиков</span>
+                                    <span class="person-email">p.novikov@example.com</span>
+                                </div>
+                                <div class="person-chip">
+                                    <span>Ирина Соколова</span>
+                                    <span class="person-email">i.sokolova@example.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-block">
+                            <h3 class="info-block-title">Камеры</h3>
+                            <div class="info-block-content">
+                                <div class="camera-chip">
+                                    <span>#12 Cam-01</span>
+                                </div>
+                                <div class="camera-chip">
+                                    <span>#5 Cam-02</span>
+                                </div>
+                                <div class="camera-chip">
+                                    <span>#4 Cam-03</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3 class="form-card-title">Редактирование зоны</h3>
+                    <form class="admin-form">
+                        <div class="form-group">
+                            <label for="brigadier-select">Бригадир</label>
+                            <div class="search-select-container">
+                                <div class="search-select">
+                                    <input type="text" class="search-select-input" placeholder="Поиск по ФИО или email..." id="brigadier-search-edit">
+                                    <div class="search-select-dropdown" style="display: none;">
+                                        <div class="search-select-option" data-id="1" data-name="Алексей Смирнов" data-email="a.smirnov@example.com">Алексей Смирнов (a.smirnov@example.com)</div>
+                                        <div class="search-select-option" data-id="2" data-name="Дмитрий Иванов" data-email="d.ivanov@example.com">Дмитрий Иванов (d.ivanov@example.com)</div>
+                                        <div class="search-select-option" data-id="3" data-name="Сергей Петров" data-email="s.petrov@example.com">Сергей Петров (s.petrov@example.com)</div>
+                                        <div class="search-select-option" data-id="4" data-name="Ирина Соколова" data-email="i.sokolova@example.com">Ирина Соколова (i.sokolova@example.com)</div>
+                                        <div class="search-select-option" data-id="5" data-name="Андрей Козлов" data-email="a.kozlov@example.com">Андрей Козлов (a.kozlov@example.com)</div>
+                                    </div>
+                                </div>
+                                <div class="selected-brigadier-container" id="edit-brigadier-container">
+                                    <div class="chip">
+                                        <span>Алексей Смирнов (a.smirnov@example.com)</span>
+                                        <button type="button" class="chip-remove" data-id="1">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hse-search-edit">Сотрудники отдела ТБ</label>
+                            <div class="multi-select-container">
+                                <div class="search-select multi-select">
+                                    <input type="text" class="search-select-input" placeholder="Поиск по ФИО или email..." id="hse-search-edit">
+                                    <div class="search-select-dropdown" style="display: none;">
+                                        <div class="search-select-option" data-id="1" data-name="Алексей Смирнов" data-email="a.smirnov@example.com">Алексей Смирнов (a.smirnov@example.com)</div>
+                                        <div class="search-select-option" data-id="2" data-name="Дмитрий Иванов" data-email="d.ivanov@example.com">Дмитрий Иванов (d.ivanov@example.com)</div>
+                                        <div class="search-select-option" data-id="3" data-name="Сергей Петров" data-email="s.petrov@example.com">Сергей Петров (s.petrov@example.com)</div>
+                                        <div class="search-select-option" data-id="4" data-name="Ирина Соколова" data-email="i.sokolova@example.com">Ирина Соколова (i.sokolova@example.com)</div>
+                                        <div class="search-select-option" data-id="5" data-name="Андрей Козлов" data-email="a.kozlov@example.com">Андрей Козлов (a.kozlov@example.com)</div>
+                                        <div class="search-select-option" data-id="6" data-name="Елена Морозова" data-email="e.morozova@example.com">Елена Морозова (e.morozova@example.com)</div>
+                                        <div class="search-select-option" data-id="7" data-name="Павел Новиков" data-email="p.novikov@example.com">Павел Новиков (p.novikov@example.com)</div>
+                                    </div>
+                                </div>
+                                <div class="selected-chips" id="edit-hse-chips">
+                                    <div class="chip">
+                                        <span>Елена Морозова (e.morozova@example.com)</span>
+                                        <button type="button" class="chip-remove" data-id="6">×</button>
+                                    </div>
+                                    <div class="chip">
+                                        <span>Павел Новиков (p.novikov@example.com)</span>
+                                        <button type="button" class="chip-remove" data-id="7">×</button>
+                                    </div>
+                                    <div class="chip">
+                                        <span>Ирина Соколова (i.sokolova@example.com)</span>
+                                        <button type="button" class="chip-remove" data-id="4">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-yellow btn-update">Сохранить изменения</button>
+                            <button type="button" class="btn btn-secondary">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentBrigadier = { id: '1', name: 'Алексей Смирнов', email: 'a.smirnov@example.com' };
+            let selectedHseUsers = [
+                { id: '6', name: 'Елена Морозова', email: 'e.morozova@example.com' },
+                { id: '7', name: 'Павел Новиков', email: 'p.novikov@example.com' },
+                { id: '4', name: 'Ирина Соколова', email: 'i.sokolova@example.com' }
+            ];
+
+            const brigadierSearchInput = document.getElementById('brigadier-search-edit');
+            const brigadierDropdown = brigadierSearchInput.closest('.search-select').querySelector('.search-select-dropdown');
+            const brigadierContainer = document.getElementById('edit-brigadier-container');
+            
+            const hseSearchInput = document.getElementById('hse-search-edit');
+            const hseDropdown = document.querySelector('#hse-search-edit').closest('.search-select').querySelector('.search-select-dropdown');
+            const hseChipsContainer = document.getElementById('edit-hse-chips');
+
+            function setupSearchSelect(input, dropdown, isMulti = false) {
+                input.addEventListener('focus', function() {
+                    dropdown.style.display = 'block';
+                    filterOptions(input, dropdown);
+                });
+
+                input.addEventListener('input', function() {
+                    filterOptions(input, dropdown);
+                });
+
+                dropdown.querySelectorAll('.search-select-option').forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.dataset.id;
+                        const name = this.dataset.name;
+                        const email = this.dataset.email;
+                        
+                        if (!isMulti) {
+                            currentBrigadier = { id, name, email };
+                            updateBrigadierChip();
+                            input.value = '';
+                            dropdown.style.display = 'none';
+                        } else {
+                            if (!selectedHseUsers.find(u => u.id === id)) {
+                                selectedHseUsers.push({ id, name, email });
+                                updateHseChips();
+                            }
+                            input.value = '';
+                            filterOptions(input, dropdown);
+                        }
+                    });
+                });
+            }
+
+            function filterOptions(input, dropdown) {
+                const searchTerm = input.value.toLowerCase();
+                const options = dropdown.querySelectorAll('.search-select-option');
+                let hasVisible = false;
+                
+                options.forEach(option => {
+                    const text = option.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        option.style.display = 'block';
+                        hasVisible = true;
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+                
+                dropdown.style.display = hasVisible ? 'block' : 'none';
+            }
+
+            function updateBrigadierChip() {
+                brigadierContainer.innerHTML = '';
+                if (currentBrigadier) {
+                    const chip = document.createElement('div');
+                    chip.className = 'chip';
+                    chip.innerHTML = `
+                        <span>${currentBrigadier.name} (${currentBrigadier.email})</span>
+                        <button type="button" class="chip-remove" data-id="${currentBrigadier.id}">×</button>
+                    `;
+                    brigadierContainer.appendChild(chip);
+                    
+                    chip.querySelector('.chip-remove').addEventListener('click', function() {
+                        currentBrigadier = null;
+                        updateBrigadierChip();
+                    });
+                }
+            }
+
+            function updateHseChips() {
+                hseChipsContainer.innerHTML = '';
+                
+                selectedHseUsers.forEach(user => {
+                    const chip = document.createElement('div');
+                    chip.className = 'chip';
+                    chip.innerHTML = `
+                        <span>${user.name} (${user.email})</span>
+                        <button type="button" class="chip-remove" data-id="${user.id}">×</button>
+                    `;
+                    hseChipsContainer.appendChild(chip);
+                });
+                
+                document.querySelectorAll('#edit-hse-chips .chip-remove').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.dataset.id;
+                        selectedHseUsers = selectedHseUsers.filter(u => u.id !== id);
+                        updateHseChips();
+                    });
+                });
+            }
+
+            setupSearchSelect(brigadierSearchInput, brigadierDropdown, false);
+            setupSearchSelect(hseSearchInput, hseDropdown, true);
+            
+            updateBrigadierChip();
+            updateHseChips();
+
+            document.addEventListener('click', function(e) {
+                if (!brigadierSearchInput.closest('.search-select')) {
+                    brigadierDropdown.style.display = 'none';
+                }
+                if (!hseSearchInput.closest('.search-select')) {
+                    hseDropdown.style.display = 'none';
+                }
+            });
+
+            const form = document.querySelector('.admin-form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Обновление зоны:', {
+                    brigadier: currentBrigadier,
+                    hseEmployees: selectedHseUsers
+                });
+                alert(`Данные зоны обновлены!\nБригадир: ${currentBrigadier ? currentBrigadier.name : 'не выбран'}\nСотрудников ТБ: ${selectedHseUsers.length}`);
+            });
+        });
+    </script>
+</body>
+</html>

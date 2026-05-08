@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователей | Админ-панель | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link active">Пользователи</a>
+                    <a href="#" class="nav-link">Зоны</a>
+                    <a href="#" class="nav-link">Камеры</a>
+                    <a href="#" class="nav-link">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Регистрация пользователя</h1>
+                </div>
+
+                <div class="form-card">
+                    <h3 class="form-card-title">Новый пользователь</h3>
+                    <form class="user-form" id="registrationForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="last-name">Фамилия</label>
+                                <input type="text" id="last-name" name="lastName" placeholder="Введите фамилию" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="first-name">Имя</label>
+                                <input type="text" id="first-name" name="firstName" placeholder="Введите имя" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="patronymic">Отчество</label>
+                                <input type="text" id="patronymic" name="patronymic" placeholder="Введите отчество">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Электронная почта (логин)</label>
+                            <input type="email" id="email" name="email" placeholder="example@company.com" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="role">Роль</label>
+                                <select id="role" name="role" required>
+                                    <option value="" disabled selected>Выберите роль</option>
+                                    <option value="BRIGADIER">Бригадир</option>
+                                    <option value="HSE">Сотрудник отдела ТБ</option>
+                                    <option value="CHIEF">Начальник</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Статус</label>
+                                <select id="status" name="status" required>
+                                    <option value="ACTIVE" selected>Активен</option>
+                                    <option value="INACTIVE">Неактивен</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="temp-password">Временный пароль</label>
+                            <div class="password-field">
+                                <input type="text" id="temp-password" name="tempPassword" value="0123456789" readonly>
+                                <button type="button" class="btn-copy" onclick="copyPassword()">Копировать</button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-yellow btn-save">Сохранить</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">Очистить</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="users-list-section">
+                    <h2 class="section-title">Список сотрудников</h2>
+                    
+                    <div class="search-filters">
+                        <div class="filter-group">
+                            <input type="text" id="search-input" class="search-input" placeholder="Поиск по ФИО или email...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="role-filter" class="role-filter">
+                                <option value="ALL">Все роли</option>
+                                <option value="BRIGADIER">Бригадир</option>
+                                <option value="HSE">Сотрудник отдела ТБ</option>
+                                <option value="CHIEF">Начальник</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="users-table-wrapper">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ФИО</th>
+                                    <th>Email</th>
+                                    <th>Роль</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Смирнов Алексей Владимирович</td>
+                                    <td>a.smirnov@example.com</td>
+                                    <td><span class="role-badge role-chief">Начальник</span></td>
+                                    <td><span class="status-badge status-active">Активен</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Иванов Дмитрий Петрович</td>
+                                    <td>d.ivanov@example.com</td>
+                                    <td><span class="role-badge role-brigadier">Бригадир</span></td>
+                                    <td><span class="status-badge status-active">Активен</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Петров Сергей Андреевич</td>
+                                    <td>s.petrov@example.com</td>
+                                    <td><span class="role-badge role-brigadier">Бригадир</span></td>
+                                    <td><span class="status-badge status-inactive">Неактивен</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Соколова Ирина Владимировна</td>
+                                    <td>i.sokolova@example.com</td>
+                                    <td><span class="role-badge role-hse">Сотрудник ТБ</span></td>
+                                    <td><span class="status-badge status-active">Активен</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Козлов Андрей Николаевич</td>
+                                    <td>a.kozlov@example.com</td>
+                                    <td><span class="role-badge role-hse">Сотрудник ТБ</span></td>
+                                    <td><span class="status-badge status-active">Активен</span></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Морозова Елена Дмитриевна</td>
+                                    <td>e.morozova@example.com</td>
+                                    <td><span class="role-badge role-chief">Начальник</span></td>
+                                    <td><span class="status-badge status-active">Активен</span></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Новиков Павел Сергеевич</td>
+                                    <td>p.novikov@example.com</td>
+                                    <td><span class="role-badge role-hse">Сотрудник ТБ</span></td>
+                                    <td><span class="status-badge status-inactive">Неактивен</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let users = [
+            { id: 1, lastName: 'Смирнов', firstName: 'Алексей', patronymic: 'Владимирович', email: 'a.smirnov@example.com', role: 'CHIEF', status: 'ACTIVE' },
+            { id: 2, lastName: 'Иванов', firstName: 'Дмитрий', patronymic: 'Петрович', email: 'd.ivanov@example.com', role: 'BRIGADIER', status: 'ACTIVE' },
+            { id: 3, lastName: 'Петров', firstName: 'Сергей', patronymic: 'Андреевич', email: 's.petrov@example.com', role: 'BRIGADIER', status: 'INACTIVE' },
+            { id: 4, lastName: 'Соколова', firstName: 'Ирина', patronymic: 'Владимировна', email: 'i.sokolova@example.com', role: 'HSE', status: 'ACTIVE' },
+            { id: 5, lastName: 'Козлов', firstName: 'Андрей', patronymic: 'Николаевич', email: 'a.kozlov@example.com', role: 'HSE', status: 'ACTIVE' },
+            { id: 6, lastName: 'Морозова', firstName: 'Елена', patronymic: 'Дмитриевна', email: 'e.morozova@example.com', role: 'CHIEF', status: 'ACTIVE' },
+            { id: 7, lastName: 'Новиков', firstName: 'Павел', patronymic: 'Сергеевич', email: 'p.novikov@example.com', role: 'HSE', status: 'INACTIVE' }
+        ];
+
+        let nextId = 8;
+
+        function getFullName(user) {
+            let parts = [user.lastName, user.firstName];
+            if (user.patronymic) {
+                parts.push(user.patronymic);
+            }
+            return parts.join(' ');
+        }
+
+        function getRoleText(role) {
+            const roles = {
+                'BRIGADIER': 'Бригадир',
+                'HSE': 'Сотрудник ТБ',
+                'CHIEF': 'Начальник'
+            };
+            return roles[role] || role;
+        }
+
+        function getRoleClass(role) {
+            const classes = {
+                'BRIGADIER': 'role-brigadier',
+                'HSE': 'role-hse',
+                'CHIEF': 'role-chief'
+            };
+            return classes[role] || '';
+        }
+
+        function getStatusText(status) {
+            return status === 'ACTIVE' ? 'Активен' : 'Неактивен';
+        }
+
+        function getStatusClass(status) {
+            return status === 'ACTIVE' ? 'status-active' : 'status-inactive';
+        }
+
+        function renderUsersTable() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const roleFilter = document.getElementById('role-filter').value;
+            
+            const filteredUsers = users.filter(user => {
+                const fullName = getFullName(user).toLowerCase();
+                const email = user.email.toLowerCase();
+                const matchesSearch = fullName.includes(searchTerm) || email.includes(searchTerm);
+                
+                const matchesRole = roleFilter === 'ALL' || user.role === roleFilter;
+                
+                return matchesSearch && matchesRole;
+            });
+            
+            const tbody = document.getElementById('users-table-body');
+            tbody.innerHTML = '';
+            
+            filteredUsers.forEach(user => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = user.id;
+                row.insertCell(1).textContent = getFullName(user);
+                row.insertCell(2).textContent = user.email;
+                
+                const roleCell = row.insertCell(3);
+                const roleSpan = document.createElement('span');
+                roleSpan.className = `role-badge ${getRoleClass(user.role)}`;
+                roleSpan.textContent = getRoleText(user.role);
+                roleCell.appendChild(roleSpan);
+                
+                const statusCell = row.insertCell(4);
+                const statusSpan = document.createElement('span');
+                statusSpan.className = `status-badge ${getStatusClass(user.status)}`;
+                statusSpan.textContent = getStatusText(user.status);
+                statusCell.appendChild(statusSpan);
+            });
+        }
+
+        function copyPassword() {
+            const passwordInput = document.getElementById('temp-password');
+            passwordInput.select();
+            document.execCommand('copy');
+            alert('Пароль скопирован в буфер обмена');
+        }
+
+        function resetForm() {
+            document.getElementById('registrationForm').reset();
+            document.getElementById('temp-password').value = '0123456789';
+        }
+
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const lastName = document.getElementById('last-name').value.trim();
+            const firstName = document.getElementById('first-name').value.trim();
+            const patronymic = document.getElementById('patronymic').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const role = document.getElementById('role').value;
+            const status = document.getElementById('status').value;
+            const tempPassword = document.getElementById('temp-password').value;
+            
+            if (!lastName || !firstName || !email || !role) {
+                alert('Пожалуйста, заполните все обязательные поля');
+                return;
+            }
+            
+            const emailExists = users.some(user => user.email === email);
+            if (emailExists) {
+                alert('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            const newUser = {
+                id: nextId++,
+                lastName: lastName,
+                firstName: firstName,
+                patronymic: patronymic || '',
+                email: email,
+                role: role,
+                status: status
+            };
+            
+            users.push(newUser);
+            renderUsersTable();
+            
+            console.log('Создан пользователь:', {
+                ...newUser,
+                tempPassword: tempPassword
+            });
+            
+            alert(`Пользователь ${getFullName(newUser)} успешно создан!\nВременный пароль: ${tempPassword}`);
+            resetForm();
+        });
+        
+        document.getElementById('search-input').addEventListener('input', renderUsersTable);
+        document.getElementById('role-filter').addEventListener('change', renderUsersTable);
+        
+        renderUsersTable();
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание камеры | Админ-панель | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">Пользователи</a>
+                    <a href="#" class="nav-link">Зоны</a>
+                    <a href="#" class="nav-link active">Камеры</a>
+                    <a href="#" class="nav-link">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Создание новой камеры</h1>
+                </div>
+
+                <div class="form-card">
+                    <form class="admin-form">
+                        <div class="form-group">
+                            <label for="camera-name">Название камеры</label>
+                            <input type="text" id="camera-name" name="cameraName" placeholder="[опционально]" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="area-select">Зона</label>
+                            <select id="area-select" name="areaId" required>
+                                <option value="" disabled selected>Выберите зону</option>
+                                <option value="1">Северная площадка</option>
+                                <option value="2">Южная площадка</option>
+                                <option value="3">Западный склад</option>
+                                <option value="4">Восточный цех</option>
+                                <option value="5">Центральный вход</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-yellow btn-create">Создать</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="cameras-list-section">
+                    <h2 class="section-title">Существующие камеры</h2>
+                    <div class="cameras-table-wrapper">
+                        <table class="cameras-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Название камеры</th>
+                                    <th>Зона</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Cam-01</td>
+                                    <td>Северная площадка</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Cam-02</td>
+                                    <td>Северная площадка</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Входная группа Юг</td>
+                                    <td>Южная площадка</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Склад Запад-1</td>
+                                    <td>Западный склад</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Камера центрального прохода</td>
+                                    <td>Центральный вход</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | Админ-панель | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">Пользователи</a>
+                    <a href="#" class="nav-link">Зоны</a>
+                    <a href="#" class="nav-link">Камеры</a>
+                    <a href="#" class="nav-link active">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Личный кабинет</h1>
+                </div>
+
+                <div class="profile-card">
+                    <h2 class="profile-card-title">Информация о пользователе</h2>
+                    
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <div class="info-label">ФИО:</div>
+                            <div class="info-value">Алексей Владимирович Смирнов</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value">a.smirnov@example.com</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Роль:</div>
+                            <div class="info-value role-badge">Администратор</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Статус:</div>
+                            <div class="info-value status-badge status-active">Активен</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3 class="form-card-title">Смена пароля</h3>
+                    <form class="password-form">
+                        <div class="form-group">
+                            <label for="old-password">Старый пароль</label>
+                            <input type="password" id="old-password" name="oldPassword" placeholder="Введите старый пароль" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-password">Новый пароль</label>
+                            <input type="password" id="new-password" name="newPassword" placeholder="Введите новый пароль" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Подтверждение нового пароля</label>
+                            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Повторите новый пароль" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-yellow btn-save">Сохранить пароль</button>
+                            <button type="button" class="btn btn-secondary">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordForm = document.querySelector('.password-form');
+            
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const oldPassword = document.getElementById('old-password').value;
+                const newPassword = document.getElementById('new-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                
+                if (!oldPassword) {
+                    alert('Введите старый пароль');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    alert('Новый пароль должен содержать минимум 6 символов');
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    alert('Новый пароль и подтверждение не совпадают');
+                    return;
+                }
+                
+                console.log('Смена пароля:', {
+                    oldPassword: oldPassword,
+                    newPassword: newPassword
+                });
+                
+                alert('Пароль успешно изменён!');
+                passwordForm.reset();
+            });
+            
+            const cancelBtn = document.querySelector('.btn-secondary');
+            cancelBtn.addEventListener('click', function() {
+                passwordForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>

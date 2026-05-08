@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр пользователя | Админ-панель | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">Пользователи</a>
+                    <a href="#" class="nav-link">Зоны</a>
+                    <a href="#" class="nav-link">Камеры</a>
+                    <a href="#" class="nav-link">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <a href="#" class="back-link" onclick="history.back(); return false;">← Назад к списку</a>
+                    <h1 class="page-title">Просмотр пользователя</h1>
+                </div>
+
+                <div class="profile-card">
+                    <h2 class="profile-card-title">Информация о пользователе</h2>
+                    
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <div class="info-label">ФИО:</div>
+                            <div class="info-value">Смирнов Алексей Владимирович</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value">a.smirnov@example.com</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Роль:</div>
+                            <div class="info-value role-badge role-chief">Начальник</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Статус:</div>
+                            <div class="info-value status-badge status-active">Активен</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3 class="form-card-title">Смена пароля</h3>
+                    <form class="password-form" id="passwordForm">
+                        <div class="form-group">
+                            <label for="new-password">Новый пароль</label>
+                            <input type="password" id="new-password" name="newPassword" placeholder="Введите новый пароль" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Подтверждение пароля</label>
+                            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Повторите новый пароль" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-yellow btn-save">Сбросить пароль</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetPasswordForm()">Очистить</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id') || '1';
+        
+        const usersData = {
+            1: {
+                id: 1,
+                lastName: 'Смирнов',
+                firstName: 'Алексей',
+                patronymic: 'Владимирович',
+                email: 'a.smirnov@example.com',
+                role: 'CHIEF',
+                roleText: 'Начальник',
+                roleClass: 'role-chief',
+                status: 'ACTIVE',
+                statusText: 'Активен',
+                statusClass: 'status-active'
+            },
+            2: {
+                id: 2,
+                lastName: 'Иванов',
+                firstName: 'Дмитрий',
+                patronymic: 'Петрович',
+                email: 'd.ivanov@example.com',
+                role: 'BRIGADIER',
+                roleText: 'Бригадир',
+                roleClass: 'role-brigadier',
+                status: 'ACTIVE',
+                statusText: 'Активен',
+                statusClass: 'status-active'
+            },
+            3: {
+                id: 3,
+                lastName: 'Петров',
+                firstName: 'Сергей',
+                patronymic: 'Андреевич',
+                email: 's.petrov@example.com',
+                role: 'BRIGADIER',
+                roleText: 'Бригадир',
+                roleClass: 'role-brigadier',
+                status: 'INACTIVE',
+                statusText: 'Неактивен',
+                statusClass: 'status-inactive'
+            },
+            4: {
+                id: 4,
+                lastName: 'Соколова',
+                firstName: 'Ирина',
+                patronymic: 'Владимировна',
+                email: 'i.sokolova@example.com',
+                role: 'HSE',
+                roleText: 'Сотрудник ТБ',
+                roleClass: 'role-hse',
+                status: 'ACTIVE',
+                statusText: 'Активен',
+                statusClass: 'status-active'
+            }
+        };
+        
+        const user = usersData[userId] || usersData[1];
+        
+        function getFullName() {
+            let parts = [user.lastName, user.firstName];
+            if (user.patronymic) {
+                parts.push(user.patronymic);
+            }
+            return parts.join(' ');
+        }
+        
+        document.querySelector('.info-row:first-child .info-value').textContent = getFullName();
+        document.querySelector('.info-row:nth-child(2) .info-value').textContent = user.email;
+        
+        const roleSpan = document.querySelector('.info-row:nth-child(3) .info-value');
+        roleSpan.textContent = user.roleText;
+        roleSpan.className = `info-value role-badge ${user.roleClass}`;
+        
+        const statusSpan = document.querySelector('.info-row:nth-child(4) .info-value');
+        statusSpan.textContent = user.statusText;
+        statusSpan.className = `info-value status-badge ${user.statusClass}`;
+        
+        const pageTitle = document.querySelector('.page-title');
+        pageTitle.textContent = `Просмотр пользователя: ${user.lastName} ${user.firstName}`;
+        
+        function resetPasswordForm() {
+            document.getElementById('passwordForm').reset();
+        }
+        
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword.length < 6) {
+                alert('Пароль должен содержать минимум 6 символов');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            console.log(`Сброс пароля для пользователя ${user.email}:`, {
+                newPassword: newPassword
+            });
+            
+            alert(`Пароль для пользователя ${getFullName()} успешно изменён!\nНовый пароль: ${newPassword}`);
+            document.getElementById('passwordForm').reset();
+        });
+    </script>
+</body>
+</html>
