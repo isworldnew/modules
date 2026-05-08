@@ -11,7 +11,7 @@ export default function NotificationBadge() {
     const fetchUnprocessedAmount = async () => {
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
-                const response = await fetch('http://localhost:8888/accidents/unprocessed-amount', {
+                const response = await fetch('/api/accidents/unprocessed-amount', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,

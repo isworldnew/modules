@@ -48,7 +48,7 @@ export default function UnprocessedReportArea({ label, children }) {
         
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
-                const response = await fetch(`http://localhost:8888/reports/accident/${id}`, {
+                const response = await fetch(`/api/reports/accident/${id}`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,

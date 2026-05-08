@@ -60,8 +60,8 @@ public class WebSecurityConfig {
                 cors(cors -> cors.configurationSource(this.corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/authentication/login", "/error").permitAll()
-                        .requestMatchers("/authentication/refresh").hasAuthority(JwtToken.REFRESH_TOKEN.name())
+                        .requestMatchers("/api/authentication/login", "/api/error").permitAll()
+                        .requestMatchers("/api/authentication/refresh").hasAuthority(JwtToken.REFRESH_TOKEN.name())
                         .anyRequest().hasAuthority(JwtToken.ACCESS_TOKEN.name())
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -20,7 +20,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accidents")
+@RequestMapping("/api/accidents")
 @Validated
 public class PotentialAccidentController {
 

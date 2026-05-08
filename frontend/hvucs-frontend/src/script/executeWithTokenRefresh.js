@@ -31,7 +31,7 @@ export async function executeWithTokenRefresh(apiCall) {
         }
         
         try {
-            const refreshResponse = await fetch('http://localhost:8888/authentication/refresh', {
+            const refreshResponse = await fetch('/api/authentication/refresh', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${refreshToken}`,

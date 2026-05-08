@@ -13,7 +13,7 @@ export default function NotificationArea() {
     const fetchNotifications = async () => {
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
-                const response = await fetch('http://localhost:8888/accidents/shortcuts?status=unprocessed', {
+                const response = await fetch('/api/accidents/shortcuts?status=unprocessed', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,

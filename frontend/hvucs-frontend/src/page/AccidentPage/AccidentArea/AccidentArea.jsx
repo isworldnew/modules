@@ -24,7 +24,7 @@ export default function AccidentArea() {
         
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
-                const response = await fetch(`http://localhost:8888/accidents/${id}`, {
+                const response = await fetch(`/api/accidents/${id}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${accessToken}`,

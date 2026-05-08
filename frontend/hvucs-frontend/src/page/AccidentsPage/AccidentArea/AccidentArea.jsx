@@ -28,7 +28,7 @@ export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
         setIsLoading(true);
         
         try {
-            let url = 'http://localhost:8888/accidents/shortcuts?status=processed';
+            let url = '/api/accidents/shortcuts?status=processed';
             
             // Добавляем фильтрацию по датам, если обе даты заполнены
             if (dateFrom && dateTo) {

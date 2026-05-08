@@ -14,7 +14,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.domain.AccidentReportServ
 import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextService;
 
 @RestController
-@RequestMapping("/reports")
+@RequestMapping("/api/reports")
 @Validated
 public class AccidentReportController {
 

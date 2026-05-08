@@ -298,6 +298,16 @@ services:
     networks:
       - hi-vis-vest-usage-control-system-network
 
+  # веб-интерфейс
+  accident-recorder-frontend:
+    build:
+      context: ../frontend/hvucs-frontend
+    container_name: accident-recorder-frontend
+    ports:
+      - "5555:5555"
+    networks:
+      - hi-vis-vest-usage-control-system-network
+
 networks:
   hi-vis-vest-usage-control-system-network:
     driver: bridge

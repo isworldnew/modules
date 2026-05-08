@@ -9,7 +9,7 @@ import ru.smirnov.accidentrecorder.dto.request.LoginRequest;
 import ru.smirnov.accidentrecorder.dto.response.JwtResponse;
 
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/api/authentication")
 public class AuthenticationController {
 
     private final TokenGenerator tokenGenerator;
