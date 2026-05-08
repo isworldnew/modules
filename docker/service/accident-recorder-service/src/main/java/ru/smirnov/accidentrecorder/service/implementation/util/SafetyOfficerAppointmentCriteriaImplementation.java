@@ -16,7 +16,7 @@ public class SafetyOfficerAppointmentCriteriaImplementation implements SafetyOff
     }
 
     @Override
-    public Long appoint() {
+    public Long appoint() { // логика назначения инцидента на сотрудника отдела ТБ
         return this.userRepository.getEnabledSafetyOfficerIdentifiers().get(0);
     }
 

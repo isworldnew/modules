@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.smirnov.accidentrecorder.entity.relation.OperatedArea;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +35,13 @@ public class Area {
     )
     @JsonManagedReference
     private List<PotentialAccident> potentialAccidents = new ArrayList<>();
+
+    @OneToMany(
+           mappedBy = "area",
+           cascade = CascadeType.ALL,
+           orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<OperatedArea> operators = new ArrayList<>();
 
 }

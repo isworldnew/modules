@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.UserStatus;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
+import ru.smirnov.accidentrecorder.entity.relation.OperatedArea;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +50,21 @@ public class User {
     )
     @JsonManagedReference
     private List<PotentialAccident> accidents = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "foreman",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<OperatedArea> operatedAreasForForeman = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "safetyOfficer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<OperatedArea> operatedAreasForSafetyOfficer = new ArrayList<>();
+
 }
