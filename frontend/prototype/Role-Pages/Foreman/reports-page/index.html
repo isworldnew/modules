@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёты | Бригадир | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">
+                        Уведомления
+                        <span class="badge">3</span>
+                    </a>
+                    <a href="#" class="nav-link">Инциденты</a>
+                    <a href="#" class="nav-link">Статистика</a>
+                    <a href="#" class="nav-link active">Отчёты</a>
+                    <a href="#" class="nav-link">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Отчёты</h1>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>От:</label>
+                        <input type="text" placeholder="ДД/ММ/ГГГГ" class="date-input" id="date-from">
+                    </div>
+                    <div class="filter-group">
+                        <label>До:</label>
+                        <input type="text" placeholder="ДД/ММ/ГГГГ" class="date-input" id="date-to">
+                    </div>
+                    <button class="btn btn-yellow" id="apply-filters">Применить</button>
+                </div>
+
+                <div class="reports-list" id="reports-list">
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-id">Отчёт #RPT-001</div>
+                            <div class="report-date">01.04.2026 14:30</div>
+                        </div>
+                        <div class="report-period">Период: 01.03.2026 - 31.03.2026</div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-id">Отчёт #RPT-002</div>
+                            <div class="report-date">25.03.2026 09:15</div>
+                        </div>
+                        <div class="report-period">Период: 01.02.2026 - 28.02.2026</div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-id">Отчёт #RPT-003</div>
+                            <div class="report-date">10.03.2026 11:45</div>
+                        </div>
+                        <div class="report-period">Период: 01.02.2026 - 28.02.2026</div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-id">Отчёт #RPT-004</div>
+                            <div class="report-date">15.02.2026 16:20</div>
+                        </div>
+                        <div class="report-period">Период: 01.01.2026 - 31.01.2026</div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-header">
+                            <div class="report-id">Отчёт #RPT-005</div>
+                            <div class="report-date">28.01.2026 10:00</div>
+                        </div>
+                        <div class="report-period">Период: 01.12.2025 - 31.12.2025</div>
+                    </div>
+                </div>
+
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-icon">📄</div>
+                    <div class="empty-text">Отчёты не найдены</div>
+                    <div class="empty-hint">Попробуйте изменить период фильтрации</div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const reports = [
+            {
+                id: 'RPT-001',
+                date: '01.04.2026 14:30',
+                periodFrom: '01.03.2026',
+                periodTo: '31.03.2026'
+            },
+            {
+                id: 'RPT-002',
+                date: '25.03.2026 09:15',
+                periodFrom: '01.02.2026',
+                periodTo: '28.02.2026'
+            },
+            {
+                id: 'RPT-003',
+                date: '10.03.2026 11:45',
+                periodFrom: '01.02.2026',
+                periodTo: '28.02.2026'
+            },
+            {
+                id: 'RPT-004',
+                date: '15.02.2026 16:20',
+                periodFrom: '01.01.2026',
+                periodTo: '31.01.2026'
+            },
+            {
+                id: 'RPT-005',
+                date: '28.01.2026 10:00',
+                periodFrom: '01.12.2025',
+                periodTo: '31.12.2025'
+            }
+        ];
+
+        function parseDate(dateStr) {
+            const parts = dateStr.split('.');
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
+
+        function filterReports() {
+            const dateFrom = document.getElementById('date-from').value;
+            const dateTo = document.getElementById('date-to').value;
+            
+            let filteredReports = [...reports];
+            
+            if (dateFrom) {
+                const fromDate = parseDate(dateFrom);
+                filteredReports = filteredReports.filter(report => {
+                    const reportDate = parseDate(report.periodFrom);
+                    return reportDate >= fromDate;
+                });
+            }
+            
+            if (dateTo) {
+                const toDate = parseDate(dateTo);
+                filteredReports = filteredReports.filter(report => {
+                    const reportDate = parseDate(report.periodTo);
+                    return reportDate <= toDate;
+                });
+            }
+            
+            renderReports(filteredReports);
+        }
+        
+        function renderReports(reportsToRender) {
+            const reportsList = document.getElementById('reports-list');
+            const emptyState = document.getElementById('empty-state');
+            
+            if (reportsToRender.length === 0) {
+                reportsList.style.display = 'none';
+                emptyState.style.display = 'flex';
+                return;
+            }
+            
+            reportsList.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            reportsList.innerHTML = '';
+            
+            reportsToRender.forEach(report => {
+                const reportCard = document.createElement('div');
+                reportCard.className = 'report-card';
+                reportCard.innerHTML = `
+                    <div class="report-header">
+                        <div class="report-id">Отчёт #${report.id}</div>
+                        <div class="report-date">${report.date}</div>
+                    </div>
+                    <div class="report-period">Период: ${report.periodFrom} - ${report.periodTo}</div>
+                `;
+                reportsList.appendChild(reportCard);
+            });
+        }
+        
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            filterReports();
+        });
+        
+        document.getElementById('date-from').addEventListener('input', function() {
+            filterReports();
+        });
+        
+        document.getElementById('date-to').addEventListener('input', function() {
+            filterReports();
+        });
+        
+        renderReports(reports);
+    </script>
+</body>
+</html>

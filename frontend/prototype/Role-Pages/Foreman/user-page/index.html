@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | Бригадир | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">
+                        Уведомления
+                        <span class="badge">3</span>
+                    </a>
+                    <a href="#" class="nav-link">Инциденты</a>
+                    <a href="#" class="nav-link">Статистика</a>
+                    <a href="#" class="nav-link">Отчёты</a>
+                    <a href="#" class="nav-link active">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Личный кабинет</h1>
+                </div>
+
+                <div class="profile-card">
+                    <h2 class="profile-card-title">Информация о пользователе</h2>
+                    
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <div class="info-label">ФИО:</div>
+                            <div class="info-value">Иванов Дмитрий Петрович</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value">d.ivanov@example.com</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Роль:</div>
+                            <div class="info-value role-badge role-brigadier">Бригадир</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Статус:</div>
+                            <div class="info-value status-badge status-active">Активен</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Зона:</div>
+                            <div class="info-value">Северная площадка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subordinates-card">
+                    <h2 class="profile-card-title">Подчинённые</h2>
+                    
+                    <div class="subordinates-list">
+                        <div class="subordinate-item">
+                            <div class="subordinate-info">
+                                <span class="subordinate-name">Смирнов Алексей Владимирович</span>
+                                <span class="subordinate-email">a.smirnov@example.com</span>
+                            </div>
+                        </div>
+                        <div class="subordinate-item">
+                            <div class="subordinate-info">
+                                <span class="subordinate-name">Петров Сергей Андреевич</span>
+                                <span class="subordinate-email">s.petrov@example.com</span>
+                            </div>
+                        </div>
+                        <div class="subordinate-item">
+                            <div class="subordinate-info">
+                                <span class="subordinate-name">Козлов Андрей Николаевич</span>
+                                <span class="subordinate-email">a.kozlov@example.com</span>
+                            </div>
+                        </div>
+                        <div class="subordinate-item">
+                            <div class="subordinate-info">
+                                <span class="subordinate-name">Морозова Елена Дмитриевна</span>
+                                <span class="subordinate-email">e.morozova@example.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3 class="form-card-title">Смена пароля</h3>
+                    <form class="password-form" id="passwordForm">
+                        <div class="form-group">
+                            <label for="old-password">Старый пароль</label>
+                            <input type="password" id="old-password" name="oldPassword" placeholder="Введите старый пароль" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-password">Новый пароль</label>
+                            <input type="password" id="new-password" name="newPassword" placeholder="Введите новый пароль" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Подтверждение нового пароля</label>
+                            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Повторите новый пароль" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-yellow btn-save">Сохранить пароль</button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function resetForm() {
+            document.getElementById('passwordForm').reset();
+        }
+
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (!oldPassword) {
+                alert('Введите старый пароль');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                alert('Новый пароль должен содержать минимум 6 символов');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('Новый пароль и подтверждение не совпадают');
+                return;
+            }
+            
+            console.log('Смена пароля бригадира:', {
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            });
+            
+            alert('Пароль успешно изменён!');
+            document.getElementById('passwordForm').reset();
+        });
+    </script>
+</body>
+</html>

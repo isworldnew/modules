@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика | Бригадир | Система контроля жилетов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container header-container">
+                <h1 class="logo">Система контроля<br>световозвращающих жилетов</h1>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-link">
+                        Уведомления
+                        <span class="badge">3</span>
+                    </a>
+                    <a href="#" class="nav-link">Инциденты</a>
+                    <a href="#" class="nav-link active">Статистика</a>
+                    <a href="#" class="nav-link">Отчёты</a>
+                    <a href="#" class="nav-link">Личный кабинет</a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Статистика по зонам</h1>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>От:</label>
+                        <input type="text" placeholder="ДД/ММ/ГГГГ" class="date-input" id="date-from" value="01/03/2026">
+                    </div>
+                    <div class="filter-group">
+                        <label>До:</label>
+                        <input type="text" placeholder="ДД/ММ/ГГГГ" class="date-input" id="date-to" value="31/03/2026">
+                    </div>
+                    <button class="btn btn-yellow" id="apply-filters">Применить</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card danger-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">⚠️</div>
+                            <h3 class="stat-title">Самая опасная зона</h3>
+                        </div>
+                        <div class="stat-value" id="most-dangerous-zone">Северная площадка</div>
+                        <div class="stat-subvalue" id="most-dangerous-count">24 нарушения</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar progress-danger" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card safe-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">✅</div>
+                            <h3 class="stat-title">Самая безопасная зона</h3>
+                        </div>
+                        <div class="stat-value" id="safest-zone">Южная площадка</div>
+                        <div class="stat-subvalue" id="safest-count">7 нарушений</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar progress-safe" style="width: 29%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card false-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">🎥</div>
+                            <h3 class="stat-title">Больше всего ложных срабатываний</h3>
+                        </div>
+                        <div class="stat-value" id="false-camera">Cam-02</div>
+                        <div class="stat-subvalue" id="false-zone">Северная площадка</div>
+                        <div class="stat-subvalue" id="false-count">12 ложных срабатываний</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar progress-warning" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-detail">
+                    <div class="detail-card">
+                        <h3 class="detail-title">Статистика по зонам</h3>
+                        <div class="zones-stats-list">
+                            <div class="zone-stat-item">
+                                <div class="zone-stat-info">
+                                    <span class="zone-name">Северная площадка</span>
+                                    <span class="zone-count">24 нарушения</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-danger" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="zone-stat-item">
+                                <div class="zone-stat-info">
+                                    <span class="zone-name">Южная площадка</span>
+                                    <span class="zone-count">7 нарушений</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-safe" style="width: 29%"></div>
+                                </div>
+                            </div>
+                            <div class="zone-stat-item">
+                                <div class="zone-stat-info">
+                                    <span class="zone-name">Западный склад</span>
+                                    <span class="zone-count">15 нарушений</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-warning" style="width: 62%"></div>
+                                </div>
+                            </div>
+                            <div class="zone-stat-item">
+                                <div class="zone-stat-info">
+                                    <span class="zone-name">Восточный цех</span>
+                                    <span class="zone-count">11 нарушений</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-info" style="width: 46%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <h3 class="detail-title">Статистика по камерам (ложные срабатывания)</h3>
+                        <div class="cameras-stats-list">
+                            <div class="camera-stat-item">
+                                <div class="camera-stat-info">
+                                    <span class="camera-name">Cam-01 (Северная площадка)</span>
+                                    <span class="camera-count">8 ложных</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-warning" style="width: 67%"></div>
+                                </div>
+                            </div>
+                            <div class="camera-stat-item">
+                                <div class="camera-stat-info">
+                                    <span class="camera-name">Cam-02 (Северная площадка)</span>
+                                    <span class="camera-count">12 ложных</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-danger" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="camera-stat-item">
+                                <div class="camera-stat-info">
+                                    <span class="camera-name">Cam-03 (Южная площадка)</span>
+                                    <span class="camera-count">3 ложных</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-safe" style="width: 25%"></div>
+                                </div>
+                            </div>
+                            <div class="camera-stat-item">
+                                <div class="camera-stat-info">
+                                    <span class="camera-name">Cam-05 (Западный склад)</span>
+                                    <span class="camera-count">6 ложных</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-info" style="width: 50%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-form-card">
+                    <h3 class="form-card-title">Создание отчёта</h3>
+                    <div class="form-group">
+                        <label for="report-comment">Комментарий к отчёту</label>
+                        <textarea id="report-comment" rows="5" placeholder="Введите аналитические выводы, рекомендации и замечания по статистике за выбранный период..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-yellow btn-create-report" id="create-report">Создать отчёт на основе статистики</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© 2026 Система контроля световозвращающих жилетов</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const statsData = {
+            '01/03/2026-31/03/2026': {
+                zones: [
+                    { name: 'Северная площадка', violations: 24, maxViolations: 24 },
+                    { name: 'Южная площадка', violations: 7, maxViolations: 24 },
+                    { name: 'Западный склад', violations: 15, maxViolations: 24 },
+                    { name: 'Восточный цех', violations: 11, maxViolations: 24 }
+                ],
+                cameras: [
+                    { name: 'Cam-01', zone: 'Северная площадка', falseAlarms: 8, maxFalseAlarms: 12 },
+                    { name: 'Cam-02', zone: 'Северная площадка', falseAlarms: 12, maxFalseAlarms: 12 },
+                    { name: 'Cam-03', zone: 'Южная площадка', falseAlarms: 3, maxFalseAlarms: 12 },
+                    { name: 'Cam-05', zone: 'Западный склад', falseAlarms: 6, maxFalseAlarms: 12 }
+                ]
+            },
+            '01/02/2026-28/02/2026': {
+                zones: [
+                    { name: 'Северная площадка', violations: 18, maxViolations: 18 },
+                    { name: 'Южная площадка', violations: 5, maxViolations: 18 },
+                    { name: 'Западный склад', violations: 12, maxViolations: 18 },
+                    { name: 'Восточный цех', violations: 9, maxViolations: 18 }
+                ],
+                cameras: [
+                    { name: 'Cam-01', zone: 'Северная площадка', falseAlarms: 6, maxFalseAlarms: 10 },
+                    { name: 'Cam-02', zone: 'Северная площадка', falseAlarms: 10, maxFalseAlarms: 10 },
+                    { name: 'Cam-03', zone: 'Южная площадка', falseAlarms: 2, maxFalseAlarms: 10 },
+                    { name: 'Cam-05', zone: 'Западный склад', falseAlarms: 5, maxFalseAlarms: 10 }
+                ]
+            }
+        };
+
+        let currentZones = [];
+        let currentCameras = [];
+
+        function getMostDangerousZone(zones) {
+            return zones.reduce((max, zone) => zone.violations > max.violations ? zone : max, zones[0]);
+        }
+
+        function getSafestZone(zones) {
+            return zones.reduce((min, zone) => zone.violations < min.violations ? zone : min, zones[0]);
+        }
+
+        function getWorstCamera(cameras) {
+            return cameras.reduce((max, cam) => cam.falseAlarms > max.falseAlarms ? cam : max, cameras[0]);
+        }
+
+        function updateStats(zones, cameras) {
+            currentZones = zones;
+            currentCameras = cameras;
+            
+            const maxViolations = Math.max(...zones.map(z => z.violations));
+            const maxFalseAlarms = Math.max(...cameras.map(c => c.falseAlarms));
+
+            const mostDangerous = getMostDangerousZone(zones);
+            const safest = getSafestZone(zones);
+            const worstCamera = getWorstCamera(cameras);
+
+            document.getElementById('most-dangerous-zone').textContent = mostDangerous.name;
+            document.getElementById('most-dangerous-count').textContent = `${mostDangerous.violations} нарушений`;
+            const dangerProgress = (mostDangerous.violations / maxViolations) * 100;
+            document.querySelector('#most-dangerous-zone').closest('.stat-card').querySelector('.progress-bar').style.width = `${dangerProgress}%`;
+
+            document.getElementById('safest-zone').textContent = safest.name;
+            document.getElementById('safest-count').textContent = `${safest.violations} нарушений`;
+            const safeProgress = (safest.violations / maxViolations) * 100;
+            document.querySelector('#safest-zone').closest('.stat-card').querySelector('.progress-bar').style.width = `${safeProgress}%`;
+
+            document.getElementById('false-camera').textContent = worstCamera.name;
+            document.getElementById('false-zone').textContent = worstCamera.zone;
+            document.getElementById('false-count').textContent = `${worstCamera.falseAlarms} ложных срабатываний`;
+            const falseProgress = (worstCamera.falseAlarms / maxFalseAlarms) * 100;
+            document.querySelector('#false-camera').closest('.stat-card').querySelector('.progress-bar').style.width = `${falseProgress}%`;
+
+            const zonesList = document.querySelector('.zones-stats-list');
+            zonesList.innerHTML = '';
+            zones.forEach(zone => {
+                const percent = (zone.violations / maxViolations) * 100;
+                let progressClass = 'progress-info';
+                if (percent >= 70) progressClass = 'progress-danger';
+                else if (percent >= 40) progressClass = 'progress-warning';
+                else progressClass = 'progress-safe';
+                
+                zonesList.innerHTML += `
+                    <div class="zone-stat-item">
+                        <div class="zone-stat-info">
+                            <span class="zone-name">${zone.name}</span>
+                            <span class="zone-count">${zone.violations} нарушений</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar ${progressClass}" style="width: ${percent}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const camerasList = document.querySelector('.cameras-stats-list');
+            camerasList.innerHTML = '';
+            cameras.forEach(camera => {
+                const percent = (camera.falseAlarms / maxFalseAlarms) * 100;
+                let progressClass = 'progress-info';
+                if (percent >= 70) progressClass = 'progress-danger';
+                else if (percent >= 40) progressClass = 'progress-warning';
+                else progressClass = 'progress-safe';
+                
+                camerasList.innerHTML += `
+                    <div class="camera-stat-item">
+                        <div class="camera-stat-info">
+                            <span class="camera-name">${camera.name} (${camera.zone})</span>
+                            <span class="camera-count">${camera.falseAlarms} ложных</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar ${progressClass}" style="width: ${percent}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function getDateKey() {
+            const dateFrom = document.getElementById('date-from').value;
+            const dateTo = document.getElementById('date-to').value;
+            return `${dateFrom}-${dateTo}`;
+        }
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            const dateKey = getDateKey();
+            if (statsData[dateKey]) {
+                updateStats(statsData[dateKey].zones, statsData[dateKey].cameras);
+            } else {
+                updateStats(statsData['01/03/2026-31/03/2026'].zones, statsData['01/03/2026-31/03/2026'].cameras);
+            }
+        });
+
+        document.getElementById('create-report').addEventListener('click', function() {
+            const dateFrom = document.getElementById('date-from').value;
+            const dateTo = document.getElementById('date-to').value;
+            const comment = document.getElementById('report-comment').value;
+            
+            const mostDangerous = getMostDangerousZone(currentZones);
+            const safest = getSafestZone(currentZones);
+            const worstCamera = getWorstCamera(currentCameras);
+            
+            const reportData = {
+                period: `${dateFrom} - ${dateTo}`,
+                mostDangerousZone: {
+                    name: mostDangerous.name,
+                    violations: mostDangerous.violations
+                },
+                safestZone: {
+                    name: safest.name,
+                    violations: safest.violations
+                },
+                worstCamera: {
+                    name: worstCamera.name,
+                    zone: worstCamera.zone,
+                    falseAlarms: worstCamera.falseAlarms
+                },
+                zonesStats: currentZones,
+                camerasStats: currentCameras,
+                comment: comment,
+                createdAt: new Date().toLocaleString()
+            };
+            
+            console.log('Создан отчёт:', reportData);
+            
+            if (!comment.trim()) {
+                alert('Пожалуйста, добавьте комментарий перед созданием отчёта');
+                return;
+            }
+            
+            alert(`Отчёт за период ${dateFrom} - ${dateTo} успешно создан!\n\nОсновные выводы:\n- Самая опасная зона: ${mostDangerous.name} (${mostDangerous.violations} нарушений)\n- Самая безопасная зона: ${safest.name} (${safest.violations} нарушений)\n- Больше всего ложных срабатываний: ${worstCamera.name} (${worstCamera.zone}) - ${worstCamera.falseAlarms} шт.\n\nОтчёт сохранён в разделе "Отчёты"`);
+            
+            document.getElementById('report-comment').value = '';
+        });
+
+        updateStats(statsData['01/03/2026-31/03/2026'].zones, statsData['01/03/2026-31/03/2026'].cameras);
+    </script>
+</body>
+</html>
