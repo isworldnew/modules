@@ -26,7 +26,7 @@ public class AccidentResponse {
 
     private String status;
 
-    private SafetyOfficerResponse safetyOfficer;
+    private UserResponse safetyOfficer;
 
     private ReportResponse report;
 }

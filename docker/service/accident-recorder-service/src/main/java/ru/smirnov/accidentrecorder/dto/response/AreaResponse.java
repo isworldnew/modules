@@ -5,20 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class UserResponse {
+public class AreaResponse {
 
     private Long id;
-
-    private String username;
-
-    private String firstname;
-
-    private String lastname;
-
-    private String parentname;
-
-    private String role;
-
-    private String status;
 
 }

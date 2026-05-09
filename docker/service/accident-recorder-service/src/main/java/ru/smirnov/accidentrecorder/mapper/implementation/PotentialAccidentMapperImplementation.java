@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
 import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
 import ru.smirnov.accidentrecorder.dto.response.ReportResponse;
-import ru.smirnov.accidentrecorder.dto.response.SafetyOfficerResponse;
+import ru.smirnov.accidentrecorder.dto.response.UserResponse;
 import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
@@ -106,13 +106,15 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
         accidentResponse.setRecordType("video/mp4");
         accidentResponse.setStatus(potentialAccident.getStatus().name());
 
-        SafetyOfficerResponse safetyOfficerResponse = new SafetyOfficerResponse();
+        UserResponse safetyOfficerResponse = new UserResponse();
 
         safetyOfficerResponse.setId(potentialAccident.getSafetyOfficer().getId());
-        safetyOfficerResponse.setEmail(potentialAccident.getSafetyOfficer().getUsername());
+        safetyOfficerResponse.setUsername(potentialAccident.getSafetyOfficer().getUsername());
         safetyOfficerResponse.setLastname(potentialAccident.getSafetyOfficer().getLastname());
         safetyOfficerResponse.setFirstname(potentialAccident.getSafetyOfficer().getFirstname());
         safetyOfficerResponse.setParentname(potentialAccident.getSafetyOfficer().getParentname());
+        safetyOfficerResponse.setRole(potentialAccident.getSafetyOfficer().getRole().name());
+        safetyOfficerResponse.setStatus(potentialAccident.getSafetyOfficer().getStatus().name());
 
         accidentResponse.setSafetyOfficer(safetyOfficerResponse);
 

@@ -11,6 +11,7 @@ public class UserMapperImplementation implements UserMapper {
     @Override
     public UserResponse userEntityToUserResponse(User user) {
         UserResponse userResponse = new UserResponse();
+        userResponse.setId(user.getId());
         userResponse.setUsername(user.getUsername());
         userResponse.setLastname(user.getLastname());
         userResponse.setFirstname(user.getFirstname());
