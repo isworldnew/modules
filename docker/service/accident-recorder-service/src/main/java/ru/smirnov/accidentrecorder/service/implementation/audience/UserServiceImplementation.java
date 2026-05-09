@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
+import ru.smirnov.accidentrecorder.dto.response.UserResponse;
 import ru.smirnov.accidentrecorder.entity.audience.User;
+import ru.smirnov.accidentrecorder.mapper.abstraction.UserMapper;
 import ru.smirnov.accidentrecorder.repository.audience.UserRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.audience.UserService;
 
@@ -19,12 +21,14 @@ import java.util.List;
 public class UserServiceImplementation implements UserDetailsService, UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImplementation(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -45,6 +49,15 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
                 .userId(user.getId())
                 .role(user.getRole().name())
                 .build();
+    }
+
+    @Override
+    public UserResponse getUserData(DataForToken tokenData) {
+        User user = this.userRepository.findById(tokenData.getUserId()).orElseThrow(
+                () -> new UsernameNotFoundException("No user with id=" + tokenData.getUserId())
+        );
+
+        return this.userMapper.userEntityToUserResponse(user);
     }
 
 }
