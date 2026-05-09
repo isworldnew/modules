@@ -1,6 +1,7 @@
 package ru.smirnov.accidentrecorder.controller.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,6 +45,13 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler({ConflictException.class})
     public ResponseEntity<ExceptionResponse> handleConflictExceptions(Exception ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                new ExceptionResponse(ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler({NotImplementedException.class})
+    public ResponseEntity<ExceptionResponse> handleNotImplementedExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                 new ExceptionResponse(ex.getMessage())
         );
     }

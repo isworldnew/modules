@@ -1,5 +1,6 @@
 package ru.smirnov.accidentrecorder.service.implementation.audience;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import ru.smirnov.accidentrecorder.mapper.abstraction.UserMapper;
 import ru.smirnov.accidentrecorder.repository.audience.UserRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.audience.UserService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,6 +60,28 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
         );
 
         return this.userMapper.userEntityToUserResponse(user);
+    }
+
+    @Override
+    public List<UserResponse> generalizedUserSearch(String role, String request) {
+
+        List<User> users = new ArrayList<>();
+
+        if (role.isEmpty() && request == null)
+            users = this.userRepository.findAll();
+
+        if (role.isEmpty() && request != null)
+            throw new NotImplementedException();
+
+        if (role != null && request == null)
+            users = this.userRepository.findAllByRole(role);
+
+        if (role != null && request != null)
+            throw new NotImplementedException();
+
+        return users.stream()
+                .map(this.userMapper::userEntityToUserResponse)
+                .toList();
     }
 
 }
