@@ -2,7 +2,6 @@ import './PersonalDataCard.css';
 import PersonalDataCardKey from './PersonalDataCardKey/PersonalDataCardKey.jsx';
 import PersonalDataCardValue from './PersonalDataCardValue/PersonalDataCardValue.jsx';
 import PersonalDataCardEnum from './PersonalDataCardEnum/PersonalDataCardEnum.jsx';
-import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 import ProgressLoader from '../../common-components/ProgressLoader/ProgressLoader.jsx';
 import { executeWithTokenRefresh } from '../../../script/executeWithTokenRefresh.js'; 
 import ActionButton from '../../common-components/ActionButton/ActionButton.jsx';
@@ -155,12 +154,6 @@ export default function PersonalDataCard() {
                     </ActionButton>
                 </div>
             </div>
-            
-            <ModalWindow 
-                message="Функция редактирования в разработке"
-                isOpen={showEditModal}
-                onClose={() => setShowEditModal(false)}
-            />
         </>
     );
 }

@@ -49,13 +49,13 @@ export default function InitPage() {
                         window.location.href = '/supervisor-user-page';
                         break;
                     case 'ADMIN':
-                        window.location.href = '/admin-home-page';
+                        window.location.href = '/admin-user-page';
                         break;
                     case 'SUPERADMIN':
-                        window.location.href = '/superadmin-home-page';
+                        window.location.href = '/superadmin-user-page';
                         break;                       
                     default:
-                        window.location.href = '/others-home-page';
+                        window.location.href = '/others-user-page';
                         break;
                 }
                 
