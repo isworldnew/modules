@@ -7,12 +7,37 @@ import PageName from '../../component/common-components/PageName/PageName.jsx';
 import AccidentArea from './AccidentArea/AccidentArea.jsx';
 
 export default function AccidentPage() {
+
+    const navItems = [
+        { 
+            label: 'Уведомления', 
+            href: '/notifications', 
+            isActive: false,
+            showBadge: true 
+        },
+        { 
+            label: 'Инциденты', 
+            href: '/accidents', 
+            isActive: false,
+            showBadge: false 
+        },
+        {
+            label: 'Личный кабинет',
+            href: '/safety-officer-user-page',
+            isActive: false,
+            showBadge: false
+        }
+    ];
+
     return (
         <div className="accident-page-wrapper">
             <Header />
             
             <div className="accident-layout">
-                <SideBar activePage="NULL" />
+                <SideBar 
+                    navItems={navItems} 
+                    showNotificationBadge={true}
+                />
                 
                 <main className="accident-content">
                     <PageName title="Просмотр инцидента" />

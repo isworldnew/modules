@@ -40,15 +40,21 @@ export default function InitPage() {
                 
                 switch(role) {
                     case 'SAFETY_OFFICER':
-                        console.log('Redirecting to /notifications');
-                        window.location.href = '/notifications';
+                        window.location.href = '/safety-officer-user-page';
+                        break;
+                    case 'FOREMAN':
+                        window.location.href = '/foreman-user-page';
+                        break;
+                    case 'SUPERVISOR':
+                        window.location.href = '/supervisor-user-page';
                         break;
                     case 'ADMIN':
-                        console.log('Redirecting to /admin-home-page');
                         window.location.href = '/admin-home-page';
                         break;
+                    case 'SUPERADMIN':
+                        window.location.href = '/superadmin-home-page';
+                        break;                       
                     default:
-                        console.log('Redirecting to /others-home-page');
                         window.location.href = '/others-home-page';
                         break;
                 }

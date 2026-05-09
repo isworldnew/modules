@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import NotificationBadge from './NotificationBadge/NotificationBadge.jsx';
 import './SideBar.css';
 
-export default function SideBar({ activePage = 'notifications' }) {
+export default function SideBar({ navItems = [], showNotificationBadge = false }) {
     
     const handleNavigation = (href) => {
         window.location.href = href;
@@ -11,20 +11,16 @@ export default function SideBar({ activePage = 'notifications' }) {
     return (
         <aside className="sidebar">
             <nav className="sidebar-nav">
-                <div 
-                    className={`nav-link ${activePage === 'notifications' ? 'active' : ''}`}
-                    onClick={() => handleNavigation('/notifications')}
-                >
-                    <span className="nav-link-text">Уведомления</span>
-                    <NotificationBadge />
-                </div>
-                
-                <div 
-                    className={`nav-link ${activePage === 'accidents' ? 'active' : ''}`}
-                    onClick={() => handleNavigation('/accidents')}
-                >
-                    <span className="nav-link-text">Инциденты</span>
-                </div>
+                {navItems.map((item, index) => (
+                    <div 
+                        key={index}
+                        className={`nav-link ${item.isActive ? 'active' : ''}`}
+                        onClick={() => handleNavigation(item.href)}
+                    >
+                        <span className="nav-link-text">{item.label}</span>
+                        {showNotificationBadge && item.showBadge && <NotificationBadge />}
+                    </div>
+                ))}
             </nav>
         </aside>
     );

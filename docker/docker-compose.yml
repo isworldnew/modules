@@ -302,11 +302,31 @@ services:
   accident-recorder-frontend:
     build:
       context: ../frontend/hvucs-frontend
+      dockerfile: Dockerfile.dev  # используем dev-версию Dockerfile
     container_name: accident-recorder-frontend
     ports:
       - "5555:5555"
+      # Добавьте проброс порта для Vite HMR (обычно 24678)
+      - "24678:24678"
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # для файловых изменений в Docker
+      - VITE_HMR_CLIENT_PORT=5555  # порт для HMR
+    volumes:
+      # Монтируем исходный код для hot-reload
+      - ../frontend/hvucs-frontend:/app
+      # Исключаем node_modules, чтобы не перезаписывать его
+      - /app/node_modules
     networks:
       - hi-vis-vest-usage-control-system-network
+
+  # accident-recorder-frontend:
+  #   build:
+  #     context: ../frontend/hvucs-frontend
+  #   container_name: accident-recorder-frontend
+  #   ports:
+  #     - "5555:5555"
+  #   networks:
+  #     - hi-vis-vest-usage-control-system-network
 
 networks:
   hi-vis-vest-usage-control-system-network:
