@@ -18,7 +18,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextS
 import java.util.List;
 
 @RestController
-@RequestMapping("/areas")
+@RequestMapping("/api/areas")
 @Validated
 public class AreaController {
 
@@ -38,7 +38,7 @@ public class AreaController {
         return this.areaService.createArea(dto);
     }
 
-    @GetMapping
+    @GetMapping("/shortcuts")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
     public List<AreaShortcutResponse> getAreaShortcuts() {
