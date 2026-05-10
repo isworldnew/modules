@@ -6,6 +6,7 @@ import SideBar from '../../../../component/common-components/SideBar/SideBar.jsx
 import PageName from '../../../../component/common-components/PageName/PageName.jsx';
 
 import AreaCreateUpdateRegion from '../../../../component/common-components/AreaCreateUpdateRegion/AreaCreateUpdateRegion.jsx';
+import ExistingAreasRegion from './ExistingAreasRegion/ExistingAreasRegion.jsx';
 
 export default function AreaCreationPage() {
 
@@ -48,6 +49,7 @@ export default function AreaCreationPage() {
                     <div className="area-creation-page__content-inner">
                         <PageName title="Создание новой зоны" />
                         <AreaCreateUpdateRegion />
+                        <ExistingAreasRegion />
                     </div>
                 </main>
             </div>

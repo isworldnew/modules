@@ -1,0 +1,22 @@
+@import '../../../../../../variables.css';
+
+.existing-area {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.existing-area:hover {
+    background-color: var(--background-input);
+}
+
+.existing-area__id {
+    font-weight: 500;
+}
+
+.existing-area__name {
+    color: var(--text-secondary);
+}
+
+.existing-area:hover .existing-area__name {
+    color: var(--button-yellow);
+}

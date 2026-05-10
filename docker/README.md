@@ -50,6 +50,15 @@ INSERT INTO users(username, password, role, status, lastname, firstname, parentn
     'Вадимович'
 ),
 (
+    'foreman1@test.mail',
+    '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
+    'FOREMAN',
+    'ENABLED',
+    'Куликов',
+    'Димитр',
+    'Анатольевич'
+),
+(
     'safety-officer1@test.mail',
     '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
     'SAFETY_OFFICER',
