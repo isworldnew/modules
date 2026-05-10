@@ -17,6 +17,7 @@ import AccidentPage from './page/AccidentPage/AccidentPage.jsx';
 
 import AdminUserPage from './page/role-page/admin-page/AdminUserPage/AdminUserPage.jsx';
 import AreaCreationPage from './page/role-page/admin-page/AreaCreationPage/AreaCreationPage.jsx';
+import CameraCreationPage from './page/role-page/admin-page/CameraCreationPage/CameraCreationPage.jsx';
 
 import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
 import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
@@ -37,6 +38,7 @@ createRoot(document.getElementById('root')).render(
         {/* страницы для роли ADMIN */}
         <Route path='/admin-user-page' element={<AdminUserPage />}/>
         <Route path='/areas' element={<AreaCreationPage />}/>
+        <Route path='/cameras' element={<CameraCreationPage />}/>
 
 
         <Route path='/not-found' element={<NotFoundPage />}/>

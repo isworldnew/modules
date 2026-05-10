@@ -165,7 +165,7 @@ export default function AreaCreateUpdateRegion() {
                         type="user"
                         endpoint="/api/users?role=FOREMAN"
                         onSelect={handleBossSelect}
-                        placeholder="Выберите начальника (прораба)"
+                        placeholder="Выберите бригадира (прораба)"
                     />
                     <ChipsArea 
                         type="user"
