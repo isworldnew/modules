@@ -1,0 +1,55 @@
+@import '../../../variables.css';
+
+.area-create-update-region {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.area-create-update-region__card {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-large);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xl);
+    width: auto;
+    min-width: 500px;
+}
+
+.area-create-update-region__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.area-create-update-region__section:last-of-type {
+    margin-bottom: 0;
+}
+
+.area-create-update-region__label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.area-create-update-region__actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+    .area-create-update-region__card {
+        width: 100%;
+        min-width: auto;
+        padding: var(--spacing-lg);
+    }
+    
+    .area-create-update-region__actions {
+        flex-direction: column;
+    }
+    
+    .area-create-update-region__actions button {
+        width: 100%;
+    }
+}

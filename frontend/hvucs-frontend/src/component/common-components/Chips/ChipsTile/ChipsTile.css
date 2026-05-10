@@ -1,0 +1,43 @@
+@import '../../../../variables.css';
+
+.chips-tile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--background-card);
+    padding: 0.375rem 0.5rem 0.375rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.chips-tile:hover {
+    border-color: var(--button-yellow);
+}
+
+.chips-tile__text {
+    color: var(--button-yellow);
+    font-weight: 500;
+}
+
+.chips-tile__remove {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.chips-tile__remove:hover {
+    color: #ff4444;
+}

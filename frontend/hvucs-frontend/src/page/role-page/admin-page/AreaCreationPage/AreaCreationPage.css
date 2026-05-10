@@ -22,6 +22,9 @@
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /* Равные отступы для формы */
@@ -41,5 +44,10 @@
     
     .area-creation-page__content-inner {
         padding: var(--spacing-md);
+        align-items: stretch;
+    }
+    
+    .area-creation-page__content-inner > * {
+        width: 100%;
     }
 }

@@ -5,6 +5,8 @@ import Footer from '../../../../component/common-components/Footer/Footer.jsx';
 import SideBar from '../../../../component/common-components/SideBar/SideBar.jsx';
 import PageName from '../../../../component/common-components/PageName/PageName.jsx';
 
+import AreaCreateUpdateRegion from '../../../../component/common-components/AreaCreateUpdateRegion/AreaCreateUpdateRegion.jsx';
+
 export default function AreaCreationPage() {
 
     const navItems = [
@@ -34,7 +36,7 @@ export default function AreaCreationPage() {
         }
     ];
 
-    return <>
+    return (
         <div className="area-creation-page">
             <Header />
             <div className="area-creation-page__layout">
@@ -45,10 +47,11 @@ export default function AreaCreationPage() {
                 <main className="area-creation-page__content">
                     <div className="area-creation-page__content-inner">
                         <PageName title="Создание новой зоны" />
+                        <AreaCreateUpdateRegion />
                     </div>
                 </main>
             </div>
             <Footer />
-        </div>    
-    </>
+        </div>
+    );
 }
