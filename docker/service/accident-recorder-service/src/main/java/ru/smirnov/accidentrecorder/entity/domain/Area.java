@@ -1,10 +1,11 @@
 package ru.smirnov.accidentrecorder.entity.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.smirnov.accidentrecorder.entity.relation.OperatedArea;
+import ru.smirnov.accidentrecorder.entity.audience.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,9 @@ public class Area {
     @JsonManagedReference
     private List<PotentialAccident> potentialAccidents = new ArrayList<>();
 
-    @OneToMany(
-           mappedBy = "area",
-           cascade = CascadeType.ALL,
-           orphanRemoval = true
-    )
-    @JsonManagedReference
-    private List<OperatedArea> operators = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "foreman_id")
+    @JsonBackReference
+    private User foreman;
 
 }

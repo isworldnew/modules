@@ -1,6 +1,7 @@
 package ru.smirnov.accidentrecorder.entity.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,13 @@ public class AccidentReport {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     private AccidentType accidentType;
+
+    @OneToOne(
+            mappedBy = "trespasser",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private Response response;
 
 }
