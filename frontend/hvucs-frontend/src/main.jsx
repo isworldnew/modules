@@ -19,6 +19,10 @@ import AdminUserPage from './page/role-page/admin-page/AdminUserPage/AdminUserPa
 import AreaCreationPage from './page/role-page/admin-page/AreaCreationPage/AreaCreationPage.jsx';
 import CameraCreationPage from './page/role-page/admin-page/CameraCreationPage/CameraCreationPage.jsx';
 
+import ForemanUserPage from './page/role-page/foreman-page/ForemanUserPage/ForemanUserPage.jsx';
+import TrespassersPage from './page/role-page/foreman-page/TrespassersPage/TrespassersPage.jsx';
+import ReportNotificationsPage from './page/role-page/foreman-page/ReportNotificationsPage/ReportNotificationsPage.jsx';
+
 import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
 import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
 
@@ -43,6 +47,11 @@ createRoot(document.getElementById('root')).render(
 
         <Route path='/not-found' element={<NotFoundPage />}/>
         <Route path='/forbidden' element={<ForbiddenPage />}/>
+
+        {/* страницы для роли FOREMAN */}
+        <Route path='/foreman-user-page' element={<ForemanUserPage />}/>
+        <Route path='/trespassers' element={<TrespassersPage />}/>
+        <Route path='/report-notifications' element={<ReportNotificationsPage />}/>
 
         
         {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}

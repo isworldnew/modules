@@ -24,12 +24,19 @@ public interface AccidentReportRepository extends JpaRepository<AccidentReport, 
                     FROM accident_reports
                     
                     INNER JOIN potential_accidents
-                    ON potential_accidents.area_id = :areaId
+                    ON potential_accidents.id = accident_reports.accident_id
                     
                     INNER JOIN areas
                     ON potential_accidents.area_id = areas.id
                     
-                    WHERE accident_reports.report_status = 'UNPROCESSED_BY_FOREMAN'
+                    WHERE
+                        potential_accidents.area_id = :areaId
+                    AND
+                        accident_reports.report_status = 'UNPROCESSED_BY_FOREMAN'
+                    AND
+                        accident_reports.accident_interpretation = 'REAL_ALARM'
+                    
+                    ORDER BY accident_reports.upload_date_time DESC
                     """,
             nativeQuery = true
     )
@@ -46,12 +53,14 @@ public interface AccidentReportRepository extends JpaRepository<AccidentReport, 
                     FROM accident_reports
                     
                     INNER JOIN potential_accidents
-                    ON potential_accidents.area_id = :areaId
+                    ON potential_accidents.id = accident_reports.accident_id
                     
                     INNER JOIN areas
                     ON potential_accidents.area_id = areas.id
                     
                     WHERE
+                        potential_accidents.area_id = :areaId
+                    AND
                         accident_reports.report_status = 'PROCESSED_BY_FOREMAN'
                     AND
                         accident_reports.upload_date_time BETWEEN :dateFrom AND :dateTo

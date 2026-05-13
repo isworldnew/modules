@@ -20,7 +20,7 @@ export default function PersonalDataCardEnum({ value }) {
             'ENABLED': 'Активен',
             'DISABLED': 'Неактивен',
             'SAFETY_OFFICER': 'Сотрудник отдела ТБ',
-            'FOREMAN': 'Бригадир',
+            'FOREMAN': 'Ответственный за зону',
             'SUPERVISOR': 'Начальник',
             'ADMIN': 'Администратор',
             'SUPERADMIN': 'Главный администратор'

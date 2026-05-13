@@ -32,5 +32,5 @@ public class AccidentResponse {
 
     private UserResponse foreman; // кто отреагировал на инцидент
 
-    private ? response; // сама реакция на инцидент
+//    private ? response; // сама реакция на инцидент
 }

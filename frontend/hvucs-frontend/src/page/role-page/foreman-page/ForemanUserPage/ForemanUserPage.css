@@ -1,0 +1,45 @@
+@import '../../../../variables.css';
+
+.foreman-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.foreman-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.foreman-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.foreman-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Равные отступы для формы */
+.foreman-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.foreman-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .foreman-page__layout {
+        flex-direction: column;
+    }
+    
+    .foreman-page__content-inner {
+        padding: var(--spacing-md);
+    }
+}

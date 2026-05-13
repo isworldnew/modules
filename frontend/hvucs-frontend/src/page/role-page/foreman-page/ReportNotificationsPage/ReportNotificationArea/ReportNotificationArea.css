@@ -1,0 +1,71 @@
+@import '../../../../../variables.css';
+
+.report-notification-area {
+    width: 100%;
+}
+
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* Стили для состояния загрузки */
+.report-notification-area-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    gap: var(--spacing-md);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 193, 7, 0.2);
+    border-top: 3px solid var(--button-yellow);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.report-notification-area-loading p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Стили для пустого состояния */
+.report-notification-area-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.report-notification-area-empty p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+    .reports-list {
+        gap: var(--spacing-xs);
+    }
+    
+    .report-notification-area-empty p {
+        font-size: 0.875rem;
+    }
+}
