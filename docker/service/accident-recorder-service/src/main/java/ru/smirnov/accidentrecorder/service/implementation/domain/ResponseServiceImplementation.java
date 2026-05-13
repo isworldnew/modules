@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.dto.request.ResponseCreationRequest;
+import ru.smirnov.accidentrecorder.entity.domain.AccidentReport;
+import ru.smirnov.accidentrecorder.entity.domain.Response;
 import ru.smirnov.accidentrecorder.entity.domain.Trespasser;
+import ru.smirnov.accidentrecorder.mapper.abstraction.ResponseMapper;
+import ru.smirnov.accidentrecorder.precondition.abstraction.AccidentReportPreconditionService;
 import ru.smirnov.accidentrecorder.precondition.abstraction.TrespasserPreconditionService;
 import ru.smirnov.accidentrecorder.repository.domain.ResponseRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.ResponseService;
@@ -17,38 +21,45 @@ public class ResponseServiceImplementation implements ResponseService {
     private final ResponseRepository responseRepository;
     private final TrespasserService trespasserService;
     private final TrespasserPreconditionService trespasserPreconditionService;
+    private final AccidentReportPreconditionService accidentReportPreconditionService;
+    private final ResponseMapper responseMapper;
 
     @Autowired
     public ResponseServiceImplementation(
             ResponseRepository responseRepository,
             TrespasserService trespasserService,
-            TrespasserPreconditionService trespasserPreconditionService
+            TrespasserPreconditionService trespasserPreconditionService,
+            AccidentReportPreconditionService accidentReportPreconditionService,
+            ResponseMapper responseMapper
     ) {
         this.responseRepository = responseRepository;
         this.trespasserService = trespasserService;
         this.trespasserPreconditionService = trespasserPreconditionService;
+        this.accidentReportPreconditionService = accidentReportPreconditionService;
+        this.responseMapper = responseMapper;
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Long createResponse(ResponseCreationRequest dto) {
+        AccidentReport accidentReport = this.accidentReportPreconditionService.safelyGetById(dto.getAccidentReportId());
 
         Trespasser trespasser = null;
 
-        if (dto.getTrespasserId() == null && dto.getTrespasser() == null) {
+        if (dto.getTrespasserId() != null && dto.getTrespasser() == null)
+            trespasser = this.trespasserPreconditionService.safelyGetById(dto.getTrespasserId());
 
-        }
+        if (dto.getTrespasserId() == null && dto.getTrespasser() != null)
+            trespasser = this.trespasserService.createTrespasser(dto.getTrespasser());
 
-        if (dto.getTrespasserId() != null && dto.getTrespasser() == null) {
+        if (dto.getTrespasserId() == null && dto.getTrespasser() == null)
+            trespasser = null;
 
-        }
+        Response response = this.responseMapper.generateAccidentResponse(dto, accidentReport, trespasser);
 
-        if (dto.getTrespasserId() == null && dto.getTrespasser() != null) {
+        this.responseRepository.save(response);
 
-        }
-
-
-
+        return response.getId();
     }
 
 }

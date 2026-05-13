@@ -16,7 +16,7 @@ public class ResponseCreationRequest {
     private Long accidentReportId;
 
     @NotBlank @ResponseTypeLabel
-    private String responseStatus;
+    private String responseType;
 
     private String responseReport;
 

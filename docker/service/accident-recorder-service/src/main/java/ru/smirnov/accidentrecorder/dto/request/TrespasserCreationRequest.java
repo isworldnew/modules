@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.smirnov.accidentrecorder.validation.annotation.TrespasserRelationLabel;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class TrespasserCreationRequest {
