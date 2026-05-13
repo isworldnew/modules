@@ -7,38 +7,33 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.dto.request.AreaCreationRequest;
 import ru.smirnov.accidentrecorder.dto.response.AreaResponse;
 import ru.smirnov.accidentrecorder.dto.response.AreaShortcutResponse;
-import ru.smirnov.accidentrecorder.entity.audience.User;
-import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.entity.domain.Area;
-import ru.smirnov.accidentrecorder.exception.ConflictException;
-import ru.smirnov.accidentrecorder.mapper.abstraction.AreaMapper;
+import ru.smirnov.accidentrecorder.exception.NotFoundException;
 import ru.smirnov.accidentrecorder.precondition.abstraction.AreaPreconditionService;
 import ru.smirnov.accidentrecorder.precondition.abstraction.UserPreconditionService;
 import ru.smirnov.accidentrecorder.repository.domain.AreaRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.AreaService;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class AreaServiceImplementation implements AreaService {
 
     private final AreaPreconditionService areaPreconditionService;
     private final AreaRepository areaRepository;
-    private final AreaMapper areaMapper;
+//    private final AreaMapper areaMapper;
     private final UserPreconditionService userPreconditionService;
 
     @Autowired
     public AreaServiceImplementation(
             AreaPreconditionService areaPreconditionService,
             AreaRepository areaRepository,
-            AreaMapper areaMapper,
+//            AreaMapper areaMapper,
             UserPreconditionService userPreconditionService
     ) {
         this.areaPreconditionService = areaPreconditionService;
         this.areaRepository = areaRepository;
-        this.areaMapper = areaMapper;
+//        this.areaMapper = areaMapper;
         this.userPreconditionService = userPreconditionService;
     }
 
@@ -78,17 +73,25 @@ public class AreaServiceImplementation implements AreaService {
 
     @Override
     public List<AreaShortcutResponse> getAreaShortcuts() {
-        List<Area> areas = this.areaRepository.findAll();
-
-        return areas.stream()
-                .map(this.areaMapper::areaEntityToAreaShortcutResponse)
-                .collect(Collectors.toList());
+//        List<Area> areas = this.areaRepository.findAll();
+//
+//        return areas.stream()
+//                .map(this.areaMapper::areaEntityToAreaShortcutResponse)
+//                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
     public AreaResponse getAreaById(Long id) {
-        Area area = this.areaPreconditionService.safelyGetAreaById(id);
-        return this.areaMapper.areaEntityToAreaResponse(area);
+//        Area area = this.areaPreconditionService.safelyGetAreaById(id);
+//        return this.areaMapper.areaEntityToAreaResponse(area);
+        return null;
     }
 
+    @Override
+    public Area getAreaByForemanId(Long foremanId) {
+        return this.areaRepository.getAreaByForemanId(foremanId).orElseThrow(
+                () -> new NotFoundException("No area found operated by foreman (user) id=" + foremanId)
+        );
+    }
 }

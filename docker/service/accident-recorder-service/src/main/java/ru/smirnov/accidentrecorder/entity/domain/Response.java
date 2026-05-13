@@ -13,12 +13,10 @@ public class Response {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private AccidentReport report;
-
     @Enumerated(EnumType.STRING)
     private ResponseType responseType;
 
+    @Column(columnDefinition = "TEXT", nullable = true)
     private String responseReport;
 
     @OneToOne

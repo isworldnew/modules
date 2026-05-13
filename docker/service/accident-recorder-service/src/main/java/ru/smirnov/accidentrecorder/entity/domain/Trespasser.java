@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.TrespasserRelation;
 
 import java.util.List;
 
@@ -22,5 +23,18 @@ public class Trespasser {
     )
     @JsonManagedReference
     private List<Response> responses;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String trespasserName;
+
+    @Column(columnDefinition = "VARCHAR(255)", nullable = true)
+    private String post;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
+    private TrespasserRelation trespasserRelation;
+
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
+    private String organizationEmail;
 
 }

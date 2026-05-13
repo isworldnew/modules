@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentInterpretation;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentType;
+import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.ReportStatus;
+
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "accident_reports")
@@ -33,11 +36,18 @@ public class AccidentReport {
     private AccidentType accidentType;
 
     @OneToOne(
-            mappedBy = "trespasser",
+            mappedBy = "accidentReport",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @JsonManagedReference
     private Response response;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
+    private ReportStatus reportStatus = ReportStatus.UNPROCESSED_BY_FOREMAN;
+
+    @Column(name = "upload_date_time", columnDefinition = "TIMESTAMP", nullable = false)
+    private OffsetDateTime uploadDateTime = OffsetDateTime.now();
 
 }
