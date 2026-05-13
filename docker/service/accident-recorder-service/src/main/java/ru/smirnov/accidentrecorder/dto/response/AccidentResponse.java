@@ -28,5 +28,9 @@ public class AccidentResponse {
 
     private UserResponse safetyOfficer;
 
-    private ReportResponse report;
+    private ReportResponse report; // то, что от safetyOfficer
+
+    private UserResponse foreman; // кто отреагировал на инцидент
+
+    private ? response; // сама реакция на инцидент
 }

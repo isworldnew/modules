@@ -41,8 +41,8 @@ public class ResponseServiceImplementation implements ResponseService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Long createResponse(ResponseCreationRequest dto) {
-        AccidentReport accidentReport = this.accidentReportPreconditionService.safelyGetById(dto.getAccidentReportId());
+    public Long createResponse(Long accidentReportId, ResponseCreationRequest dto) {
+        AccidentReport accidentReport = this.accidentReportPreconditionService.safelyGetById(accidentReportId);
 
         Trespasser trespasser = null;
 

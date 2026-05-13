@@ -5,11 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.dto.request.TrespasserCreationRequest;
+import ru.smirnov.accidentrecorder.dto.response.TrespasserShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.domain.Trespasser;
 import ru.smirnov.accidentrecorder.mapper.abstraction.TrespasserMapper;
 import ru.smirnov.accidentrecorder.precondition.abstraction.TrespasserPreconditionService;
 import ru.smirnov.accidentrecorder.repository.domain.TrespasserRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.TrespasserService;
+
+import java.util.List;
 
 @Service
 public class TrespasserServiceImplementation implements TrespasserService {
@@ -35,6 +38,12 @@ public class TrespasserServiceImplementation implements TrespasserService {
         Trespasser trespasser = this.trespasserMapper.trespasserCreationRequestToTrespasserEntity(dto);
         this.trespasserRepository.save(trespasser);
         return trespasser;
+    }
+
+
+    @Override
+    public List<TrespasserShortcutResponse> trespassersSearch(String searchRequest) {
+
     }
 
 }

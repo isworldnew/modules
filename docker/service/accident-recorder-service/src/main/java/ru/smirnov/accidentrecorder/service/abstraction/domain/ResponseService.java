@@ -4,5 +4,5 @@ import ru.smirnov.accidentrecorder.dto.request.ResponseCreationRequest;
 
 public interface ResponseService {
 
-    Long createResponse(ResponseCreationRequest dto);
+    Long createResponse(Long accidentReportId, ResponseCreationRequest dto);
 }
