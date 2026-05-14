@@ -24,7 +24,6 @@
     width: 100%;
 }
 
-/* Равные отступы для формы */
 .trespassers-page__content-inner > * {
     margin-bottom: var(--spacing-xl);
 }
@@ -33,13 +32,93 @@
     margin-bottom: 0;
 }
 
-/* Адаптивность */
+.trespassers-search-section {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+}
+
+.trespassers-search-fields {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.trespassers-search-input {
+    flex: 1;
+    min-width: 250px;
+}
+
+.trespassers-search-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.trespassers-results {
+    min-height: 200px;
+}
+
+.trespassers-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.trespassers-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.trespassers-empty p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Стили для полей ввода */
+.trespassers-search-input input {
+    background-color: var(--background-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-sm) var(--spacing-md);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.trespassers-search-input input:focus {
+    outline: none;
+    border-color: var(--button-yellow);
+}
+
+.trespassers-search-input input:-webkit-autofill,
+.trespassers-search-input input:-webkit-autofill:hover,
+.trespassers-search-input input:-webkit-autofill:focus,
+.trespassers-search-input input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--background-input) inset !important;
+    box-shadow: 0 0 0 30px var(--background-input) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    background-color: var(--background-input) !important;
+}
+
 @media (max-width: 768px) {
-    .trespassers-page__layout {
-        flex-direction: column;
-    }
-    
     .trespassers-page__content-inner {
         padding: var(--spacing-md);
+    }
+    
+    .trespassers-search-fields {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .trespassers-search-actions {
+        justify-content: flex-start;
     }
 }
