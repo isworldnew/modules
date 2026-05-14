@@ -18,6 +18,6 @@ public interface TrespasserRepository extends JpaRepository<Trespasser, Long> {
                     """,
             nativeQuery = true
     )
-    List<Trespasser> searchByNameNative(@Param("searchRequest") String searchRequest);
+    List<Trespasser> searchByName(@Param("searchRequest") String searchRequest);
 
 }

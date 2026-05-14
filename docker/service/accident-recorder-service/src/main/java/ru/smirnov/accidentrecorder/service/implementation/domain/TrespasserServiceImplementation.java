@@ -43,7 +43,7 @@ public class TrespasserServiceImplementation implements TrespasserService {
 
     @Override
     public List<TrespasserShortcutResponse> trespassersSearch(String searchRequest) {
-         return this.trespasserRepository.searchByNameNative(searchRequest).stream()
+         return this.trespasserRepository.searchByName(searchRequest).stream()
                  .map(this.trespasserMapper::trespasserEntityToTrespasserShortcutResponse)
                  .toList();
     }
