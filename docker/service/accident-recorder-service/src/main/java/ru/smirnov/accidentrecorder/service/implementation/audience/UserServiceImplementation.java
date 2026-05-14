@@ -91,4 +91,10 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
                 .toList();
     }
 
+    @Override
+    public List<UserResponse> getFreeForemans() {
+        return this.userRepository.getFreeForemans().stream()
+                .map(this.userMapper::userEntityToUserResponse)
+                .toList();
+    }
 }

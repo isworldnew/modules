@@ -54,4 +54,12 @@ public class UserController {
     ) {
         return this.userService.usersSearch(searchRequest, role);
     }
+
+    @GetMapping("/free-foremans")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> getFreeForemans() {
+        return this.userService.getFreeForemans();
+    }
+
 }

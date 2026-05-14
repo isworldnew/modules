@@ -16,26 +16,32 @@ public class AreaMapperImplementation implements AreaMapper {
     public AreaResponse areaEntityToAreaResponse(Area area) {
         AreaResponse areaResponse = new AreaResponse();
 
-        List<CameraResponse> cameras = area.getCameras().stream()
-                .map(camera -> new CameraResponse(
-                        camera.getId(), camera.getName(),
-                        area.getId(), area.getName()
-                ))
-                .toList();
+        if (area.getCameras() != null) {
+            List<CameraResponse> cameras = area.getCameras().stream()
+                    .map(camera -> new CameraResponse(
+                            camera.getId(), camera.getName(),
+                            area.getId(), area.getName()
+                    ))
+                    .toList();
 
-        UserResponse foreman = new UserResponse();
-        foreman.setId(area.getForeman().getId());
-        foreman.setUsername(area.getForeman().getUsername());
-        foreman.setRole(area.getForeman().getRole().name());
-        foreman.setStatus(area.getForeman().getStatus().name());
-        foreman.setLastname(area.getForeman().getLastname());
-        foreman.setFirstname(area.getForeman().getLastname());
-        foreman.setParentname(area.getForeman().getParentname());
+            areaResponse.setCameras(cameras);
+        }
+
+        if (area.getForeman() != null) {
+            UserResponse foreman = new UserResponse();
+            foreman.setId(area.getForeman().getId());
+            foreman.setUsername(area.getForeman().getUsername());
+            foreman.setRole(area.getForeman().getRole().name());
+            foreman.setStatus(area.getForeman().getStatus().name());
+            foreman.setLastname(area.getForeman().getLastname());
+            foreman.setFirstname(area.getForeman().getFirstname());
+            foreman.setParentname(area.getForeman().getParentname());
+
+            areaResponse.setForeman(foreman);
+        }
 
         areaResponse.setAreaId(area.getId());
         areaResponse.setName(area.getName());
-        areaResponse.setForeman(foreman);
-        areaResponse.setCameras(cameras);
 
         return areaResponse;
     }

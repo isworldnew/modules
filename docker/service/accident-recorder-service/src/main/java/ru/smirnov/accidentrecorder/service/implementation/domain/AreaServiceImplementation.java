@@ -15,6 +15,7 @@ import ru.smirnov.accidentrecorder.precondition.abstraction.UserPreconditionServ
 import ru.smirnov.accidentrecorder.repository.domain.AreaRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.AreaService;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -72,6 +73,7 @@ public class AreaServiceImplementation implements AreaService {
     public List<AreaResponse> getAreas() {
         return this.areaRepository.findAll().stream()
                 .map(this.areaMapper::areaEntityToAreaResponse)
+                .sorted(Comparator.comparing(AreaResponse::getName))
                 .toList();
     }
 }

@@ -27,17 +27,18 @@ public class AreaController {
         this.areaService = areaService;
     }
 
-    @PostMapping
+    @PostMapping("/area")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     public Long createArea(@Valid @RequestBody AreaCreationRequest dto) {
         return this.areaService.createArea(dto);
     }
 
-    @PostMapping
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('SUPERVISOR', 'ADMIN', 'ADMIN')")
     public List<AreaResponse> getAreas() {
         return this.areaService.getAreas();
     }
+
 }

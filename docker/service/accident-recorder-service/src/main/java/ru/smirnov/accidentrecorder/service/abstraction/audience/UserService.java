@@ -14,4 +14,6 @@ public interface UserService {
     Long createUser(UserCreationRequest dto);
 
     List<UserResponse> usersSearch(String searchRequest, String role);
+
+    List<UserResponse> getFreeForemans();
 }
