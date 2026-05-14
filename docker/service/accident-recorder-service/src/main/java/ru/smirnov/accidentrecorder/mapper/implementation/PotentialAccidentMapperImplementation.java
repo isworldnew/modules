@@ -3,11 +3,11 @@ package ru.smirnov.accidentrecorder.mapper.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
-import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
-import ru.smirnov.accidentrecorder.dto.response.ReportResponse;
-import ru.smirnov.accidentrecorder.dto.response.UserResponse;
+import ru.smirnov.accidentrecorder.dto.response.*;
 import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
+import ru.smirnov.accidentrecorder.entity.domain.Response;
+import ru.smirnov.accidentrecorder.entity.domain.Trespasser;
 import ru.smirnov.accidentrecorder.entity.mongo.DetectedPerson;
 import ru.smirnov.accidentrecorder.exception.NotFoundException;
 import ru.smirnov.accidentrecorder.mapper.abstraction.PotentialAccidentMapper;
@@ -127,7 +127,38 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
             reportResponse.setDescription(potentialAccident.getReport().getDescription());
 
             accidentResponse.setReport(reportResponse);
+
+            Response response = potentialAccident.getReport().getResponse();
+
+            if (response != null) {
+
+                ForemanAccidentResponse foremanAccidentResponse = new ForemanAccidentResponse();
+
+                foremanAccidentResponse.setId(response.getId());
+                foremanAccidentResponse.setType(response.getResponseType().name());
+                foremanAccidentResponse.setReport(response.getResponseReport());
+
+                accidentResponse.setResponse(foremanAccidentResponse);
+
+                Trespasser trespasser = response.getTrespasser();
+
+                if (trespasser != null) {
+
+                    TrespasserResponse trespasserResponse = new TrespasserResponse();
+
+                    trespasserResponse.setId(trespasser.getId());
+                    trespasserResponse.setName(trespasser.getTrespasserName());
+                    trespasserResponse.setPost(trespasser.getPost());
+                    trespasserResponse.setRelation(trespasser.getTrespasserRelation().name());
+                    trespasserResponse.setOrganizationEmail(trespasser.getOrganizationEmail());
+
+                    accidentResponse.setTrespasser(trespasserResponse);
+                }
+
+            }
+
         }
+        // accidentResponse.setForeman();
 
         return accidentResponse;
     }

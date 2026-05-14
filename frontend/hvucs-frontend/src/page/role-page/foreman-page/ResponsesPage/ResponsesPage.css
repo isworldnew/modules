@@ -1,0 +1,47 @@
+@import '../../../../variables.css';
+
+.responses-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.responses-layout {
+    display: flex;
+    flex: 1;
+}
+
+.responses-content {
+    flex: 1;
+    padding: var(--spacing-xl);
+    background-color: var(--background-dark);
+}
+
+.responses-filters {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-end;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.responses-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.responses-filter-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .responses-content {
+        padding: var(--spacing-lg);
+    }
+    
+    .responses-filters {
+        gap: var(--spacing-sm);
+    }
+}

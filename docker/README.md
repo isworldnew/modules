@@ -68,11 +68,11 @@ INSERT INTO users(username, password, role, status, lastname, firstname, parentn
     'Вадимович'
 );
 
-INSERT INTO areas(name) VALUES
-('Основной склад'),
-('Подсобное помещение');
+INSERT INTO areas(name, foreman_id) VALUES
+('Основной склад', 2);
+-- ('Подсобное помещение');
 
 INSERT INTO cameras(name, area_id) VALUES
 ('camera1', 1),
-('camera2', 2);
+('camera2', 1);
 ```

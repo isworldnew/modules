@@ -1,0 +1,32 @@
+@import '../../../../../variables.css';
+
+.responses-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.responses-area-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.responses-area-empty p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .responses-list {
+        gap: var(--spacing-xs);
+    }
+    
+    .responses-area-empty p {
+        font-size: 0.875rem;
+    }
+}

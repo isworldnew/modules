@@ -23,6 +23,7 @@ import ForemanUserPage from './page/role-page/foreman-page/ForemanUserPage/Forem
 import TrespassersPage from './page/role-page/foreman-page/TrespassersPage/TrespassersPage.jsx';
 import ReportNotificationsPage from './page/role-page/foreman-page/ReportNotificationsPage/ReportNotificationsPage.jsx';
 import ReportPage from './page/role-page/foreman-page/ReportPage/ReportPage.jsx';
+import ResponsesPage from './page/role-page/foreman-page/ResponsesPage/ResponsesPage.jsx';
 
 import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
 import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
@@ -54,6 +55,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/trespassers' element={<TrespassersPage />}/>
         <Route path='/report-notifications' element={<ReportNotificationsPage />}/>
         <Route path='/report/:id' element={<ReportPage />}/>
+        <Route path='/responses' element={<ResponsesPage />}/>
 
         
         {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}

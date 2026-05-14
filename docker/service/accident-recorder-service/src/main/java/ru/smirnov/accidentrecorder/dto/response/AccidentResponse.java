@@ -26,9 +26,9 @@ public class AccidentResponse {
 
     private String status;
 
-    private UserResponse safetyOfficer; // ТОЖЕ ОТОБРАЗИТЬ
+    private UserResponse safetyOfficer;
 
-    private ReportResponse report; // то, что от safetyOfficer
+    private ReportResponse report;
 
     private UserResponse foreman; // кто отреагировал на инцидент
 
