@@ -15,6 +15,7 @@ import MetaInfoArea from '../../../AccidentPage/MetaInfoArea/MetaInfoArea.jsx';
 import ProcessedReportArea from '../../../AccidentPage/ProcessedReportArea/ProcessedReportArea.jsx';
 
 import UnprocessedReportResponse from './UnprocessedReportResponse/UnprocessedReportResponse.jsx';
+import ProcessedReportResponse from './ProcessedReportResponse/ProcessedReportResponse.jsx';
 
 export default function ReportPage() {
     const { id } = useParams();
@@ -149,7 +150,13 @@ export default function ReportPage() {
         }
         
         if (incidentData.response !== null) {
-            return <div className="placeholder-processed">Placeholder: response != null</div>;
+            return (
+                <ProcessedReportResponse 
+                    response={incidentData.response}
+                    trespasser={incidentData.trespasser}
+                    foreman={incidentData.foreman}
+                />
+            );
         }
         
         return null;
