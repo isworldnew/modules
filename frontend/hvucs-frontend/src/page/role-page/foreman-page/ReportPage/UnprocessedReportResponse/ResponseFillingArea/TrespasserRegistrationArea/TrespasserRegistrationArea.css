@@ -1,0 +1,60 @@
+@import '../../../../../../../variables.css';
+
+.trespasser-registration-area {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    background-color: var(--background-input);
+    overflow: hidden;
+}
+
+.trespasser-registration-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    background-color: var(--background-card);
+    transition: background-color 0.2s ease;
+}
+
+.trespasser-registration-header:hover {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.trespasser-registration-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.trespasser-registration-icon {
+    color: var(--button-yellow);
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.trespasser-registration-content {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.trespasser-registration-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.trespasser-registration-field-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.trespasser-registration-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-start;
+}

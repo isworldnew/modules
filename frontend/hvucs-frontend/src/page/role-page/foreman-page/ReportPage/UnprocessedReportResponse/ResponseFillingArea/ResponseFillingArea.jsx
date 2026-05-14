@@ -1,16 +1,22 @@
 import './ResponseFillingArea.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import BigTextInputField from '../../../../../../component/common-components/BigTextInputField/BigTextInputField.jsx';
 import RadioButtonArea from '../../../../../../component/common-components/RadioButtonsArea/RadioButtonsArea.jsx';
 import ActionButton from '../../../../../../component/common-components/ActionButton/ActionButton.jsx';
 
+import TrespasserSearchArea from './TrespasserSearchArea/TrespasserSearchArea.jsx';
+import TrespasserRegistrationArea from './TrespasserRegistrationArea/TrespasserRegistrationArea.jsx';
+
 export default function ResponseFillingArea() {
     const descriptionRef = useRef(null);
     const radioAreaRef = useRef(null);
+    const [activeSection, setActiveSection] = useState(null);
+    const searchAreaRef = useRef(null);
+    const registrationAreaRef = useRef(null);
 
     const radioOptions = [
-        { label: "Нарушитель пойман с поличным", value: "CAUGHT", color: "#4caf50" },
-        { label: "Не застал нарушителя", value: "NOT_CAUGHT", color: "#ef5350" }
+        { label: "Нарушитель пойман с поличным", value: "RED_HANDED_CATCH", color: "#4caf50" },
+        { label: "Не застал нарушителя", value: "NOTED", color: "#ef5350" }
     ];
 
     const handleSubmit = () => {
@@ -21,15 +27,41 @@ export default function ResponseFillingArea() {
         console.log('Description:', description);
     };
 
+    const handleSectionToggle = (section) => {
+        if (activeSection === section) {
+            if (section === 'search' && searchAreaRef.current?.handleClear) {
+                searchAreaRef.current.handleClear();
+            }
+            if (section === 'registration' && registrationAreaRef.current?.handleClear) {
+                registrationAreaRef.current.handleClear();
+            }
+            setActiveSection(null);
+        } else {
+            setActiveSection(section);
+        }
+    };
+
     return (
         <div className="response-filling-area">
-            <div className="response-filling-label">Реакция на инцидент:</div>
+            <div className="response-filling-label">Принятые меры:</div>
             
             <div className="response-filling-content">
                 <RadioButtonArea
                     ref={radioAreaRef}
                     label="Результат разбирательства:"
                     options={radioOptions}
+                />
+                
+                <TrespasserSearchArea 
+                    ref={searchAreaRef}
+                    isExpanded={activeSection === 'search'}
+                    onToggle={() => handleSectionToggle('search')}
+                />
+                
+                <TrespasserRegistrationArea 
+                    ref={registrationAreaRef}
+                    isExpanded={activeSection === 'registration'}
+                    onToggle={() => handleSectionToggle('registration')}
                 />
                 
                 <BigTextInputField
