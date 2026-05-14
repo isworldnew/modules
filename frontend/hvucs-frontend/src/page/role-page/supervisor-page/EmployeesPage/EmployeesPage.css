@@ -1,0 +1,45 @@
+@import '../../../../variables.css';
+
+.employee-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.employee-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.employee-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.employee-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Равные отступы для формы */
+.employee-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.employee-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .employee-page__layout {
+        flex-direction: column;
+    }
+    
+    .employee-page__content-inner {
+        padding: var(--spacing-md);
+    }
+}

@@ -147,7 +147,7 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
                     dateTo
             );
 
-        // если ADMIN или SUPERADMIN: возвращаем все
+        // если SUPERVISOR, ADMIN, SUPERADMIN: возвращаем все
         else
             return this.potentialAccidentRepository.getPotentialAccidentShortcuts(
                     status.toUpperCase(),
@@ -169,7 +169,7 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
                 throw new ForbiddenException("Potential Accident Record with id=" + id + " is not appointed to Safety Officer with id=" + tokenData.getUserId());
         }
 
-        // если ADMIN или SUPERADMIN - читать могут всё
+        // если FOREMAN, SUPERVISOR, ADMIN, SUPERADMIN - читать могут всё
 
         return this.potentialAccidentMapper.potentialAccidentEntityToAccidentResponse(potentialAccident);
     }

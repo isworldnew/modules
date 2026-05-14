@@ -1,0 +1,66 @@
+@import '../../../../variables.css';
+
+.event-archive-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.event-archive-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.event-archive-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.event-archive-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.event-archive-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.event-archive-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+.archive-filters {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-end;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.filter-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .event-archive-page__layout {
+        flex-direction: column;
+    }
+    
+    .event-archive-page__content-inner {
+        padding: var(--spacing-md);
+    }
+    
+    .archive-filters {
+        gap: var(--spacing-sm);
+    }
+}

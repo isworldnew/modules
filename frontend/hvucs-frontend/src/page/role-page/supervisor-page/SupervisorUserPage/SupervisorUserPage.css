@@ -1,0 +1,45 @@
+@import '../../../../variables.css';
+
+.supervisor-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.supervisor-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.supervisor-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.supervisor-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Равные отступы для формы */
+.supervisor-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.supervisor-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .supervisor-page__layout {
+        flex-direction: column;
+    }
+    
+    .supervisor-page__content-inner {
+        padding: var(--spacing-md);
+    }
+}

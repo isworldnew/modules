@@ -26,6 +26,13 @@ import ReportNotificationsPage from './page/role-page/foreman-page/ReportNotific
 import ReportPage from './page/role-page/foreman-page/ReportPage/ReportPage.jsx';
 import ResponsesPage from './page/role-page/foreman-page/ResponsesPage/ResponsesPage.jsx';
 
+import SupervisorUserPage from './page/role-page/supervisor-page/SupervisorUserPage/SupervisorUserPage.jsx';
+import EmployeesPage from './page/role-page/supervisor-page/EmployeesPage/EmployeesPage.jsx';
+import AreasPage from './page/role-page/supervisor-page/AreasPage/AreasPage.jsx';
+import CamerasPage from './page/role-page/supervisor-page/CamerasPage/CamerasPage.jsx';
+import EventsArchive from './page/role-page/supervisor-page/EventsArchive/EventsArchive.jsx';
+import StatsPage from './page/role-page/supervisor-page/StatsPage/StatsPage.jsx';
+
 import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
 import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
 
@@ -50,7 +57,6 @@ createRoot(document.getElementById('root')).render(
         <Route path='/areas' element={<AreaManagementPage />}/>
         <Route path='/cameras' element={<CameraManagementPage />}/>
 
-
         {/* страницы для роли FOREMAN */}
         <Route path='/foreman-user-page' element={<ForemanUserPage />}/>
         <Route path='/trespassers' element={<TrespassersPage />}/>
@@ -58,8 +64,14 @@ createRoot(document.getElementById('root')).render(
         <Route path='/report/:id' element={<ReportPage />}/>
         <Route path='/responses' element={<ResponsesPage />}/>
 
-        
-        {/* <Route path="/" element={<Navigate to="/analysis" replace />} /> */}
+        {/* страницы для роли SUPERVISOR */}
+        <Route path='/supervisor-user-page' element={<SupervisorUserPage />}/>
+        <Route path='/employees' element={<EmployeesPage />}/>
+        <Route path='/areas-page' element={<AreasPage />}/>
+        <Route path='/cameras-page' element={<CamerasPage />}/>
+        <Route path='/archive' element={<EventsArchive />}/>
+        <Route path='/stats' element={<StatsPage />}/>
+
       </Routes>
     </Router>
   </React.StrictMode>,

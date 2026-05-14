@@ -48,7 +48,7 @@ public class PotentialAccidentController {
     // шорткаты UNPROCESSED или PROCESSED + по диапизону дат
     @GetMapping("/shortcuts")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER')")
+    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER', 'SUPERVISOR')")
     public List<AccidentShortcutResponse> getAccidentShortcutsByStatus(
             @NotBlank @AccidentStatusLabel @RequestParam(name = "status") String status,
             @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)OffsetDateTime dateFrom,
@@ -61,7 +61,7 @@ public class PotentialAccidentController {
     // полная информация по инциденту (обработан он или нет)
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER', 'FOREMAN')")
+    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER', 'FOREMAN', 'SUPERVISOR')")
     public AccidentResponse getAccidentById(@NotNull @Positive @PathVariable("id") Long id) {
         DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
         return this.potentialAccidentService.getAccidentById(tokenData, id);
