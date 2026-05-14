@@ -45,4 +45,13 @@ public class UserController {
         return this.userService.createUser(dto);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('SUPERVISOR', 'ADMIN', 'SUPERADMIN')")
+    public List<UserResponse> usersSearch(
+            @NotBlank @RequestParam(value = "searchRequest", required = true) String searchRequest,
+            @NotBlank @RoleLabel @RequestParam(value = "role", required = true) String role
+    ) {
+        return this.userService.usersSearch(searchRequest, role);
+    }
 }

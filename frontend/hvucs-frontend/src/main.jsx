@@ -33,6 +33,8 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<InitPage />}/>
         <Route path='/login' element={<LoginPage />}/>
+        <Route path='/forbidden' element={<ForbiddenPage />}/>
+        <Route path='/not-found' element={<NotFoundPage />}/>
 
         {/* страницы для роли SAFETY_OFFICER */}
         <Route path='/safety-officer-user-page' element={<SafetyOfficerUserPage />}/>

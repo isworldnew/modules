@@ -15,7 +15,7 @@ export default function UserSearchItem({ id, username, firstname, lastname, pare
             'ADMIN': 'Администратор',
             'SUPERADMIN': 'Супер-администратор',
             'SAFETY_OFFICER': 'Сотрудник отдела ТБ',
-            'FOREMAN': 'Бригадир',
+            'FOREMAN': 'Ответственный за зону',
             'SUPERVISOR': 'Начальник'
         };
         return roles[role] || role;
@@ -33,15 +33,19 @@ export default function UserSearchItem({ id, username, firstname, lastname, pare
     };
 
     const getStatusText = () => {
-        return status === 'ACTIVE' ? 'Активен' : 'Неактивен';
+        return status === 'ENABLED' ? 'Активен' : 'Неактивен';
     };
 
     const getStatusClass = () => {
-        return status === 'ACTIVE' ? 'status-active' : 'status-inactive';
+        return status === 'ENABLED' ? 'status-active' : 'status-inactive';
+    };
+
+    const handleClick = () => {
+        window.location.href = `/user/${id}`;
     };
 
     return (
-        <div className="user-search-item">
+        <div className="user-search-item" onClick={handleClick}>
             <div className="user-search-item-header">
                 <div className="user-search-item-name">{getFullName()}</div>
                 <div className="user-search-item-id">ID: {id}</div>

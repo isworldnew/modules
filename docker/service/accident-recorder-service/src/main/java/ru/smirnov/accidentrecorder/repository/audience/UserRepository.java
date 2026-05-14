@@ -26,12 +26,23 @@ public interface UserRepository extends JpaRepository<User, Long> {
     )
     List<Long> getEnabledSafetyOfficerIdentifiers();
 
+
     @Query(
             value = """
-                    SELECT * FROM users
-                    WHERE users.role = :role
+                    SELECT DISTINCT u.*
+                    FROM users u
+                    WHERE (
+                        (:searchRequest IS NULL OR :searchRequest = '')\s
+                        OR LOWER(u.lastname) LIKE LOWER(CONCAT('%', :searchRequest, '%'))
+                        OR LOWER(u.firstname) LIKE LOWER(CONCAT('%', :searchRequest, '%'))
+                        OR LOWER(u.parentname) LIKE LOWER(CONCAT('%', :searchRequest, '%'))
+                        OR LOWER(u.username) LIKE LOWER(CONCAT('%', :searchRequest, '%'))
+                    )
+                    AND
+                        u.role = :role
+                    ORDER BY u.id
                     """,
             nativeQuery = true
     )
-    List<User> findAllByRole(@Param("role") String role);
+    List<User> usersSearch(@Param("searchRequest") String searchRequest, @Param("role") String role);
 }

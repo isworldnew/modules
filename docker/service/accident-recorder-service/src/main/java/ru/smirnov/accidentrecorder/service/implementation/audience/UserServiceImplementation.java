@@ -82,4 +82,13 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
         return user.getId();
     }
 
+    @Override
+    public List<UserResponse> usersSearch(String searchRequest, String role) {
+        List<User> users = this.userRepository.usersSearch(searchRequest, role.toUpperCase());
+
+        return users.stream()
+                .map(this.userMapper::userEntityToUserResponse)
+                .toList();
+    }
+
 }

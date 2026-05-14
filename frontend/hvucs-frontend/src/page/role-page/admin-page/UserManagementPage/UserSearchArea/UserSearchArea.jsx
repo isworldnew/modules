@@ -1,10 +1,11 @@
 import './UserSearchArea.css';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import UserSearchItem from './UserSearchItem/UserSearchItem.jsx';
 import InlineTextInputField from '../../../../../component/common-components/InlineTextInputField/InlineTextInputField.jsx';
 import ActionButton from '../../../../../component/common-components/ActionButton/ActionButton.jsx';
 import ModalWindow from '../../../../../component/common-components/ModalWindow/ModalWindow.jsx';
 import ProgressLoader from '../../../../../component/common-components/ProgressLoader/ProgressLoader.jsx';
+import { executeWithTokenRefresh } from '../../../../../script/executeWithTokenRefresh.js';
 
 export default function UserSearchArea() {
     const [searchValue, setSearchValue] = useState('');
@@ -28,24 +29,48 @@ export default function UserSearchArea() {
         setModalOpen(true);
     };
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         if (!searchValue.trim()) {
             openModal('Введите поисковый запрос');
             return;
         }
 
-        console.log('Поиск пользователей:');
-        console.log('Поисковый запрос:', searchValue);
-        console.log('Фильтр по роли:', selectedRole);
-        
-        // Здесь будет реальный запрос к API
+        setIsLoading(true);
         setHasSearched(true);
-        setSearchResults([]);
-    };
 
-    const getRoleLabel = (roleValue) => {
-        const role = roleOptions.find(r => r.value === roleValue);
-        return role ? role.label : roleValue;
+        try {
+            const result = await executeWithTokenRefresh(async (accessToken) => {
+                const response = await fetch(`/api/users/search?searchRequest=${encodeURIComponent(searchValue.trim())}&role=${selectedRole}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                let data = null;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    data = null;
+                }
+
+                return { status: response.status, data: data };
+            });
+
+            if (result.status === 200 && result.data) {
+                setSearchResults(result.data);
+            } else if (result.status === 403) {
+                window.location.href = '/forbidden';
+            } else {
+                setSearchResults([]);
+            }
+        } catch (error) {
+            console.error('Error searching users:', error);
+            setSearchResults([]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -78,8 +103,8 @@ export default function UserSearchArea() {
                         </select>
                     </div>
                     
-                    <ActionButton onClick={handleSearch} width="auto">
-                        Найти
+                    <ActionButton onClick={handleSearch} width="auto" disabled={isLoading}>
+                        {isLoading ? 'Поиск...' : 'Найти'}
                     </ActionButton>
                 </div>
             </div>

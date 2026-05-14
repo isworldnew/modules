@@ -49,6 +49,7 @@ export default function ForemanUserPage() {
                         <PageName title="Личный кабинет" />
                         <PersonalDataCard />
                     </div>
+                    <div>TODO: К КАКОЙ ЗОНЕ ПРИВЯЗАН ОН</div>
                 </main>
             </div>
             <Footer />
