@@ -1,5 +1,6 @@
 package ru.smirnov.accidentrecorder.controller.domain;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +30,7 @@ public class CameraController {
     @PostMapping("/camera")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
-    public Long createCamera(CameraCreationRequest dto) {
+    public Long createCamera(@Valid @RequestBody CameraCreationRequest dto) {
         return this.cameraService.createCamera(dto);
     }
 

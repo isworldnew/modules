@@ -18,6 +18,7 @@ import AccidentPage from './page/AccidentPage/AccidentPage.jsx';
 import AdminUserPage from './page/role-page/admin-page/AdminUserPage/AdminUserPage.jsx';
 import UserManagementPage from './page/role-page/admin-page/UserManagementPage/UserManagementPage.jsx';
 import AreaManagementPage from './page/role-page/admin-page/AreaManagementPage/AreaManagementPage.jsx';
+import CameraManagementPage from './page/role-page/admin-page/CameraManagementPage/CameraManagementPage.jsx';
 
 import ForemanUserPage from './page/role-page/foreman-page/ForemanUserPage/ForemanUserPage.jsx';
 import TrespassersPage from './page/role-page/foreman-page/TrespassersPage/TrespassersPage.jsx';
@@ -47,6 +48,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/admin-user-page' element={<AdminUserPage />}/>
         <Route path='/users' element={<UserManagementPage />}/>
         <Route path='/areas' element={<AreaManagementPage />}/>
+        <Route path='/cameras' element={<CameraManagementPage />}/>
 
 
         {/* страницы для роли FOREMAN */}

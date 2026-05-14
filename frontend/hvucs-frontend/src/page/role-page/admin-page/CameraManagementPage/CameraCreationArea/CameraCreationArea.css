@@ -1,0 +1,67 @@
+@import '../../../../../variables.css';
+
+.camera-creation-area {
+    display: inline-block;
+    width: auto;
+    min-width: 500px;
+}
+
+.camera-creation-card {
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1px solid #2c2c2c;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.camera-creation-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--button-yellow);
+}
+
+.camera-creation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #ccc;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.camera-creation-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .camera-creation-area {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .camera-creation-card {
+        padding: 1rem;
+    }
+    
+    .camera-creation-actions {
+        flex-direction: column;
+    }
+    
+    .camera-creation-actions button {
+        width: 100%;
+    }
+}

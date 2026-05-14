@@ -1,0 +1,42 @@
+@import '../../../../../variables.css';
+
+.existing-cameras-region {
+    width: 100%;
+    margin-top: var(--spacing-xl);
+}
+
+.existing-cameras-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--button-yellow);
+}
+
+.existing-cameras-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.existing-cameras-empty,
+.existing-cameras-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.existing-cameras-empty p,
+.existing-cameras-error p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .existing-cameras-list {
+        gap: var(--spacing-sm);
+    }
+}

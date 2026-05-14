@@ -9,7 +9,6 @@ import CameraCreationArea from './CameraCreationArea/CameraCreationArea.jsx';
 import ExistingCamerasArea from './ExistingCamerasArea/ExistingCamerasArea.jsx';
 
 export default function CameraManagementPage() {
-
     const navItems = [
         { 
             label: 'Пользователи', 
@@ -48,8 +47,8 @@ export default function CameraManagementPage() {
                 <main className="camera-page__content">
                     <div className="camera-page__content-inner">
                         <PageName title="Камеры" />
-                        {/* CameraCreationArea */}
-                        {/* ExistingCamerasArea */}
+                        <CameraCreationArea />
+                        <ExistingCamerasArea />
                     </div>
                 </main>
             </div>
