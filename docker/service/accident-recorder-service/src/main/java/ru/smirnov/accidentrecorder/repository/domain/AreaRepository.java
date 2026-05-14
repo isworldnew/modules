@@ -20,4 +20,12 @@ public interface AreaRepository extends JpaRepository<Area, Long> {
     )
     Optional<Area> getAreaByForemanId(@Param("foremanId") Long foremanId);
 
+    @Query(
+            value = """
+                    SELECT * FROM areas
+                    WHERE areas.name = :name
+                    """,
+            nativeQuery = true
+    )
+    Optional<Area> getAreaByName(@Param("name") String name);
 }

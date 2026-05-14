@@ -45,4 +45,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
             nativeQuery = true
     )
     List<User> usersSearch(@Param("searchRequest") String searchRequest, @Param("role") String role);
+
+    @Query(
+            value = """
+            SELECT * FROM users
+            WHERE
+                users.role = 'FOREMAN'
+            AND
+                users.id NOT IN (
+                    SELECT DISTINCT areas.foreman_id FROM areas WHERE areas.foreman_id IS NOT NULL
+                );
+            """,
+            nativeQuery = true
+    )
+    List<User> getFreeForemans();
 }
