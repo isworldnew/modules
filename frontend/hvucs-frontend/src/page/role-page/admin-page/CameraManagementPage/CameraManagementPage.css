@@ -1,0 +1,45 @@
+@import '../../../../variables.css';
+
+.camera-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.camera-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.camera-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.camera-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Равные отступы для формы */
+.camera-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.camera-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .camera-page__layout {
+        flex-direction: column;
+    }
+    
+    .camera-page__content-inner {
+        padding: var(--spacing-md);
+    }
+}

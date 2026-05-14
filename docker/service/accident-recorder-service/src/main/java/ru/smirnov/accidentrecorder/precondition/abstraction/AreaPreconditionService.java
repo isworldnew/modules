@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface AreaPreconditionService {
 
     Optional<Area> safelyGetByName(String name);
+
+    Area safelyGetById(Long id);
 }

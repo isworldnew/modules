@@ -2,6 +2,8 @@ package ru.smirnov.accidentrecorder.service.implementation.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.dto.request.AreaCreationRequest;
 import ru.smirnov.accidentrecorder.dto.response.AreaResponse;
 import ru.smirnov.accidentrecorder.entity.audience.User;
@@ -48,6 +50,7 @@ public class AreaServiceImplementation implements AreaService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Long createArea(AreaCreationRequest dto) {
         Area areaFoundByName = this.areaPreconditionService.safelyGetByName(dto.getName()).orElse(null);
 
