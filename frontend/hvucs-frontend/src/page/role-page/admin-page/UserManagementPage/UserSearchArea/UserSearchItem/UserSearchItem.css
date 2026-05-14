@@ -1,0 +1,125 @@
+@import '../../../../../../variables.css';
+
+.user-search-item {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-md) var(--spacing-lg);
+    transition: all 0.2s ease;
+}
+
+.user-search-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--button-yellow);
+    box-shadow: var(--shadow-card);
+}
+
+.user-search-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.user-search-item-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.user-search-item-id {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+}
+
+.user-search-item-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+}
+
+.user-search-item-detail {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+}
+
+.detail-label {
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    color: var(--text-primary);
+}
+
+.role-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.role-brigadier {
+    background-color: #e65100;
+    color: #fff3e0;
+}
+
+.role-hse {
+    background-color: #1565c0;
+    color: #e3f2fd;
+}
+
+.role-chief {
+    background-color: #6a1b9a;
+    color: #f3e5f5;
+}
+
+.role-admin {
+    background-color: #2e7d32;
+    color: #e8f5e9;
+}
+
+.role-superadmin {
+    background-color: #c62828;
+    color: #ffebee;
+}
+
+.role-unknown {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-active {
+    background-color: #1b5e20;
+    color: #c8e6c9;
+}
+
+.status-inactive {
+    background-color: #b71c1c;
+    color: #ffcdd2;
+}
+
+@media (max-width: 768px) {
+    .user-search-item {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .user-search-item-details {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+}

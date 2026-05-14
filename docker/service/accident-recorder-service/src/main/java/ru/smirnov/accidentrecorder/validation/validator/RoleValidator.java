@@ -2,7 +2,6 @@ package ru.smirnov.accidentrecorder.validation.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentInterpretation;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
 import ru.smirnov.accidentrecorder.validation.annotation.RoleLabel;
 

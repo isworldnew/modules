@@ -8,9 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
+import ru.smirnov.accidentrecorder.dto.request.UserCreationRequest;
 import ru.smirnov.accidentrecorder.dto.response.UserResponse;
 import ru.smirnov.accidentrecorder.entity.audience.User;
+import ru.smirnov.accidentrecorder.exception.ConflictException;
 import ru.smirnov.accidentrecorder.mapper.abstraction.UserMapper;
 import ru.smirnov.accidentrecorder.repository.audience.UserRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.audience.UserService;
@@ -63,25 +67,19 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
     }
 
     @Override
-    public List<UserResponse> generalizedUserSearch(String role, String request) {
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Long createUser(UserCreationRequest dto) {
 
-        List<User> users = new ArrayList<>();
+        User userFoundByUsername = this.userRepository.findByUsername(dto.getUsername()).orElse(null);
 
-        if (role.isEmpty() && request == null)
-            users = this.userRepository.findAll();
+        if (userFoundByUsername != null)
+            throw new ConflictException("User with username='" + dto.getUsername() + "' already exists");
 
-        if (role.isEmpty() && request != null)
-            throw new NotImplementedException();
+        User user = this.userMapper.userCreationRequestToUserEntity(dto, this.bCryptPasswordEncoder.encode(dto.getPassword()));
 
-        if (role != null && request == null)
-            users = this.userRepository.findAllByRole(role);
+        this.userRepository.save(user);
 
-        if (role != null && request != null)
-            throw new NotImplementedException();
-
-        return users.stream()
-                .map(this.userMapper::userEntityToUserResponse)
-                .toList();
+        return user.getId();
     }
 
 }

@@ -1,0 +1,137 @@
+@import '../../../../../variables.css';
+
+.user-creation-area {
+    width: 100%;
+}
+
+.user-creation-card {
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    border: 1px solid #2c2c2c;
+}
+
+.user-creation-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--button-yellow);
+}
+
+.user-creation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.user-creation-form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.user-creation-form-group {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.user-creation-label {
+    color: #ccc;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.user-creation-role-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.role-btn {
+    padding: 0.75rem 1rem;
+    background-color: #2c2c2c;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.role-btn:hover {
+    background-color: #3a3a3a;
+}
+
+.role-btn.active {
+    background-color: var(--button-yellow);
+    border-color: var(--button-yellow);
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.user-creation-password-field {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.user-creation-password-field > div {
+    flex: 1;
+}
+
+.user-creation-copy-btn {
+    padding: 0.75rem 1rem;
+    background-color: #2c2c2c;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    color: var(--button-yellow);
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.user-creation-copy-btn:hover {
+    background-color: #3a3a3a;
+}
+
+.user-creation-form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .user-creation-card {
+        padding: 1rem;
+    }
+    
+    .user-creation-form-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .user-creation-form-group {
+        min-width: 100%;
+    }
+    
+    .user-creation-form-actions {
+        flex-direction: column;
+    }
+    
+    .user-creation-form-actions button {
+        width: 100%;
+    }
+    
+    .user-creation-password-field {
+        flex-direction: column;
+    }
+    
+    .user-creation-copy-btn {
+        width: 100%;
+    }
+}
