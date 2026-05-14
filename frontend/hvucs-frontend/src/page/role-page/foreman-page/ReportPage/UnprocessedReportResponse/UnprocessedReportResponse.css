@@ -1,0 +1,7 @@
+@import '../../../../../variables.css';
+
+.unprocessed-report-response {
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-lg);
+}

@@ -1,0 +1,27 @@
+@import '../../../../../../variables.css';
+
+.response-filling-area {
+    width: 100%;
+}
+
+.response-filling-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--button-yellow);
+}
+
+.response-filling-content {
+    background-color: #252525;
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.response-filling-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: var(--spacing-xs);
+}

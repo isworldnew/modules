@@ -26,11 +26,13 @@ public class AccidentResponse {
 
     private String status;
 
-    private UserResponse safetyOfficer;
+    private UserResponse safetyOfficer; // ТОЖЕ ОТОБРАЗИТЬ
 
     private ReportResponse report; // то, что от safetyOfficer
 
     private UserResponse foreman; // кто отреагировал на инцидент
 
-//    private ? response; // сама реакция на инцидент
+    private ForemanAccidentResponse response; // сама реакция на инцидент
+
+    private TrespasserResponse trespasser; // нарушитель
 }

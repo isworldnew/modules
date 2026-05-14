@@ -61,7 +61,7 @@ public class PotentialAccidentController {
     // полная информация по инциденту (обработан он или нет)
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER')")
+    @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER', 'FOREMAN')")
     public AccidentResponse getAccidentById(@NotNull @Positive @PathVariable("id") Long id) {
         DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
         return this.potentialAccidentService.getAccidentById(tokenData, id);
