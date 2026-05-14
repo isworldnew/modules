@@ -34,7 +34,7 @@ export default function ReportItem({ potentialAccidentId, accidentReportId, area
     
     const handleClick = () => {
         // Переход на страницу отчёта о нарушении
-        window.location.href = `/report/${potentialAccidentId}`;
+        window.location.href = `/report/${accidentReportId}`;
     };
     
     return (

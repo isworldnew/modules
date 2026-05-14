@@ -1,51 +1,41 @@
-@import '../../../../variables.css';
-
 .radio-button {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
     cursor: pointer;
-    position: relative;
+    font-family: inherit;
 }
 
-.radio-input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+.radio-button input {
+    display: none;
 }
 
 .radio-custom {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--border-color);
     border-radius: 50%;
+    border: 2px solid var(--border-color);
     position: relative;
-    transition: all 0.2s ease;
 }
 
-.radio-input:checked + .radio-custom {
+.radio-button input:checked + .radio-custom {
     border-color: var(--button-yellow);
 }
 
-.radio-input:checked + .radio-custom::after {
+.radio-button input:checked + .radio-custom::after {
     content: '';
     position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--button-yellow);
+    border-radius: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    background-color: var(--button-yellow);
-    border-radius: 50%;
 }
 
 .radio-label {
     font-size: 0.9rem;
     font-weight: 600;
-    transition: color 0.2s ease;
 }
 
-.radio-button:hover .radio-label {
-    opacity: 0.8;
-}

@@ -53,6 +53,23 @@
     color: var(--text-primary);
 }
 
+.radio-group {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.radio-label input {
+    cursor: pointer;
+}
+
 .trespasser-registration-actions {
     display: flex;
     gap: var(--spacing-sm);
