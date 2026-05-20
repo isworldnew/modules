@@ -51,8 +51,8 @@ public class PotentialAccidentController {
     @PreAuthorize("hasAnyRole('SUPERADMIN', 'ADMIN', 'SAFETY_OFFICER', 'SUPERVISOR')")
     public List<AccidentShortcutResponse> getAccidentShortcutsByStatus(
             @NotBlank @AccidentStatusLabel @RequestParam(name = "status") String status,
-            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)OffsetDateTime dateFrom,
-            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)OffsetDateTime dateTo
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateTo
     ) {
         DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
         return this.potentialAccidentService.getAccidentShortcutsByStatus(tokenData, status, dateFrom, dateTo);

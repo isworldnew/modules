@@ -60,14 +60,15 @@ public class AccidentReportController {
 
     @GetMapping("/shortcuts")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('FOREMAN')")
+    @PreAuthorize("hasAnyRole('FOREMAN', 'SUPERVISOR', 'ADMIN', 'SUPERADMIN')")
     public List<AccidentReportShortcutResponse> getReportShortcutsByStatus(
+            @Positive @RequestParam(name = "areaId", required = false) Long areaId,
             @NotBlank @ReportStatusLabel @RequestParam(name = "status") String status,
             @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateFrom,
             @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)OffsetDateTime dateTo
     ) {
         DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
-        return this.accidentReportService.getAccidentReportShortcuts(tokenData, status, dateFrom, dateTo);
+        return this.accidentReportService.getAccidentReportShortcuts(tokenData, areaId, status, dateFrom, dateTo);
     }
 
 }

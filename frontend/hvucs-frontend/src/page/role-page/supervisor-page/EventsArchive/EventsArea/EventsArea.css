@@ -1,0 +1,32 @@
+@import '../../../../../variables.css';
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.events-area-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.events-area-empty p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .events-list {
+        gap: var(--spacing-xs);
+    }
+    
+    .events-area-empty p {
+        font-size: 0.875rem;
+    }
+}

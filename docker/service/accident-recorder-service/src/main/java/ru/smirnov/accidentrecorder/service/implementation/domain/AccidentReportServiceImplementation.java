@@ -7,14 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.dto.request.ReportRequest;
 import ru.smirnov.accidentrecorder.entity.audience.User;
-import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentInterpretation;
-import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentStatus;
-import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.AccidentType;
-import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.ReportStatus;
+import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.*;
 import ru.smirnov.accidentrecorder.entity.domain.AccidentReport;
 import ru.smirnov.accidentrecorder.entity.domain.Area;
 import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.exception.ForbiddenException;
+import ru.smirnov.accidentrecorder.precondition.abstraction.AreaPreconditionService;
 import ru.smirnov.accidentrecorder.precondition.abstraction.PotentialAccidentPreconditionService;
 import ru.smirnov.accidentrecorder.projection.abstraction.AccidentReportShortcutResponse;
 import ru.smirnov.accidentrecorder.repository.domain.AccidentReportRepository;
@@ -31,16 +29,19 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
     private final AccidentReportRepository accidentReportRepository;
     private final PotentialAccidentPreconditionService potentialAccidentPreconditionService;
     private final AreaService areaService;
+    private final AreaPreconditionService areaPreconditionService;
 
     @Autowired
     public AccidentReportServiceImplementation(
             AccidentReportRepository accidentReportRepository,
             PotentialAccidentPreconditionService potentialAccidentPreconditionService,
-            AreaService areaService
+            AreaService areaService,
+            AreaPreconditionService areaPreconditionService
     ) {
         this.accidentReportRepository = accidentReportRepository;
         this.potentialAccidentPreconditionService = potentialAccidentPreconditionService;
         this.areaService = areaService;
+        this.areaPreconditionService = areaPreconditionService;
     }
 
     @Override
@@ -71,6 +72,7 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
     @Override
     public List<AccidentReportShortcutResponse> getAccidentReportShortcuts(
             DataForToken tokenData,
+            Long areaId,
             String reportStatus,
             OffsetDateTime dateFrom,
             OffsetDateTime dateTo
@@ -78,19 +80,27 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
         /*
              Метод для роли FOREMAN
              Можно использовать для уведомлений или архива: вернёт то, что относится к Area данного Foreman
+
+             И метод для роли SUPERVISOR
+             В архиве используется для просмотра полностью обработанных инцидентов
         */
 
-        Area operatedArea = this.areaService.getAreaByForemanId(tokenData.getUserId());
+        Area operatedArea = null;
+
+        if (Role.valueOf(tokenData.getRole()).equals(Role.FOREMAN))
+            operatedArea = this.areaService.getAreaByForemanId(tokenData.getUserId());
 
         ReportStatus statusOfReport = ReportStatus.valueOf(reportStatus.toUpperCase());
 
         List<AccidentReportShortcutResponse> accidentReportShortcuts = new ArrayList<>();
 
         // для уведомлений
-        if (statusOfReport == ReportStatus.UNPROCESSED_BY_FOREMAN)
+        // уведомления только у FOREMAN
+        if (statusOfReport == ReportStatus.UNPROCESSED_BY_FOREMAN && Role.valueOf(tokenData.getRole()).equals(Role.FOREMAN))
             return this.accidentReportRepository.getUnprocessedAccidentReportsByAreaId(operatedArea.getId());
 
         // для архива
+        // тут архив либо FOREMAN-а, либо SUPERVISOR-а
         if (statusOfReport == ReportStatus.PROCESSED_BY_FOREMAN) {
 
             if (dateFrom == null && dateTo == null) {
@@ -98,7 +108,18 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
                 dateFrom = dateTo.minusDays(3);
             }
 
-            return this.accidentReportRepository.getProcessedAccidentReportsByAreaIdAndDateTimeRange(operatedArea.getId(), dateFrom, dateTo);
+            if (Role.valueOf(tokenData.getRole()).equals(Role.FOREMAN))
+                return this.accidentReportRepository.getProcessedAccidentReportsByAreaIdAndDateTimeRange(operatedArea.getId(), dateFrom, dateTo);
+
+            else {
+                if (areaId != null) {
+                    Area area = this.areaPreconditionService.safelyGetById(areaId);
+
+                    return this.accidentReportRepository.getProcessedAccidentReportsByAreaIdAndDateTimeRange(areaId, dateFrom, dateTo);
+                }
+
+                return this.accidentReportRepository.getProcessedAccidentReportsByDateTimeRange(dateFrom, dateTo);
+            }
         }
 
         return accidentReportShortcuts;
@@ -108,6 +129,7 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
     public Integer getUnprocessedAccidentReportsAmount(DataForToken tokenData) {
         return this.getAccidentReportShortcuts(
                 tokenData,
+                null,
                 ReportStatus.UNPROCESSED_BY_FOREMAN.name(),
                 null, null
         ).size();

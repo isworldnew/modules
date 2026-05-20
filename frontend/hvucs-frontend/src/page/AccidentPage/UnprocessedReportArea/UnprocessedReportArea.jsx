@@ -69,7 +69,7 @@ export default function UnprocessedReportArea({ label, children }) {
             
             // Обработка успешного ответа
             if (result.status === 200) {
-                window.location.href = '/accidents';
+                window.location.href = '/notifications';
             } else {
                 // Отображаем ошибку от сервера
                 const errorMessage = result.data?.message || result.data?.error || 'Произошла ошибка при обработке инцидента';

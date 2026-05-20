@@ -76,5 +76,35 @@ public interface AccidentReportRepository extends JpaRepository<AccidentReport, 
             @Param("dateTo") OffsetDateTime dateTo
     );
 
+    @Query(
+            value = """
+                    SELECT
+                        potential_accidents.id AS potential_accident_id,
+                        accident_reports.id AS accident_report_id,
+                        accident_reports.report_status AS report_status,
+                        areas.name AS area_name,
+                        TO_CHAR(accident_reports.upload_date_time, 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS upload_date_time
+                    FROM accident_reports
+                    
+                    INNER JOIN potential_accidents
+                    ON potential_accidents.id = accident_reports.accident_id
+                    
+                    INNER JOIN areas
+                    ON potential_accidents.area_id = areas.id
+                    
+                    WHERE
+                        accident_reports.report_status = 'PROCESSED_BY_FOREMAN'
+                    AND
+                        accident_reports.accident_interpretation = 'REAL_ALARM'
+                    AND
+                        accident_reports.upload_date_time BETWEEN :dateFrom AND :dateTo
+                    ORDER BY accident_reports.upload_date_time DESC
+                    """,
+            nativeQuery = true
+    )
+    List<AccidentReportShortcutResponse> getProcessedAccidentReportsByDateTimeRange(
+            @Param("dateFrom") OffsetDateTime dateFrom,
+            @Param("dateTo") OffsetDateTime dateTo
+    );
 
 }

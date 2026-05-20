@@ -13,6 +13,7 @@ public interface AccidentReportService {
 
     List<AccidentReportShortcutResponse> getAccidentReportShortcuts(
             DataForToken tokenData,
+            Long areaId,
             String reportStatus,
             OffsetDateTime dateFrom,
             OffsetDateTime dateTo

@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
 import ru.smirnov.accidentrecorder.dto.response.AccidentResponse;
+import ru.smirnov.accidentrecorder.entity.domain.Area;
 import ru.smirnov.accidentrecorder.exception.ForbiddenException;
+import ru.smirnov.accidentrecorder.precondition.abstraction.AreaPreconditionService;
 import ru.smirnov.accidentrecorder.precondition.abstraction.PotentialAccidentPreconditionService;
 import ru.smirnov.accidentrecorder.projection.abstraction.AccidentShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.Role;
@@ -25,6 +27,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.util.SafetyOfficerAppoint
 
 import java.io.InputStream;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +48,6 @@ public class PotentialAccidentServiceImplementation implements PotentialAccident
     private final SafetyOfficerAppointmentCriteria safetyOfficerAppointmentCriteria;
 
     private final PotentialAccidentPreconditionService potentialAccidentPreconditionService;
-
 
     @Autowired
     public PotentialAccidentServiceImplementation(

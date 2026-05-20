@@ -1,11 +1,11 @@
+import './EventsArea.css';
 import { useState, useEffect, useRef } from 'react';
-import { executeWithTokenRefresh } from '../../../script/executeWithTokenRefresh.js';
-import AccidentItem from '../../NotificationsPage/AccidentItem/AccidentItem.jsx';
-import ProgressLoader from '../../../component/common-components/ProgressLoader/ProgressLoader.jsx';
-import './AccidentArea.css';
+import { executeWithTokenRefresh } from '../../../../../script/executeWithTokenRefresh.js';
+import EventItem from './EventItem/EventItem.jsx';
+import ProgressLoader from '../../../../../component/common-components/ProgressLoader/ProgressLoader.jsx';
 
-export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
-    const [accidents, setAccidents] = useState([]);
+export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) {
+    const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(true);
 
@@ -22,11 +22,15 @@ export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
         return `${year}-${month}-${day}T00:00:00.000Z`;
     };
 
-    const fetchAccidents = async () => {
+    const fetchEvents = async () => {
         setIsLoading(true);
         
         try {
-            let url = '/api/accidents/shortcuts?status=processed';
+            let url = '/api/reports/shortcuts?status=processed_by_foreman';
+            
+            if (areaId) {
+                url = `/api/reports/shortcuts?areaId=${areaId}&status=processed_by_foreman`;
+            }
             
             if (dateFrom && dateTo) {
                 const isoDateFrom = convertToISODate(dateFrom);
@@ -59,14 +63,14 @@ export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
             if (!isMounted.current) return;
 
             if (result.status === 200 && result.data) {
-                setAccidents(result.data);
+                setEvents(result.data);
             } else if (result.status === 403) {
                 window.location.href = '/forbidden';
             } else if (result.status === 404) {
                 window.location.href = '/not-found';
             }
         } catch (error) {
-            console.error('Error fetching accidents:', error);
+            console.error('Error fetching events:', error);
         } finally {
             if (isMounted.current) {
                 setIsLoading(false);
@@ -76,40 +80,40 @@ export default function AccidentArea({ dateFrom, dateTo, searchTrigger }) {
 
     useEffect(() => {
         isMounted.current = true;
-        fetchAccidents();
+        fetchEvents();
         
         return () => {
             isMounted.current = false;
         };
-    }, []);
+    }, [areaId]);
 
     useEffect(() => {
         if (searchTrigger > 0) {
-            fetchAccidents();
+            fetchEvents();
         }
     }, [searchTrigger]);
 
     if (isLoading) {
-        return <ProgressLoader message="Загрузка инцидентов..." />;
+        return <ProgressLoader message="Загрузка событий..." />;
     }
 
-    if (accidents.length === 0) {
+    if (events.length === 0) {
         return (
-            <div className="accident-area-empty">
-                <p>Нет инцидентов</p>
+            <div className="events-area-empty">
+                <p>Нет событий</p>
             </div>
         );
     }
 
     return (
-        <div className="accidents-list">
-            {accidents.map((accident) => (
-                <AccidentItem
-                    key={accident.id}
-                    id={accident.id}
-                    areaName={accident.areaName}
-                    uploadDateTime={accident.uploadDateTime}
-                    status={accident.status}
+        <div className="events-list">
+            {events.map((event) => (
+                <EventItem
+                    key={event.potentialAccidentId}
+                    potentialAccidentId={event.potentialAccidentId}
+                    areaName={event.areaName}
+                    uploadDateTime={event.uploadDateTime}
+                    status={event.reportStatus}
                 />
             ))}
         </div>

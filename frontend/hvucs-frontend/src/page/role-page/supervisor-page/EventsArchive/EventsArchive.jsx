@@ -6,10 +6,11 @@ import Footer from '../../../../component/common-components/Footer/Footer.jsx';
 import SideBar from '../../../../component/common-components/SideBar/SideBar.jsx';
 import PageName from '../../../../component/common-components/PageName/PageName.jsx';
 import InlineTextInputField from '../../../../component/common-components/InlineTextInputField/InlineTextInputField.jsx';
+import DropDownMenu from '../../../../component/common-components/DropDownMenu/DropDownMenu.jsx';
 import ActionButton from '../../../../component/common-components/ActionButton/ActionButton.jsx';
 import ModalWindow from '../../../../component/common-components/ModalWindow/ModalWindow.jsx';
 
-import AccidentsArea from '../../../AccidentsPage/AccidentArea/AccidentArea.jsx';
+import EventsArea from './EventsArea/EventsArea.jsx';
 
 export default function EventsArchive() {
     const navItems = [
@@ -53,6 +54,7 @@ export default function EventsArchive() {
 
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
+    const [selectedArea, setSelectedArea] = useState(null);
     const [modalMessage, setModalMessage] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchTrigger, setSearchTrigger] = useState(0);
@@ -108,6 +110,11 @@ export default function EventsArchive() {
         setIsInitialLoad(false);
     }, []);
     
+    const handleAreaSelect = (area) => {
+        setSelectedArea(area);
+        console.log('Выбрана зона:', area);
+    };
+    
     const handleSearch = () => {
         if (!dateFrom && !dateTo) {
             clearDatesFromLocalStorage();
@@ -150,6 +157,7 @@ export default function EventsArchive() {
         
         saveDatesToLocalStorage(dateFrom, dateTo);
         setSearchTrigger(prev => prev + 1);
+        console.log('Поиск по зоне:', selectedArea?.areaId, selectedArea?.name);
     };
     
     return (
@@ -187,6 +195,17 @@ export default function EventsArchive() {
                                 />
                             </div>
                             
+                            <div className="filter-group">
+                                <label>Зона:</label>
+                                <DropDownMenu
+                                    type="area"
+                                    endpoint="/api/areas"
+                                    onSelect={handleAreaSelect}
+                                    placeholder="Выберите зону..."
+                                    width="260px"
+                                />
+                            </div>
+                            
                             <ActionButton 
                                 onClick={handleSearch}
                                 width="auto"
@@ -195,11 +214,12 @@ export default function EventsArchive() {
                             </ActionButton>
                         </div>
                         
-                        <AccidentsArea 
+                        <EventsArea 
                             dateFrom={dateFrom} 
                             dateTo={dateTo} 
                             searchTrigger={searchTrigger}
                             isInitialLoad={isInitialLoad}
+                            areaId={selectedArea?.areaId}
                         />
                     </div>
                 </main>
