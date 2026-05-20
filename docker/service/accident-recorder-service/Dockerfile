@@ -10,7 +10,10 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
 
+ENV TZ=Europe/Saratov
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 WORKDIR /accident-recorder
 COPY --from=assembly /accident-recorder/target/accidentrecorder-0.0.1-SNAPSHOT.jar .
 
-CMD ["java", "-jar", "accidentrecorder-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-Duser.timezone=Europe/Saratov", "-jar", "accidentrecorder-0.0.1-SNAPSHOT.jar"]

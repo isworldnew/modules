@@ -1,0 +1,60 @@
+@import '../../../../../variables.css';
+
+.operated-area {
+    width: 100%;
+    margin-top: var(--spacing-xl);
+}
+
+.operated-area-card {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-lg);
+    transition: all 0.2s ease;
+}
+
+.operated-area-card:hover {
+    border-color: var(--button-yellow);
+}
+
+.operated-area-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.operated-area-names {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--button-yellow);
+    line-height: 1.4;
+}
+
+.operated-area-empty,
+.operated-area-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.operated-area-empty p,
+.operated-area-error p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .operated-area-card {
+        padding: var(--spacing-md);
+    }
+    
+    .operated-area-names {
+        font-size: 0.875rem;
+    }
+}

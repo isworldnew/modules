@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.dto.request.AreaCreationRequest;
 import ru.smirnov.accidentrecorder.dto.response.AreaResponse;
 import ru.smirnov.accidentrecorder.entity.audience.User;
@@ -19,6 +20,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.domain.AreaService;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @Service
@@ -73,10 +75,23 @@ public class AreaServiceImplementation implements AreaService {
     }
 
     @Override
-    public List<AreaResponse> getAreas() {
+    public List<AreaResponse> getAreas(DataForToken tokenData) {
+
+        Stream<Area> areas = this.areaRepository.findAll().stream();
+
+        if (Role.valueOf(tokenData.getRole()).equals(Role.FOREMAN))
+            areas = areas.filter(area -> area.getForeman().getId().equals(tokenData.getUserId()));
+
+        return areas
+                .map(this.areaMapper::areaEntityToAreaResponse)
+                .sorted(Comparator.comparing((AreaResponse::getName)))
+                .toList();
+
+        /*
         return this.areaRepository.findAll().stream()
                 .map(this.areaMapper::areaEntityToAreaResponse)
                 .sorted(Comparator.comparing(AreaResponse::getName))
                 .toList();
+         */
     }
 }

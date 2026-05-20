@@ -63,6 +63,8 @@ public interface AccidentReportRepository extends JpaRepository<AccidentReport, 
                     AND
                         accident_reports.report_status = 'PROCESSED_BY_FOREMAN'
                     AND
+                        accident_reports.accident_interpretation = 'REAL_ALARM'
+                    AND
                         accident_reports.upload_date_time BETWEEN :dateFrom AND :dateTo
                     ORDER BY accident_reports.upload_date_time DESC
                     """,

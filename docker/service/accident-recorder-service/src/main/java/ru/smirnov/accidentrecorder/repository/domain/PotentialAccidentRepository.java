@@ -42,7 +42,7 @@ public interface PotentialAccidentRepository extends JpaRepository<PotentialAcci
                         potential_accidents.status = :status
                     AND
                         potential_accidents.upload_date_time BETWEEN :dateFrom AND :dateTo
-                    ORDER BY potential_accidents.upload_date_time DESC                    
+                    ORDER BY potential_accidents.upload_date_time DESC
                     """,
             nativeQuery = true
     )

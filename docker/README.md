@@ -45,9 +45,18 @@ INSERT INTO users(username, password, role, status, lastname, firstname, parentn
     '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
     'ADMIN',
     'ENABLED',
-    'Ермаков',
-    'Александр',
-    'Вадимович'
+    'Нестеров',
+    'Леонид',
+    'Иванович'
+),
+(
+    'supervisor1@test.mail',
+    '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
+    'SUPERVISOR',
+    'ENABLED',
+    'Аткарский',
+    'Пётр',
+    'Николаевич'
 ),
 (
     'foreman1@test.mail',
@@ -59,6 +68,15 @@ INSERT INTO users(username, password, role, status, lastname, firstname, parentn
     'Анатольевич'
 ),
 (
+    'foreman2@test.mail',
+    '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
+    'FOREMAN',
+    'ENABLED',
+    'Диденко',
+    'Олег',
+    'Павлович'
+),
+(
     'safety-officer1@test.mail',
     '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
     'SAFETY_OFFICER',
@@ -66,10 +84,19 @@ INSERT INTO users(username, password, role, status, lastname, firstname, parentn
     'Смирнов',
     'Иван',
     'Вадимович'
+),
+(
+    'safety-officer2@test.mail',
+    '$2a$10$idCIIywXNewOAZd3A9j1QeqEIdHVEeEMwaD/JGpL31cDej.ijrZ9.',
+    'SAFETY_OFFICER',
+    'ENABLED',
+    'Данилов',
+    'Сергей',
+    'Дмитриевич'
 );
 
 INSERT INTO areas(name, foreman_id) VALUES
-('Основной склад', 2);
+('Основной склад', 3);
 -- ('Подсобное помещение');
 
 INSERT INTO cameras(name, area_id) VALUES

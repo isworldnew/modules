@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.dto.request.AreaCreationRequest;
 import ru.smirnov.accidentrecorder.dto.response.AreaResponse;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.AreaService;
@@ -36,9 +37,10 @@ public class AreaController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAnyRole('SUPERVISOR', 'ADMIN', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPERVISOR', 'ADMIN', 'FOREMAN')")
     public List<AreaResponse> getAreas() {
-        return this.areaService.getAreas();
+        DataForToken  tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
+        return this.areaService.getAreas(tokenData);
     }
 
 }

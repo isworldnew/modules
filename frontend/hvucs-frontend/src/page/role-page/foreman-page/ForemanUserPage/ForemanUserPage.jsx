@@ -7,6 +7,8 @@ import SideBar from '../../../../component/common-components/SideBar/SideBar.jsx
 import PageName from '../../../../component/common-components/PageName/PageName.jsx';
 import PersonalDataCard from '../../../../component/common-components/PersonalDataCard/PersonalDataCard.jsx';
 
+import OperatedArea from './OperatedArea/OperatedArea.jsx';
+
 export default function ForemanUserPage() {
 
     const navItems = [
@@ -48,8 +50,8 @@ export default function ForemanUserPage() {
                     <div className="foreman-page__content-inner">
                         <PageName title="Личный кабинет" />
                         <PersonalDataCard />
+                        <OperatedArea />
                     </div>
-                    <div>TODO: К КАКОЙ ЗОНЕ ПРИВЯЗАН ОН</div>
                 </main>
             </div>
             <Footer />
