@@ -38,12 +38,12 @@ export default function EventsArchive() {
             isActive: true,
             showBadge: false,
         },
-        {
-            label: 'Статистика',
-            href: '/stats',
-            isActive: false,
-            showBadge: false,
-        },
+        // {
+        //     label: 'Статистика',
+        //     href: '/stats',
+        //     isActive: false,
+        //     showBadge: false,
+        // },
         {
             label: 'Личный кабинет',
             href: '/supervisor-user-page',

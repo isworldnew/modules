@@ -32,12 +32,12 @@ export default function StatsPage() {
             isActive: false,
             showBadge: false,
         },
-        {
-            label: 'Статистика',
-            href: '/stats',
-            isActive: true,
-            showBadge: false,
-        },
+        // {
+        //     label: 'Статистика',
+        //     href: '/stats',
+        //     isActive: true,
+        //     showBadge: false,
+        // },
         {
             label: 'Личный кабинет',
             href: '/supervisor-user-page',
