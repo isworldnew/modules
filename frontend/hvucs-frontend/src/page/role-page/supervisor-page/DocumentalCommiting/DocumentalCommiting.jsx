@@ -1,16 +1,28 @@
 import './DocumentalCommiting.css';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Header from '../../../../component/common-components/Header/Header.jsx';
 import Footer from '../../../../component/common-components/Footer/Footer.jsx';
 import SideBar from '../../../../component/common-components/SideBar/SideBar.jsx';
 import PageName from '../../../../component/common-components/PageName/PageName.jsx';
 
+import { executeWithTokenRefresh } from '../../../../script/executeWithTokenRefresh.js';
+
 import ActionButton from '../../../../component/common-components/ActionButton/ActionButton.jsx';
 import ProgressLoader from '../../../../component/common-components/ProgressLoader/ProgressLoader.jsx';
+import ModalWindow from '../../../../component/common-components/ModalWindow/ModalWindow.jsx';
 
 import Act from '../../../../component/documents/Act/Act.jsx';
 
 export default function DocumentalCommiting() {
+    const { id } = useParams();
+    const [userData, setUserData] = useState(null);
+    const [incidentData, setIncidentData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const navItems = [
         { 
@@ -45,6 +57,173 @@ export default function DocumentalCommiting() {
         }
     ];
 
+    const fetchUserData = async () => {
+        try {
+            const response = await executeWithTokenRefresh(async (accessToken) => {
+                const fetchResponse = await fetch('/api/users/user', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                let data = null;
+                try {
+                    data = await fetchResponse.json();
+                } catch (e) {
+                    data = null;
+                }
+                
+                return {
+                    status: fetchResponse.status,
+                    data: data
+                };
+            });
+            
+            if (response.status === 200 && response.data) {
+                setUserData(response.data);
+            }
+        } catch (err) {
+            console.error('Error fetching user data:', err);
+        }
+    };
+
+    const fetchIncidentData = async () => {
+        if (!id) {
+            setError('Не указан ID инцидента');
+            return;
+        }
+        
+        try {
+            const result = await executeWithTokenRefresh(async (accessToken) => {
+                const response = await fetch(`/api/accidents/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                let data = null;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    data = null;
+                }
+
+                return { status: response.status, data: data };
+            });
+
+            if (result.status === 200 && result.data) {
+                setIncidentData(result.data);
+            } else if (result.status === 404) {
+                window.location.href = '/not-found';
+            } else if (result.status === 403) {
+                window.location.href = '/forbidden';
+            } else {
+                setError('Не удалось загрузить данные инцидента');
+            }
+        } catch (error) {
+            console.error('Error fetching incident data:', error);
+            setError('Не удалось подключиться к серверу. Проверьте соединение.');
+        }
+    };
+
+    useEffect(() => {
+        const init = async () => {
+            setLoading(true);
+            await Promise.all([fetchUserData(), fetchIncidentData()]);
+            setLoading(false);
+        };
+        init();
+    }, [id]);
+
+    const getFullName = () => {
+        const parts = [
+            userData?.lastname,
+            userData?.firstname,
+            userData?.parentname
+        ].filter(part => part && part.trim() !== '');
+        
+        return parts.length > 0 ? parts.join(' ') : '—';
+    };
+
+    const getRoleDisplay = () => {
+        const roleMap = {
+            'SAFETY_OFFICER': 'Сотрудник отдела ТБ',
+            'FOREMAN': 'Ответственный за зону',
+            'SUPERVISOR': 'Начальник',
+            'ADMIN': 'Администратор',
+            'SUPERADMIN': 'Главный администратор'
+        };
+        return roleMap[userData?.role] || userData?.role || '—';
+    };
+
+    const getDayMonthFromDate = (dateTimeString) => {
+        if (!dateTimeString) return { day: '', month: '' };
+        
+        const date = new Date(dateTimeString);
+        const day = date.getUTCDate().toString();
+        const monthNames = [
+            'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+        ];
+        const month = monthNames[date.getUTCMonth()];
+        
+        return { day, month };
+    };
+
+    const getFormattedDateTime = (dateTimeString) => {
+        if (!dateTimeString) return { time: '', year: '' };
+        
+        const date = new Date(dateTimeString);
+        const hours = date.getUTCHours().toString().padStart(2, '0');
+        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+        const time = `${hours}:${minutes}`;
+        const year = date.getUTCFullYear().toString().slice(-2);
+        
+        return { time, year };
+    };
+
+    const chairpersonValue = userData ? `${getFullName()} (${getRoleDisplay()})` : '';
+    const responseId = incidentData?.responseId || '';
+    const accidentDate = getDayMonthFromDate(incidentData?.accidentDateTime);
+    const accidentDateTimeFormatted = getFormattedDateTime(incidentData?.accidentDateTime);
+    const zoneValue = incidentData?.areaName || '';
+    const cameraValue = incidentData?.cameraName || '';
+    const reportDescription = incidentData?.report?.description || '';
+
+    if (loading) {
+        return <ProgressLoader message="Загрузка данных..." />;
+    }
+
+    if (error) {
+        return (
+            <div className="documental-commiting-page">
+                <Header />
+                <div className="documental-commiting-page__layout">
+                    <SideBar 
+                        navItems={navItems} 
+                        showNotificationBadge={true}
+                    />
+                    <main className="documental-commiting-page__content">
+                        <div className="documental-commiting-page__content-inner">
+                            <PageName title="Документирование инцидента" />
+                            <div className="error-container">
+                                <p>{error}</p>
+                                <ActionButton onClick={() => window.location.reload()}>
+                                    Повторить
+                                </ActionButton>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <Footer />
+            </div>
+        );
+    }
+
     return (
         <div className="documental-commiting-page">
             <Header />
@@ -56,11 +235,27 @@ export default function DocumentalCommiting() {
                 <main className="documental-commiting-page__content">
                     <div className="documental-commiting-page__content-inner">
                         <PageName title="Документирование инцидента" />
-                        <Act />
+                        <Act 
+                            chairpersonValue={chairpersonValue}
+                            responseId={responseId}
+                            accidentDay={accidentDate.day}
+                            accidentMonth={accidentDate.month}
+                            accidentTime={accidentDateTimeFormatted.time}
+                            accidentYear={accidentDateTimeFormatted.year}
+                            zoneName={zoneValue}
+                            cameraName={cameraValue}
+                            reportDescription={reportDescription}
+                        />
                     </div>
                 </main>
             </div>
             <Footer />
+            
+            <ModalWindow
+                isOpen={modalOpen}
+                message={modalMessage}
+                onClose={() => setModalOpen(false)}
+            />
         </div>
     );
 }

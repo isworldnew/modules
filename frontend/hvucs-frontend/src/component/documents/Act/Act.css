@@ -189,3 +189,9 @@
     padding: 18mm 18mm 15mm;
   }
 }
+
+.act-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}

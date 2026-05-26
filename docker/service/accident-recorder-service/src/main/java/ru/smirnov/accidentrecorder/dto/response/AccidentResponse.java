@@ -37,4 +37,6 @@ public class AccidentResponse {
     private TrespasserResponse trespasser; // нарушитель
 
     private String documented;
+
+    private Long responseId;
 }
