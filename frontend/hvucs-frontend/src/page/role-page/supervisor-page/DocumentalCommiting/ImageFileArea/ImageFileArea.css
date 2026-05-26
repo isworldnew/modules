@@ -1,0 +1,104 @@
+@import '../../../../../variables.css';
+
+.image-file-area {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+}
+
+.image-file-area__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.image-file-area__dropzone {
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius-medium);
+    background-color: var(--background-input);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: var(--spacing-lg);
+}
+
+.image-file-area__dropzone:hover {
+    border-color: var(--button-yellow);
+    background-color: rgba(255, 193, 7, 0.05);
+}
+
+.dropzone__icon {
+    font-size: 48px;
+}
+
+.dropzone__text {
+    font-size: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.dropzone__hint {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.image-file-area__preview {
+    width: 100%;
+}
+
+.preview__container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.preview__image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+    background-color: var(--background-card);
+}
+
+.preview__clear {
+    position: absolute;
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.preview__clear:hover {
+    background-color: var(--danger-red);
+    transform: scale(1.1);
+}
+
+.image-file-area__upload {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .preview__image {
+        max-height: 250px;
+    }
+}

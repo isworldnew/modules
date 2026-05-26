@@ -1,6 +1,8 @@
 import './DocumentalCommiting.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 import Header from '../../../../component/common-components/Header/Header.jsx';
 import Footer from '../../../../component/common-components/Footer/Footer.jsx';
@@ -14,15 +16,18 @@ import ProgressLoader from '../../../../component/common-components/ProgressLoad
 import ModalWindow from '../../../../component/common-components/ModalWindow/ModalWindow.jsx';
 
 import Act from '../../../../component/documents/Act/Act.jsx';
+import ImageFileArea from './ImageFileArea/ImageFileArea.jsx';
 
 export default function DocumentalCommiting() {
     const { id } = useParams();
+    const actRef = useRef(null);
     const [userData, setUserData] = useState(null);
     const [incidentData, setIncidentData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const navItems = [
         { 
@@ -139,6 +144,55 @@ export default function DocumentalCommiting() {
         init();
     }, [id]);
 
+    const handleDownloadPDF = async () => {
+        if (!actRef.current) return;
+        
+        setIsDownloading(true);
+        
+        const element = actRef.current;
+        const responseId = incidentData?.responseId || 'akt';
+        
+        try {
+            const originalOverflow = element.style.overflow;
+            const originalPadding = element.style.padding;
+            element.style.overflow = 'visible';
+            element.style.padding = '0';
+            element.style.margin = '0';
+            
+            const canvas = await html2canvas(element, {
+                scale: 3,
+                logging: false,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            });
+            
+            element.style.overflow = originalOverflow;
+            element.style.padding = originalPadding;
+            element.style.margin = '0';
+            
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            });
+            
+            const imgWidth = 210;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save(`${responseId}.pdf`);
+        } catch (err) {
+            console.error('Error generating PDF:', err);
+            setModalMessage('Ошибка при создании PDF файла');
+            setModalOpen(true);
+        } finally {
+            setIsDownloading(false);
+        }
+    };
+
     const getFullName = () => {
         const parts = [
             userData?.lastname,
@@ -193,6 +247,9 @@ export default function DocumentalCommiting() {
     const zoneValue = incidentData?.areaName || '';
     const cameraValue = incidentData?.cameraName || '';
     const reportDescription = incidentData?.report?.description || '';
+    const responseType = incidentData?.response?.type || '';
+    const responseReport = incidentData?.response?.report || '';
+    const trespasser = incidentData?.trespasser || null;
 
     if (loading) {
         return <ProgressLoader message="Загрузка данных..." />;
@@ -234,18 +291,32 @@ export default function DocumentalCommiting() {
                 />
                 <main className="documental-commiting-page__content">
                     <div className="documental-commiting-page__content-inner">
-                        <PageName title="Документирование инцидента" />
-                        <Act 
-                            chairpersonValue={chairpersonValue}
-                            responseId={responseId}
-                            accidentDay={accidentDate.day}
-                            accidentMonth={accidentDate.month}
-                            accidentTime={accidentDateTimeFormatted.time}
-                            accidentYear={accidentDateTimeFormatted.year}
-                            zoneName={zoneValue}
-                            cameraName={cameraValue}
-                            reportDescription={reportDescription}
-                        />
+                        <div className="act-wrapper" ref={actRef}>
+                            <Act 
+                                chairpersonValue={chairpersonValue}
+                                responseId={responseId}
+                                accidentDay={accidentDate.day}
+                                accidentMonth={accidentDate.month}
+                                accidentTime={accidentDateTimeFormatted.time}
+                                accidentYear={accidentDateTimeFormatted.year}
+                                zoneName={zoneValue}
+                                cameraName={cameraValue}
+                                reportDescription={reportDescription}
+                                responseType={responseType}
+                                responseReport={responseReport}
+                                trespasser={trespasser}
+                            />
+                        </div>
+                        <div className="download-button-container">
+                            <ActionButton 
+                                onClick={handleDownloadPDF} 
+                                width="auto"
+                                disabled={isDownloading}
+                            >
+                                {isDownloading ? 'Подготовка PDF...' : 'Скачать для подписи'}
+                            </ActionButton>
+                        </div>
+                        <ImageFileArea responseId={responseId} />
                     </div>
                 </main>
             </div>

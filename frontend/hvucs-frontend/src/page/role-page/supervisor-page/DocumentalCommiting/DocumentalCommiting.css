@@ -22,15 +22,20 @@
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
-/* Равные отступы для формы */
-.documental-commiting-page__content-inner > * {
+.act-wrapper {
+    width: 100%;
     margin-bottom: var(--spacing-xl);
 }
 
-.documental-commiting-page__content-inner > *:last-child {
-    margin-bottom: 0;
+.download-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 }
 
 /* Адаптивность */

@@ -1,9 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './Act.css';
 import DocLine from '../document-components/DocLine/DocLine.jsx';
-import ActionButton from '../../../component/common-components/ActionButton/ActionButton.jsx';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export default function Act({ 
     chairpersonValue = '', 
@@ -19,9 +16,6 @@ export default function Act({
     responseReport = '',
     trespasser = null
 }) {
-    const actRef = useRef(null);
-    const [isGenerating, setIsGenerating] = useState(false);
-
     const getCurrentDate = () => {
         const today = new Date();
         const day = today.getDate().toString();
@@ -137,54 +131,9 @@ export default function Act({
         setForm((prev) => ({ ...prev, [key]: value }));
     };
 
-    const handleDownloadPDF = async () => {
-        if (!actRef.current) return;
-        
-        setIsGenerating(true);
-        
-        try {
-            const element = actRef.current;
-            const originalOverflow = element.style.overflow;
-            element.style.overflow = 'visible';
-            
-            const canvas = await html2canvas(element, {
-                scale: 3,
-                logging: false,
-                useCORS: true,
-                backgroundColor: '#ffffff'
-            });
-            
-            element.style.overflow = originalOverflow;
-            
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF({
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait'
-            });
-            
-            const imgWidth = 210;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            
-            const fileName = form.number ? `АКТ_${form.number}.pdf` : 'АКТ.pdf';
-            pdf.save(fileName);
-        } catch (error) {
-            console.error('Error generating PDF:', error);
-        } finally {
-            setIsGenerating(false);
-        }
-    };
-
     return (
         <div className="act-root">
-            <div className="act-actions">
-                <ActionButton onClick={handleDownloadPDF} width="auto" disabled={isGenerating}>
-                    {isGenerating ? 'Генерация PDF...' : 'Скачать для подписи'}
-                </ActionButton>
-            </div>
-            <div className="act-shell" ref={actRef}>
+            <div className="act-shell">
                 <section className="act-page">
                     <div className="act-paper">
                         <header className="act-header">
