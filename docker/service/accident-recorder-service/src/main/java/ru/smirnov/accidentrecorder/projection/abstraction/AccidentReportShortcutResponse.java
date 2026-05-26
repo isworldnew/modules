@@ -11,4 +11,6 @@ public interface AccidentReportShortcutResponse {
     String getAreaName();
 
     String getUploadDateTime();
+
+    String getDocumented();
 }

@@ -1,0 +1,97 @@
+@page { size: A4; margin: 0; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f3f4f6;
+  font-family: "Times New Roman", serif;
+  color: #111;
+}
+
+.page {
+  width: min(100vw, calc(100vh * 210 / 297));
+  aspect-ratio: 210 / 297;
+  margin: 24px auto;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+}
+
+.doc {
+  width: 100%;
+  height: 100%;
+  padding: 18mm 18mm 15mm;
+  font-size: 12pt;
+  line-height: 1.35;
+}
+
+.org {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.title-block {
+  text-align: center;
+  margin: 8px 0 14px;
+}
+
+.doc-no {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.doc-title {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 12px;
+}
+
+.persons, .list, .attachments {
+  margin: 6px 0 10px 22px;
+}
+
+.paragraph-box {
+  min-height: 54px;
+  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  margin: 6px 0 10px;
+}
+
+.signatures {
+  margin-top: 18px;
+}
+
+.sig-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.line {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  height: 1em;
+  vertical-align: baseline;
+}
+
+.short { width: 22mm; }
+.tiny { width: 8mm; }
+.mid { width: 30mm; }
+.time { width: 18mm; }
+.zone { width: 74mm; }
+.long { width: 100%; }
+.wide { width: 100%; min-width: 30mm; }
+.sign { width: 85mm; }
+
+@media print {
+  body { background: white; }
+  .page { width: 210mm; height: 297mm; margin: 0; box-shadow: none; }
+}

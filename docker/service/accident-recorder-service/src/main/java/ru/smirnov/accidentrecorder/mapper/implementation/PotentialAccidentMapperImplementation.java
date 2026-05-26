@@ -139,6 +139,7 @@ public class PotentialAccidentMapperImplementation implements PotentialAccidentM
                 foremanAccidentResponse.setReport(response.getResponseReport());
 
                 accidentResponse.setResponse(foremanAccidentResponse);
+                accidentResponse.setDocumented(response.getDocumentedResponse().name());
 
                 Trespasser trespasser = response.getTrespasser();
 

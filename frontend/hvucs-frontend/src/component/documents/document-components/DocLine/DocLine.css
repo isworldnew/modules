@@ -1,0 +1,46 @@
+.doc-line {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #111;
+  background: transparent;
+  outline: none;
+  color: inherit;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
+  line-height: 1.2;
+  padding: 0 0 1px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.doc-line::placeholder {
+  color: #8a8a8a;
+  opacity: 1;
+}
+
+.doc-line:focus {
+  border-bottom-color: #0066cc;
+}
+
+.doc-line--textarea {
+  resize: none;
+  display: block;
+  min-height: 1.4em;
+  overflow: hidden;
+  border-bottom: 1px solid #111;
+  padding: 0 0 1px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+}
+
+.doc-line--center {
+  text-align: center;
+}
+
+.doc-line--strong {
+  font-weight: 700;
+}
+
+.doc-line--nowrap {
+  white-space: nowrap;
+}

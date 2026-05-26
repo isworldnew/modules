@@ -32,6 +32,7 @@ import AreasPage from './page/role-page/supervisor-page/AreasPage/AreasPage.jsx'
 import CamerasPage from './page/role-page/supervisor-page/CamerasPage/CamerasPage.jsx';
 import EventsArchive from './page/role-page/supervisor-page/EventsArchive/EventsArchive.jsx';
 import StatsPage from './page/role-page/supervisor-page/StatsPage/StatsPage.jsx';
+import DocumentalCommiting from './page/role-page/supervisor-page/DocumentalCommiting/DocumentalCommiting.jsx';
 
 import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
 import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
@@ -71,6 +72,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/cameras-page' element={<CamerasPage />}/>
         <Route path='/archive' element={<EventsArchive />}/>
         <Route path='/stats' element={<StatsPage />}/>
+        <Route path='/documental-commiting/:id' element={<DocumentalCommiting />}/>
 
       </Routes>
     </Router>

@@ -1,8 +1,10 @@
 import './EventsArea.css';
 import { useState, useEffect, useRef } from 'react';
 import { executeWithTokenRefresh } from '../../../../../script/executeWithTokenRefresh.js';
+import { extractRoleFromToken } from '../../../../../script/extractRoleTokenUtil.js';
 import EventItem from './EventItem/EventItem.jsx';
 import ProgressLoader from '../../../../../component/common-components/ProgressLoader/ProgressLoader.jsx';
+import ActionButton from '../../../../../component/common-components/ActionButton/ActionButton.jsx';
 
 export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) {
     const [events, setEvents] = useState([]);
@@ -113,7 +115,7 @@ export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) 
                     potentialAccidentId={event.potentialAccidentId}
                     areaName={event.areaName}
                     uploadDateTime={event.uploadDateTime}
-                    status={event.reportStatus}
+                    // status={event.reportStatus}
                 />
             ))}
         </div>

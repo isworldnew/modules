@@ -18,10 +18,10 @@ export default function EventItem({ potentialAccidentId, areaName, uploadDateTim
     
     const getStatusInfo = () => {
         switch(status) {
-            case 'PROCESSED_BY_FOREMAN':
-                return { text: 'Обработано', className: 'status-processed' };
-            case 'UNPROCESSED_BY_FOREMAN':
-                return { text: 'Не обработано', className: 'status-unprocessed' };
+            case 'DOCUMENTED':
+                return { text: 'Обработано', className: 'status-documented' };
+            case 'NON_DOCUMENTED':
+                return { text: 'Не обработано', className: 'status-non-documented' };
             default:
                 return { text: status || 'Неизвестно', className: 'status-unknown' };
         }
@@ -42,9 +42,9 @@ export default function EventItem({ potentialAccidentId, areaName, uploadDateTim
             <div className="event-meta">
                 {formattedDateTime}
             </div>
-            <div className={`event-status ${statusInfo.className}`}>
+            {/* <div className={`event-status ${statusInfo.className}`}>
                 {statusInfo.text}
-            </div>
+            </div> */}
         </div>
     );
 }

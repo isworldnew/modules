@@ -35,4 +35,6 @@ public class AccidentResponse {
     private ForemanAccidentResponse response; // сама реакция на инцидент
 
     private TrespasserResponse trespasser; // нарушитель
+
+    private String documented;
 }

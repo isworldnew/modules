@@ -39,12 +39,12 @@
     font-size: 0.8rem;
 }
 
-.status-processed {
+.status-documented {
     background-color: #1b5e20;
     color: #c8e6c9;
 }
 
-.status-unprocessed {
+.status-non-documented {
     background-color: #b71c1c;
     color: #ffcdd2;
 }

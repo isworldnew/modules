@@ -2,6 +2,7 @@ import './ReportPage.css';
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { executeWithTokenRefresh } from '../../../../script/executeWithTokenRefresh.js';
+import { extractRoleFromToken } from '../../../../script/extractRoleTokenUtil.js';
 
 import Header from '../../../../component/common-components/Header/Header.jsx';
 import Footer from '../../../../component/common-components/Footer/Footer.jsx';
@@ -13,6 +14,8 @@ import AccidentSource from '../../../AccidentPage/AccidentSource/AccidentSource.
 import VideoPlayer from '../../../AccidentPage/VideoPlayer/VideoPlayer.jsx';
 import MetaInfoArea from '../../../AccidentPage/MetaInfoArea/MetaInfoArea.jsx';
 import ProcessedReportArea from '../../../AccidentPage/ProcessedReportArea/ProcessedReportArea.jsx';
+
+import ActionButton from '../../../../component/common-components/ActionButton/ActionButton.jsx';
 
 import UnprocessedReportResponse from './UnprocessedReportResponse/UnprocessedReportResponse.jsx';
 import ProcessedReportResponse from './ProcessedReportResponse/ProcessedReportResponse.jsx';
@@ -30,6 +33,21 @@ export default function ReportPage() {
     const [incidentData, setIncidentData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [userRole, setUserRole] = useState(null);
+
+    const fetchUserRole = async () => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            if (accessToken) {
+                const role = extractRoleFromToken(accessToken);
+                setUserRole(role);
+                return role;
+            }
+        } catch (error) {
+            console.error('Error fetching user role:', error);
+        }
+        return null;
+    };
 
     const fetchIncidentData = async () => {
         setIsLoading(true);
@@ -79,10 +97,80 @@ export default function ReportPage() {
     };
 
     useEffect(() => {
-        if (potentialAccidentId) {
-            fetchIncidentData();
-        }
+        const init = async () => {
+            await fetchUserRole();
+            if (potentialAccidentId) {
+                await fetchIncidentData();
+            }
+        };
+        init();
     }, [potentialAccidentId]);
+
+    const getNavItems = () => {
+        if (userRole === 'SUPERVISOR') {
+            return [
+                { 
+                    label: 'Сотрудники', 
+                    href: '/employees', 
+                    isActive: false,
+                    showBadge: false,
+                }, 
+                { 
+                    label: 'Зоны', 
+                    href: '/areas-page', 
+                    isActive: false,
+                    showBadge: false,
+                },
+                {
+                    label: 'Камеры',
+                    href: '/cameras-page',
+                    isActive: false,
+                    showBadge: false,
+                },
+                {
+                    label: 'Архив проишествий',
+                    href: '/archive',
+                    isActive: false,
+                    showBadge: false,
+                },
+                {
+                    label: 'Личный кабинет',
+                    href: '/supervisor-user-page',
+                    isActive: false,
+                    showBadge: false,
+                }
+            ];
+        }
+        
+        return [
+            { 
+                label: 'Нарушители', 
+                href: '/trespassers', 
+                isActive: false,
+                showBadge: false,
+            }, 
+            { 
+                label: 'Уведомления', 
+                href: '/report-notifications', 
+                isActive: false,
+                showBadge: true,
+            },
+            {
+                label: 'Принятые меры',
+                href: '/responses',
+                isActive: false,
+                showBadge: false,
+            },
+            {
+                label: 'Личный кабинет',
+                href: '/foreman-user-page',
+                isActive: false,
+                showBadge: false,
+            }
+        ];
+    };
+
+    const navItems = getNavItems();
 
     if (isLoading) {
         return <ProgressLoader message="Загрузка данных инцидента..." />;
@@ -103,33 +191,6 @@ export default function ReportPage() {
             </div>
         );
     }
-
-    const navItems = [
-        { 
-            label: 'Нарушители', 
-            href: '/trespassers', 
-            isActive: false,
-            showBadge: false,
-        }, 
-        { 
-            label: 'Уведомления', 
-            href: '/report-notifications', 
-            isActive: false,
-            showBadge: true,
-        },
-        {
-            label: 'Принятые меры',
-            href: '/responses',
-            isActive: false,
-            showBadge: false,
-        },
-        {
-            label: 'Личный кабинет',
-            href: '/foreman-user-page',
-            isActive: false,
-            showBadge: false,
-        }
-    ];
 
     const metaInfoItems = [
         { label: "Уведомление получено:", info: incidentData.uploadDateTime, infoType: "datetime" },
@@ -176,6 +237,8 @@ export default function ReportPage() {
         return null;
     };
 
+    const showDocumentButton = userRole === 'SUPERVISOR' && incidentData.documented === 'NON_DOCUMENTED';
+
     return (
         <div className="report-page-wrapper">
             <Header />
@@ -206,6 +269,17 @@ export default function ReportPage() {
                         )}
                         
                         {renderContent()}
+
+                        {showDocumentButton && (
+                            <div className="document-button-container">
+                                <ActionButton 
+                                    onClick={() => window.location.href = `/documental-commiting/${potentialAccidentId}`}
+                                    width="auto"
+                                >
+                                    Документировать
+                                </ActionButton>
+                            </div>
+                        )}
                     </div>
                 </main>
             </div>
@@ -215,8 +289,9 @@ export default function ReportPage() {
 }
 // import './ReportPage.css';
 // import { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
+// import { useParams, useSearchParams } from 'react-router-dom';
 // import { executeWithTokenRefresh } from '../../../../script/executeWithTokenRefresh.js';
+// import { extractRoleFromToken } from '../../../../script/extractRoleTokenUtil.js';
 
 // import Header from '../../../../component/common-components/Header/Header.jsx';
 // import Footer from '../../../../component/common-components/Footer/Footer.jsx';
@@ -229,11 +304,21 @@ export default function ReportPage() {
 // import MetaInfoArea from '../../../AccidentPage/MetaInfoArea/MetaInfoArea.jsx';
 // import ProcessedReportArea from '../../../AccidentPage/ProcessedReportArea/ProcessedReportArea.jsx';
 
+// import ActionButton from '../../../../component/common-components/ActionButton/ActionButton.jsx';
+
 // import UnprocessedReportResponse from './UnprocessedReportResponse/UnprocessedReportResponse.jsx';
 // import ProcessedReportResponse from './ProcessedReportResponse/ProcessedReportResponse.jsx';
 
 // export default function ReportPage() {
 //     const { id } = useParams();
+//     const [searchParams] = useSearchParams();
+//     const accidentReportId = searchParams.get('reportId');
+    
+//     const potentialAccidentId = id;
+    
+//     console.log('potentialAccidentId:', potentialAccidentId);
+//     console.log('accidentReportId:', accidentReportId);
+    
 //     const [incidentData, setIncidentData] = useState(null);
 //     const [isLoading, setIsLoading] = useState(true);
 //     const [error, setError] = useState(null);
@@ -242,9 +327,15 @@ export default function ReportPage() {
 //         setIsLoading(true);
 //         setError(null);
         
+//         if (!potentialAccidentId) {
+//             setError('Не указан ID инцидента');
+//             setIsLoading(false);
+//             return;
+//         }
+        
 //         try {
 //             const result = await executeWithTokenRefresh(async (accessToken) => {
-//                 const response = await fetch(`/api/accidents/${id}`, {
+//                 const response = await fetch(`/api/accidents/${potentialAccidentId}`, {
 //                     method: 'GET',
 //                     headers: {
 //                         'Authorization': `Bearer ${accessToken}`,
@@ -280,10 +371,10 @@ export default function ReportPage() {
 //     };
 
 //     useEffect(() => {
-//         if (id) {
+//         if (potentialAccidentId) {
 //             fetchIncidentData();
 //         }
-//     }, [id]);
+//     }, [potentialAccidentId]);
 
 //     if (isLoading) {
 //         return <ProgressLoader message="Загрузка данных инцидента..." />;
@@ -361,7 +452,7 @@ export default function ReportPage() {
 
 //     const renderContent = () => {
 //         if (incidentData.response === null && incidentData.trespasser === null) {
-//             return <UnprocessedReportResponse />;
+//             return <UnprocessedReportResponse accidentReportId={incidentData.id} />;
 //         }
         
 //         if (incidentData.response !== null) {
