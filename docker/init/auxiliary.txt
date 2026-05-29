@@ -1,0 +1,1 @@
+find ./init -name "*.bash" -exec sed -i 's/\r$//' {} \;
