@@ -6,7 +6,6 @@
   outline: none;
   color: inherit;
   font-family: "Times New Roman", Times, serif;
-  /* Относительный размер шрифта */
   font-size: inherit;
   line-height: 1.2;
   padding: 0 0 1px;
@@ -24,7 +23,7 @@
   border-bottom-color: #0066cc;
 }
 
-.doc-line--textarea {
+/* .doc-line--textarea {
   resize: none;
   display: block;
   min-height: 1.4em;
@@ -33,6 +32,22 @@
   padding: 0 0 1px;
   line-height: 1.35;
   white-space: pre-wrap;
+} */
+.doc-line--textarea {
+  resize: none;
+  display: block;
+  overflow: hidden;
+  min-height: 1.4em;
+
+  border-bottom: 1px solid #111;
+
+  padding: 0 0 1px;
+
+  line-height: 1.35;
+
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .doc-line--center {
@@ -47,7 +62,6 @@
   white-space: nowrap;
 }
 
-/* Адаптация для маленьких экранов */
 @media (max-width: 480px) {
   .doc-line {
     font-size: 0.9em;
@@ -57,49 +71,7 @@
     font-size: 0.85em;
   }
 }
-/* .doc-line {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #111;
-  background: transparent;
-  outline: none;
-  color: inherit;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 12pt;
-  line-height: 1.2;
-  padding: 0 0 1px;
-  min-width: 0;
-  box-sizing: border-box;
-}
 
-.doc-line::placeholder {
-  color: #8a8a8a;
-  opacity: 1;
+.pdf-export .doc-line::placeholder {
+  color: transparent !important;
 }
-
-.doc-line:focus {
-  border-bottom-color: #0066cc;
-}
-
-.doc-line--textarea {
-  resize: none;
-  display: block;
-  min-height: 1.4em;
-  overflow: hidden;
-  border-bottom: 1px solid #111;
-  padding: 0 0 1px;
-  line-height: 1.35;
-  white-space: pre-wrap;
-}
-
-.doc-line--center {
-  text-align: center;
-}
-
-.doc-line--strong {
-  font-weight: 700;
-}
-
-.doc-line--nowrap {
-  white-space: nowrap;
-} */

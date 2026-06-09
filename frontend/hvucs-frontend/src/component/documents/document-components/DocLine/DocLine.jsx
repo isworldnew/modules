@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './DocLine.css';
 
 export default function DocLine({
@@ -13,7 +13,10 @@ export default function DocLine({
   readOnly = false,
 }) {
   const controlled = value !== undefined;
+
   const [innerValue, setInnerValue] = useState(defaultValue);
+
+  const textareaRef = useRef(null);
 
   useEffect(() => {
     if (!controlled) {
@@ -22,24 +25,101 @@ export default function DocLine({
   }, [defaultValue, controlled]);
 
   const currentValue = controlled ? value : innerValue;
-  const Comp = multiline ? 'textarea' : 'input';
+
+  useEffect(() => {
+    if (multiline && textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height =
+        `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [currentValue, multiline]);
 
   const handleChange = (e) => {
     const next = e.target.value;
-    if (!controlled) setInnerValue(next);
+
+    if (multiline) {
+      e.target.style.height = 'auto';
+      e.target.style.height =
+        `${e.target.scrollHeight}px`;
+    }
+
+    if (!controlled) {
+      setInnerValue(next);
+    }
+
     onChange?.(e);
   };
 
+  if (multiline) {
+    return (
+      <textarea
+        ref={textareaRef}
+        className={`doc-line doc-line--textarea ${className}`.trim()}
+        value={currentValue}
+        onChange={handleChange}
+        placeholder={placeholder}
+        style={{ width }}
+        rows={rows}
+        readOnly={readOnly}
+        spellCheck={false}
+      />
+    );
+  }
+
   return (
-    <Comp
-      className={`doc-line ${multiline ? 'doc-line--textarea' : ''} ${className}`.trim()}
+    <input
+      className={`doc-line ${className}`.trim()}
       value={currentValue}
       onChange={handleChange}
       placeholder={placeholder}
       style={{ width }}
-      rows={multiline ? rows : undefined}
       readOnly={readOnly}
       spellCheck={false}
     />
   );
 }
+// import { useEffect, useState } from 'react';
+// import './DocLine.css';
+
+// export default function DocLine({
+//   value,
+//   defaultValue = '',
+//   onChange,
+//   placeholder = '',
+//   className = '',
+//   width = '100%',
+//   multiline = false,
+//   rows = 2,
+//   readOnly = false,
+// }) {
+//   const controlled = value !== undefined;
+//   const [innerValue, setInnerValue] = useState(defaultValue);
+
+//   useEffect(() => {
+//     if (!controlled) {
+//       setInnerValue(defaultValue);
+//     }
+//   }, [defaultValue, controlled]);
+
+//   const currentValue = controlled ? value : innerValue;
+//   const Comp = multiline ? 'textarea' : 'input';
+
+//   const handleChange = (e) => {
+//     const next = e.target.value;
+//     if (!controlled) setInnerValue(next);
+//     onChange?.(e);
+//   };
+
+//   return (
+//     <Comp
+//       className={`doc-line ${multiline ? 'doc-line--textarea' : ''} ${className}`.trim()}
+//       value={currentValue}
+//       onChange={handleChange}
+//       placeholder={placeholder}
+//       style={{ width }}
+//       rows={multiline ? rows : undefined}
+//       readOnly={readOnly}
+//       spellCheck={false}
+//     />
+//   );
+// }
