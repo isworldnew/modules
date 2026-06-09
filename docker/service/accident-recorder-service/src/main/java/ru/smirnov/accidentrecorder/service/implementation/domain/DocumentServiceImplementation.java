@@ -1,9 +1,11 @@
 package ru.smirnov.accidentrecorder.service.implementation.domain;
 
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
 import ru.smirnov.accidentrecorder.dto.request.DocumentCreationRequest;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.DocumentType;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.DocumentedResponse;
@@ -15,6 +17,10 @@ import ru.smirnov.accidentrecorder.repository.domain.DocumentRepository;
 import ru.smirnov.accidentrecorder.repository.domain.ResponseRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.DocumentService;
 import ru.smirnov.accidentrecorder.service.abstraction.minio.AccidentStorageClient;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class DocumentServiceImplementation implements DocumentService {
@@ -42,20 +48,31 @@ public class DocumentServiceImplementation implements DocumentService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @SneakyThrows
     public Long addDocumentPerResponse(DocumentCreationRequest dto) {
 
         Response response = this.responsePreconditionService.safelyGetById(dto.getResponseId());
         response.setDocumentedResponse(DocumentedResponse.DOCUMENTED);
         this.responseRepository.save(response);
 
-        String reference = "";
+        String extension = Files.probeContentType(Paths.get(dto.getDocument().getOriginalFilename()));
+        String fileName = dto.getResponseId() + "-" + UUID.randomUUID().toString() + "." + extension.split("/")[1];
 
         Document document = this.documentMapper.generateDocumentEntity(
-                reference,
+                fileName,
                 response,
-                DocumentType.ACT
+                DocumentType.valueOf(dto.getDocumentType().toUpperCase())
         );
 
-        return null;
+        this.accidentStorageClient.saveRecord(
+                AccidentStorageMinioBuckets.DOCUMENTS.getBucketName(),
+                fileName,
+                dto.getDocument().getInputStream(),
+                extension
+        );
+
+        this.documentRepository.save(document);
+
+        return document.getId();
     }
 }

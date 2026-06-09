@@ -27,24 +27,19 @@
 }
 
 .act-page {
-  /* Адаптивная ширина: от 320px до максимума */
   width: min(100%, 210mm);
-  /* Высота автоматическая, сохраняем пропорции */
   height: auto;
   aspect-ratio: 210 / 297;
   
-  /* Масштабирование через transform при необходимости */
   transform-origin: top center;
 }
 
-/* Медиа-запросы для масштабирования на маленьких экранах */
 @media (max-width: 768px) {
   .act-shell {
     padding: 12px;
   }
   
   .act-page {
-    /* Уменьшаем масштаб через transform */
     transform: scale(0.9);
   }
 }
@@ -80,12 +75,10 @@
   flex-direction: column;
   color: #111;
   font-family: "Times New Roman", Times, serif;
-  /* Используем относительные единицы для шрифта */
   font-size: clamp(10pt, 3vw, 12pt);
   line-height: 1.35;
 }
 
-/* Адаптивные отступы для маленьких экранов */
 @media (max-width: 600px) {
   .act-paper {
     padding: 10mm 10mm 8mm;
@@ -98,7 +91,6 @@
   }
 }
 
-/* Остальные стили без изменений */
 .act-header {
   flex: 0 0 auto;
 }

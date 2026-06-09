@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum AccidentStorageMinioBuckets {
 
-    ACCIDENTS("accidents");
+    ACCIDENTS("accidents"),
+    DOCUMENTS("documents");
 
     private final String bucketName;
 
