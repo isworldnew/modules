@@ -1,6 +1,7 @@
 package ru.smirnov.accidentrecorder.service.abstraction.domain;
 
 import ru.smirnov.accidentrecorder.dto.request.TrespasserCreationRequest;
+import ru.smirnov.accidentrecorder.dto.response.EpisodeShortcutResponse;
 import ru.smirnov.accidentrecorder.dto.response.TrespasserShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.domain.Trespasser;
 

@@ -71,4 +71,19 @@ public class AccidentReportController {
         return this.accidentReportService.getAccidentReportShortcuts(tokenData, areaId, status, dateFrom, dateTo);
     }
 
+    @GetMapping("/event-shortcuts")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('SUPERVISOR')")
+    public List<AccidentReportShortcutResponse> getEventShortcutsByDocumentedStatus(
+            @RequestParam(name = "areaId", required = false) @NotNull @Positive Long areaId,
+            @NotBlank @RequestParam(name = "documented") String documented,
+            @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateFrom,
+            @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateTo
+    ) {
+        DataForToken tokenData = this.securityContextService.safelyExtractTokenDataFromSecurityContext();
+        return this.accidentReportService.getProcessedAccidentReportShortcutsByDocumentedStatus(
+                tokenData, areaId, documented, dateFrom, dateTo
+        );
+    }
+
 }

@@ -15,7 +15,13 @@ export default function EmployeesPage() {
             href: '/employees', 
             isActive: true,
             showBadge: false,
-        }, 
+        },
+        {
+            label: 'Нарушители', 
+            href: '/trespassers', 
+            isActive: false,
+            showBadge: false,            
+        },
         { 
             label: 'Зоны', 
             href: '/areas-page', 

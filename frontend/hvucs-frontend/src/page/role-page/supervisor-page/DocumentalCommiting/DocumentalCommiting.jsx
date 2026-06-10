@@ -35,6 +35,12 @@ export default function DocumentalCommiting() {
             href: '/employees', 
             isActive: false,
             showBadge: false,
+        },
+        {
+            label: 'Нарушители', 
+            href: '/trespassers', 
+            isActive: false,
+            showBadge: false,            
         }, 
         { 
             label: 'Зоны', 

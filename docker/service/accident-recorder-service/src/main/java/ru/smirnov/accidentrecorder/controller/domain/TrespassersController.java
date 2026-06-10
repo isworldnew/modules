@@ -1,9 +1,12 @@
 package ru.smirnov.accidentrecorder.controller.domain;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.smirnov.accidentrecorder.dto.response.EpisodeShortcutResponse;
 import ru.smirnov.accidentrecorder.dto.response.TrespasserShortcutResponse;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.TrespasserService;
 import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextService;

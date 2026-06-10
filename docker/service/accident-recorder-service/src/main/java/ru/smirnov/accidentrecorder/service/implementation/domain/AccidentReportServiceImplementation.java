@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.authentication.DataForToken;
 import ru.smirnov.accidentrecorder.dto.request.ReportRequest;
-import ru.smirnov.accidentrecorder.entity.audience.User;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.*;
 import ru.smirnov.accidentrecorder.entity.domain.AccidentReport;
 import ru.smirnov.accidentrecorder.entity.domain.Area;
@@ -135,4 +134,53 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
         ).size();
     }
 
+    @Override
+    public List<AccidentReportShortcutResponse> getProcessedAccidentReportShortcutsByDocumentedStatus(
+            DataForToken tokenData,
+            Long areaId,
+            String documented,
+            OffsetDateTime dateFrom,
+            OffsetDateTime dateTo
+    ) {
+        // Только для SUPERVISOR (проверка будет в контроллере через @PreAuthorize)
+
+        // Случай 1: Только documented (без дат и без areaId)
+        if (areaId == null && dateFrom == null && dateTo == null) {
+            return this.accidentReportRepository
+                    .getProcessedAccidentReportsByDocumentedStatus(documented);
+        }
+
+        // Случай 2: documented + даты (без areaId)
+        if (areaId == null && dateFrom != null && dateTo != null) {
+            return this.accidentReportRepository
+                    .getProcessedAccidentReportsByDateTimeRangeAndDocumentedStatus(
+                            dateFrom, dateTo, documented
+                    );
+        }
+
+        // Случай 3: documented + areaId (без дат)
+        if (areaId != null && dateFrom == null && dateTo == null) {
+            // Проверяем, что зона существует
+            Area area = this.areaPreconditionService.safelyGetById(areaId);
+
+            return this.accidentReportRepository
+                    .getProcessedAccidentReportsByAreaIdAndDocumentedStatus(
+                            areaId, documented
+                    );
+        }
+
+        // Случай 4: documented + areaId + даты (все параметры)
+        if (areaId != null && dateFrom != null && dateTo != null) {
+            // Проверяем, что зона существует
+            Area area = this.areaPreconditionService.safelyGetById(areaId);
+
+            return this.accidentReportRepository
+                    .getProcessedAccidentReportsByAreaIdAndDateTimeRangeAndDocumentedStatus(
+                            areaId, dateFrom, dateTo, documented
+                    );
+        }
+
+        // Если комбинация параметров не подходит ни под один случай, возвращаем пустой список
+        return new ArrayList<>();
+    }
 }

@@ -85,6 +85,25 @@ services:
     networks:
       - hi-vis-vest-usage-control-system-network
 
+  webhook-setup:
+    image: minio/mc:latest
+    container_name: webhook-setup
+    depends_on:
+      - entry-record-storage
+      - notification-service
+    env_file:
+      - ./env/entry-record-storage.env
+    volumes:
+      - ./init/webhook-setup.bash:/webhook-setup.bash
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: >
+      /bin/sh -c "
+      chmod +x /webhook-setup.bash;
+      /webhook-setup.bash;
+      "
+    networks:
+      - hi-vis-vest-usage-control-system-network
+
   # хранилище выявленных треков
   track-storage:
     image: mongo:latest

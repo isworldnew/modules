@@ -20,4 +20,12 @@ public interface AccidentReportService {
     );
 
     Integer getUnprocessedAccidentReportsAmount(DataForToken tokenData);
+
+    List<AccidentReportShortcutResponse> getProcessedAccidentReportShortcutsByDocumentedStatus(
+            DataForToken tokenData,
+            Long areaId,
+            String documented,
+            OffsetDateTime dateFrom,
+            OffsetDateTime dateTo
+    );
 }

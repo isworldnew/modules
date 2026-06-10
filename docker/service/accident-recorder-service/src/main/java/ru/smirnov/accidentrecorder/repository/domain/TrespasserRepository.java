@@ -20,4 +20,5 @@ public interface TrespasserRepository extends JpaRepository<Trespasser, Long> {
     )
     List<Trespasser> searchByName(@Param("searchRequest") String searchRequest);
 
+
 }

@@ -42,9 +42,9 @@ export default function EventItem({ potentialAccidentId, areaName, uploadDateTim
             <div className="event-meta">
                 {formattedDateTime}
             </div>
-            {/* <div className={`event-status ${statusInfo.className}`}>
+            <div className={`event-status ${statusInfo.className}`}>
                 {statusInfo.text}
-            </div> */}
+            </div>
         </div>
     );
 }

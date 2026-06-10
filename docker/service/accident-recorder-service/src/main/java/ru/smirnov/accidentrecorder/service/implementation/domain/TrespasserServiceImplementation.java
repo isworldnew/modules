@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.dto.request.TrespasserCreationRequest;
+import ru.smirnov.accidentrecorder.dto.response.EpisodeShortcutResponse;
 import ru.smirnov.accidentrecorder.dto.response.TrespasserShortcutResponse;
 import ru.smirnov.accidentrecorder.entity.domain.Trespasser;
 import ru.smirnov.accidentrecorder.mapper.abstraction.TrespasserMapper;
@@ -39,7 +40,6 @@ public class TrespasserServiceImplementation implements TrespasserService {
         this.trespasserRepository.save(trespasser);
         return trespasser;
     }
-
 
     @Override
     public List<TrespasserShortcutResponse> trespassersSearch(String searchRequest) {

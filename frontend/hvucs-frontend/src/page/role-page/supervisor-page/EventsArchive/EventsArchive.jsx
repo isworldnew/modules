@@ -20,6 +20,12 @@ export default function EventsArchive() {
             isActive: false,
             showBadge: false,
         }, 
+        {
+            label: 'Нарушители', 
+            href: '/trespassers', 
+            isActive: false,
+            showBadge: false,            
+        },
         { 
             label: 'Зоны', 
             href: '/areas-page', 
