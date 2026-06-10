@@ -34,11 +34,18 @@ export default function SupervisorUserPage() {
             showBadge: false,
         },
         {
+            label: 'Уведомления',
+            href: '/events-to-document',
+            isActive: false,
+            showBadge: true,
+        },
+        {
             label: 'Архив проишествий',
             href: '/archive',
             isActive: false,
             showBadge: false,
         },
+        
         // {
         //     label: 'Статистика',
         //     href: '/stats',

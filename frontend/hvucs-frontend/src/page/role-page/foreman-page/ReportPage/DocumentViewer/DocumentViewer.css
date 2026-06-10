@@ -1,0 +1,65 @@
+.document-viewer-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.document-viewer-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.document-viewer-thumbnail:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+}
+
+.document-viewer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.document-viewer-modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.document-viewer-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.document-viewer-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.document-viewer-loading,
+.document-viewer-error {
+    margin-top: 16px;
+    padding: 12px;
+    text-align: center;
+    color: #666;
+}

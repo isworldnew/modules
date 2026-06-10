@@ -1,6 +1,6 @@
 import './EventItem.css';
 
-export default function EventItem({ potentialAccidentId, areaName, uploadDateTime, status }) {
+export default function EventItem({ potentialAccidentId, areaName, uploadDateTime, documented }) {
     
     const formatDateTime = (dateTimeString) => {
         if (!dateTimeString) return '';
@@ -17,13 +17,13 @@ export default function EventItem({ potentialAccidentId, areaName, uploadDateTim
     };
     
     const getStatusInfo = () => {
-        switch(status) {
+        switch(documented) {
             case 'DOCUMENTED':
                 return { text: 'Обработано', className: 'status-documented' };
             case 'NON_DOCUMENTED':
                 return { text: 'Не обработано', className: 'status-non-documented' };
             default:
-                return { text: status || 'Неизвестно', className: 'status-unknown' };
+                return { text: documented || 'Неизвестно', className: 'status-unknown' };
         }
     };
     

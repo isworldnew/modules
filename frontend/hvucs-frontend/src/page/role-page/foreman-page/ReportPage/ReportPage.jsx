@@ -14,6 +14,7 @@ import AccidentSource from '../../../AccidentPage/AccidentSource/AccidentSource.
 import VideoPlayer from '../../../AccidentPage/VideoPlayer/VideoPlayer.jsx';
 import MetaInfoArea from '../../../AccidentPage/MetaInfoArea/MetaInfoArea.jsx';
 import ProcessedReportArea from '../../../AccidentPage/ProcessedReportArea/ProcessedReportArea.jsx';
+import DocumentViewer from './DocumentViewer/DocumentViewer.jsx';
 
 import ActionButton from '../../../../component/common-components/ActionButton/ActionButton.jsx';
 
@@ -72,7 +73,6 @@ export default function ReportPage() {
                 let data = null;
                 try {
                     data = await response.json();
-                    // console.log('Распарсенные данные:', data);
                 } catch (e) {
                     data = null;
                 }
@@ -137,6 +137,12 @@ export default function ReportPage() {
                 {
                     label: 'Архив проишествий',
                     href: '/archive',
+                    isActive: false,
+                    showBadge: false,
+                },
+                {
+                    label: 'Уведомления',
+                    href: '/events-to-document',
                     isActive: false,
                     showBadge: false,
                 },
@@ -245,6 +251,7 @@ export default function ReportPage() {
     };
 
     const showDocumentButton = userRole === 'SUPERVISOR' && incidentData.documented === 'NON_DOCUMENTED';
+    const showDocumentViewer = userRole === 'SUPERVISOR' && incidentData.documented === 'DOCUMENTED' && incidentData.response !== null;
 
     return (
         <div className="report-page-wrapper">
@@ -286,6 +293,10 @@ export default function ReportPage() {
                                     Документировать
                                 </ActionButton>
                             </div>
+                        )}
+
+                        {showDocumentViewer && (
+                            <DocumentViewer accidentId={potentialAccidentId} />
                         )}
                     </div>
                 </main>

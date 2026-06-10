@@ -23,4 +23,11 @@ public class ResponsePreconditionServiceImplementation implements ResponsePrecon
                 () -> new NotFoundException("Response with id=" + id + " doesn't exist")
         );
     }
+
+    @Override
+    public Response safelyGetByAccidentReportId(Long accidentReportId) {
+        return this.responseRepository.findByAccidentReportId(accidentReportId).orElseThrow(
+                () -> new NotFoundException("Response not found for accident_report_id: " + accidentReportId)
+        );
+    }
 }

@@ -39,17 +39,17 @@ export default function EventsArchive() {
             showBadge: false,
         },
         {
+            label: 'Уведомления',
+            href: '/events-to-document',
+            isActive: false,
+            showBadge: true,
+        },
+        {
             label: 'Архив проишествий',
             href: '/archive',
             isActive: true,
             showBadge: false,
         },
-        // {
-        //     label: 'Статистика',
-        //     href: '/stats',
-        //     isActive: false,
-        //     showBadge: false,
-        // },
         {
             label: 'Личный кабинет',
             href: '/supervisor-user-page',
@@ -90,7 +90,10 @@ export default function EventsArchive() {
         return true;
     };
     
-    const saveDatesToLocalStorage = (from, to) => {
+    const saveFiltersToLocalStorage = (area, from, to) => {
+        if (area) {
+            localStorage.setItem('archiveSelectedArea', JSON.stringify(area));
+        }
         if (from && to) {
             localStorage.setItem('archiveDateFrom', from);
             localStorage.setItem('archiveDateTo', to);
@@ -102,17 +105,30 @@ export default function EventsArchive() {
         localStorage.removeItem('archiveDateTo');
     };
     
+    const clearAreaFromLocalStorage = () => {
+        localStorage.removeItem('archiveSelectedArea');
+    };
+    
+    // Загрузка сохраненных фильтров при монтировании
     useEffect(() => {
         const savedDateFrom = localStorage.getItem('archiveDateFrom');
         const savedDateTo = localStorage.getItem('archiveDateTo');
+        const savedArea = localStorage.getItem('archiveSelectedArea');
         
         if (savedDateFrom && savedDateTo) {
             setDateFrom(savedDateFrom);
             setDateTo(savedDateTo);
-            setTimeout(() => {
-                setSearchTrigger(prev => prev + 1);
-            }, 100);
         }
+        
+        if (savedArea) {
+            try {
+                const parsedArea = JSON.parse(savedArea);
+                setSelectedArea(parsedArea);
+            } catch (e) {
+                console.error('Error parsing saved area:', e);
+            }
+        }
+        
         setIsInitialLoad(false);
     }, []);
     
@@ -122,17 +138,19 @@ export default function EventsArchive() {
     };
     
     const handleSearch = () => {
-        if (!dateFrom && !dateTo) {
-            clearDatesFromLocalStorage();
-            setSearchTrigger(prev => prev + 1);
+        // Проверка: если есть зона, но нет дат
+        if (selectedArea && (!dateFrom || !dateTo)) {
+            showErrorModal('При выборе зоны необходимо указать обе даты');
             return;
         }
         
-        if ((dateFrom && !dateTo) || (!dateFrom && dateTo)) {
-            showErrorModal('Пожалуйста, заполните обе даты для поиска по диапазону');
+        // Проверка: если есть даты, но нет зоны
+        if ((dateFrom || dateTo) && !selectedArea) {
+            showErrorModal('При указании дат необходимо выбрать зону');
             return;
         }
         
+        // Проверка формата дат, если они указаны
         if (dateFrom && !validateDateFormat(dateFrom)) {
             showErrorModal('Неверный формат даты "От"\nДата должна быть в формате ДД/ММ/ГГГГ\nДень: 1-31, Месяц: 1-12, Год: 4 цифры');
             return;
@@ -143,6 +161,7 @@ export default function EventsArchive() {
             return;
         }
         
+        // Проверка, что дата "От" не позже даты "До"
         if (dateFrom && dateTo) {
             const dayFrom = parseInt(dateFrom.split('/')[0], 10);
             const monthFrom = parseInt(dateFrom.split('/')[1], 10);
@@ -161,9 +180,41 @@ export default function EventsArchive() {
             }
         }
         
-        saveDatesToLocalStorage(dateFrom, dateTo);
+        // Сохраняем фильтры в localStorage
+        if (selectedArea && dateFrom && dateTo) {
+            saveFiltersToLocalStorage(selectedArea, dateFrom, dateTo);
+        } else if (selectedArea && !dateFrom && !dateTo) {
+            // Если выбрана только зона без дат - очищаем даты из localStorage
+            clearDatesFromLocalStorage();
+            saveFiltersToLocalStorage(selectedArea, null, null);
+        } else if (!selectedArea && dateFrom && dateTo) {
+            // Если указаны только даты без зоны - очищаем зону из localStorage
+            clearAreaFromLocalStorage();
+            saveFiltersToLocalStorage(null, dateFrom, dateTo);
+        } else {
+            // Если ничего не выбрано - очищаем всё
+            clearDatesFromLocalStorage();
+            clearAreaFromLocalStorage();
+        }
+        
+        // Триггерим поиск
         setSearchTrigger(prev => prev + 1);
-        console.log('Поиск по зоне:', selectedArea?.areaId, selectedArea?.name);
+        console.log('Поиск:', {
+            areaId: selectedArea?.areaId,
+            areaName: selectedArea?.name,
+            dateFrom,
+            dateTo
+        });
+    };
+    
+    const handleClearFilters = () => {
+        setDateFrom('');
+        setDateTo('');
+        setSelectedArea(null);
+        clearDatesFromLocalStorage();
+        clearAreaFromLocalStorage();
+        setSearchTrigger(prev => prev + 1);
+        console.log('Фильтры очищены');
     };
     
     return (
@@ -209,6 +260,7 @@ export default function EventsArchive() {
                                     onSelect={handleAreaSelect}
                                     placeholder="Выберите зону..."
                                     width="260px"
+                                    selectedValue={selectedArea}
                                 />
                             </div>
                             
@@ -217,6 +269,14 @@ export default function EventsArchive() {
                                 width="auto"
                             >
                                 Найти
+                            </ActionButton>
+                            
+                            <ActionButton 
+                                onClick={handleClearFilters}
+                                width="auto"
+                                variant="secondary"
+                            >
+                                Очистить
                             </ActionButton>
                         </div>
                         

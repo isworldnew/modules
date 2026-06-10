@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.smirnov.accidentrecorder.dto.request.DocumentCreationRequest;
+import ru.smirnov.accidentrecorder.dto.response.DocumentResponse;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.DocumentType;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.DocumentService;
 import ru.smirnov.accidentrecorder.service.abstraction.security.SecurityContextService;
@@ -41,6 +42,15 @@ public class DocumentController {
                         document,
                         DocumentType.ACT.name())
         );
+    }
+
+    @GetMapping("/by-accident/{accidentId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('SUPERVISOR', 'FOREMAN')")
+    public DocumentResponse getDocumentByAccidentId(
+            @NotNull @Positive @PathVariable("accidentId") Long accidentId
+    ) {
+        return this.documentService.getDocumentByAccidentId(accidentId);
     }
 
 }

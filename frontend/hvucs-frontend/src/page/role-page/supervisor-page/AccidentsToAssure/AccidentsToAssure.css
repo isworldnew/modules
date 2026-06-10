@@ -1,0 +1,43 @@
+@import '../../../../variables.css';
+
+.accidents-to-assure-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.accidents-to-assure-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.accidents-to-assure-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.accidents-to-assure-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.accidents-to-assure-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.accidents-to-assure-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .accidents-to-assure-page__layout {
+        flex-direction: column;
+    }
+    
+    .accidents-to-assure-page__content-inner {
+        padding: var(--spacing-md);
+    }
+}

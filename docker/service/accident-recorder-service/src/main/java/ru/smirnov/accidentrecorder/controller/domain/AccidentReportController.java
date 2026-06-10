@@ -75,7 +75,7 @@ public class AccidentReportController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('SUPERVISOR')")
     public List<AccidentReportShortcutResponse> getEventShortcutsByDocumentedStatus(
-            @RequestParam(name = "areaId", required = false) @NotNull @Positive Long areaId,
+            @RequestParam(name = "areaId", required = false) @Positive Long areaId,
             @NotBlank @RequestParam(name = "documented") String documented,
             @RequestParam(name = "dateFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateFrom,
             @RequestParam(name = "dateTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime dateTo

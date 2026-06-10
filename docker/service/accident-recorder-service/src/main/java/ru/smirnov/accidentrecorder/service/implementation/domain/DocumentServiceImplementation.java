@@ -7,12 +7,16 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.smirnov.accidentrecorder.config.AccidentStorageMinioBuckets;
 import ru.smirnov.accidentrecorder.dto.request.DocumentCreationRequest;
+import ru.smirnov.accidentrecorder.dto.response.DocumentResponse;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.DocumentType;
 import ru.smirnov.accidentrecorder.entity.auxiliary.fixed.DocumentedResponse;
+import ru.smirnov.accidentrecorder.entity.domain.AccidentReport;
 import ru.smirnov.accidentrecorder.entity.domain.Document;
 import ru.smirnov.accidentrecorder.entity.domain.Response;
+import ru.smirnov.accidentrecorder.exception.NotFoundException;
 import ru.smirnov.accidentrecorder.mapper.abstraction.DocumentMapper;
 import ru.smirnov.accidentrecorder.precondition.abstraction.ResponsePreconditionService;
+import ru.smirnov.accidentrecorder.repository.domain.AccidentReportRepository;
 import ru.smirnov.accidentrecorder.repository.domain.DocumentRepository;
 import ru.smirnov.accidentrecorder.repository.domain.ResponseRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.DocumentService;
@@ -20,6 +24,7 @@ import ru.smirnov.accidentrecorder.service.abstraction.minio.AccidentStorageClie
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.UUID;
 
 @Service
@@ -30,6 +35,8 @@ public class DocumentServiceImplementation implements DocumentService {
     private final ResponsePreconditionService responsePreconditionService;
     private final AccidentStorageClient accidentStorageClient;
     private final DocumentMapper documentMapper;
+    private final AccidentReportRepository accidentReportRepository;
+
 
     @Autowired
     public DocumentServiceImplementation(
@@ -37,13 +44,15 @@ public class DocumentServiceImplementation implements DocumentService {
             ResponseRepository responseRepository,
             ResponsePreconditionService responsePreconditionService,
             AccidentStorageClient accidentStorageClient,
-            DocumentMapper documentMapper
+            DocumentMapper documentMapper,
+            AccidentReportRepository accidentReportRepository
     ) {
         this.documentRepository = documentRepository;
         this.responseRepository = responseRepository;
         this.responsePreconditionService = responsePreconditionService;
         this.accidentStorageClient = accidentStorageClient;
         this.documentMapper = documentMapper;
+        this.accidentReportRepository = accidentReportRepository;
     }
 
     @Override
@@ -75,4 +84,62 @@ public class DocumentServiceImplementation implements DocumentService {
 
         return document.getId();
     }
+
+    @Override
+    @SneakyThrows
+    public DocumentResponse getDocumentByAccidentReportId(Long accidentReportId) {
+        Response response = this.responseRepository.findByAccidentReportId(accidentReportId)
+                .orElseThrow(() -> new NotFoundException("Response not found for accident_report_id: " + accidentReportId));
+
+        Document document = this.documentRepository.findByResponseId(response.getId())
+                .orElseThrow(() -> new NotFoundException("Document not found for response id: " + response.getId()));
+
+        byte[] content = this.accidentStorageClient.getRecordAsBytes(
+                AccidentStorageMinioBuckets.DOCUMENTS.getBucketName(),
+                document.getDocumentReference()
+        );
+
+        String contentType = Files.probeContentType(Paths.get(document.getDocumentReference()));
+        String base64Content = Base64.getEncoder().encodeToString(content);
+
+        return new DocumentResponse(
+                base64Content,
+                contentType != null ? contentType : "application/octet-stream",
+                document.getDocumentReference(),
+                document.getId()
+        );
+    }
+
+    @Override
+    @SneakyThrows
+    public DocumentResponse getDocumentByAccidentId(Long accidentId) {
+        // 1. Находим AccidentReport по accident_id (potential_accident_id)
+        AccidentReport accidentReport = accidentReportRepository.findByAccidentId(accidentId)
+                .orElseThrow(() -> new NotFoundException("Accident report not found for accident id: " + accidentId));
+
+        // 2. Находим Response по accident_report_id
+        Response response = responseRepository.findByAccidentReportId(accidentReport.getId())
+                .orElseThrow(() -> new NotFoundException("Response not found for accident_report_id: " + accidentReport.getId()));
+
+        // 3. Находим Document по response_id
+        Document document = documentRepository.findByResponseId(response.getId())
+                .orElseThrow(() -> new NotFoundException("Document not found for response id: " + response.getId()));
+
+        // 4. Получаем файл из MinIO и конвертируем в base64
+        byte[] content = accidentStorageClient.getRecordAsBytes(
+                AccidentStorageMinioBuckets.DOCUMENTS.getBucketName(),
+                document.getDocumentReference()
+        );
+
+        String contentType = Files.probeContentType(Paths.get(document.getDocumentReference()));
+        String base64Content = Base64.getEncoder().encodeToString(content);
+
+        return new DocumentResponse(
+                base64Content,
+                contentType != null ? contentType : "application/octet-stream",
+                document.getDocumentReference(),
+                document.getId()
+        );
+    }
+
 }

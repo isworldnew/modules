@@ -35,6 +35,12 @@ export default function CamerasPage() {
             showBadge: false,
         },
         {
+            label: 'Уведомления',
+            href: '/events-to-document',
+            isActive: false,
+            showBadge: true,
+        },
+        {
             label: 'Архив проишествий',
             href: '/archive',
             isActive: false,

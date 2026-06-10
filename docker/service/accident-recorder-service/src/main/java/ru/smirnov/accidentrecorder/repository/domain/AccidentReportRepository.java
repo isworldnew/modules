@@ -9,9 +9,12 @@ import ru.smirnov.accidentrecorder.projection.abstraction.AccidentReportShortcut
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AccidentReportRepository extends JpaRepository<AccidentReport, Long> {
+
+    Optional<AccidentReport> findByAccidentId(Long accidentId);
 
     @Query(
             value = """
