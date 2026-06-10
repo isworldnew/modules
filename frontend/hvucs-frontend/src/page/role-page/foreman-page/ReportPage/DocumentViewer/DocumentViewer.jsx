@@ -8,6 +8,20 @@ export default function DocumentViewer({ accidentId }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error, setError] = useState(null);
+    const [fileExtension, setFileExtension] = useState('');
+
+    const getExtensionFromContentType = (contentType) => {
+        const extensions = {
+            'image/jpeg': 'jpg',
+            'image/jpg': 'jpg',
+            'image/png': 'png',
+            'image/gif': 'gif',
+            'image/webp': 'webp',
+            'image/bmp': 'bmp',
+            'application/pdf': 'pdf'
+        };
+        return extensions[contentType] || 'jpg';
+    };
 
     const fetchDocument = async () => {
         setIsLoading(true);
@@ -34,6 +48,8 @@ export default function DocumentViewer({ accidentId }) {
             if (result && result.content) {
                 const url = `data:${result.contentType};base64,${result.content}`;
                 setDocumentUrl(url);
+                const ext = getExtensionFromContentType(result.contentType);
+                setFileExtension(ext);
             } else {
                 setError('Документ не содержит данных');
             }
@@ -61,7 +77,7 @@ export default function DocumentViewer({ accidentId }) {
         if (documentUrl) {
             const link = document.createElement('a');
             link.href = documentUrl;
-            link.download = `document_${accidentId}`;
+            link.download = `document_${accidentId}.${fileExtension}`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
