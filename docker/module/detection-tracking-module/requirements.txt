@@ -8,4 +8,4 @@ torchvision
 lap
 gunicorn
 minio
-kafka-python
+kafka-python==2.0.2
