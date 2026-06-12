@@ -11,6 +11,17 @@
     margin-bottom: var(--spacing-sm);
     color: var(--text-primary);
 }
+.image-file-area {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+}
+
+.image-file-area__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
 
 .image-file-area__dropzone {
     width: 100%;
@@ -30,7 +41,7 @@
 
 .image-file-area__dropzone:hover {
     border-color: var(--button-yellow);
-    background-color: rgba(255, 193, 7, 0.05);
+    background-color: color-mix(in srgb, var(--button-yellow) 5%, transparent);
 }
 
 .dropzone__icon {

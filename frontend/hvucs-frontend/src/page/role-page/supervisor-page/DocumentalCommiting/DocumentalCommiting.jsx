@@ -218,7 +218,7 @@ export default function DocumentalCommiting() {
 
                 wrapper.appendChild(textBlock);
 
-                const extraLines = 3;
+                const extraLines = 1;
 
                 for (let i = 0; i < extraLines; i++) {
                     const line = document.createElement('div');
@@ -357,7 +357,7 @@ export default function DocumentalCommiting() {
             setIsDownloading(false);
         }
     };
-
+    
     const getFullName = () => {
         const parts = [
             userData?.lastname,

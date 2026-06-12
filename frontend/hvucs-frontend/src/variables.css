@@ -1,36 +1,59 @@
 :root {
-    /* Цвета кнопок */
-    --button-yellow: #ffc107;
-    --button-yellow-hover: #e0a800;
-    --button-text-dark: #1a1a1a;
+    --button-yellow: #0055a4;
+    --button-yellow-hover: #004488;
+    --button-text-dark: #ffffff;
+    --danger-red: #dc2626;
     
-    /* Фоны */
-    --background-dark: #1e1e1e;  /* Светлее: было #121212 */
-    --background-card: #2a2a2a;   /* Светлее: было #1e1e1e */
-    --background-input: #3a3a3a;  /* Светлее: было #2c2c2c */
-    --footer-bg: #d3d3d3;
-    --footer-text: #1a1a1a;
+    --background-dark: #f4f6f9;
+    --background-card: #ffffff;
+    --background-input: #e8edf2;
+    --footer-bg: #1e2a3a;
+    --footer-text: #f4f6f9;
     
-    /* Цвета текста */
-    --text-primary: #ffffff;
-    --text-secondary: #e0e0e0;    /* Светлее: было #cccccc */
-    --text-dark: #1a1a1a;
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a5568;
+    --text-dark: #f4f6f9;
     
-    /* Цвета границ */
-    --border-color: #4a4a4a;      /* Светлее: было #3a3a3a */
+    --border-color: #cbd5e0;
     
-    /* Скругления */
     --border-radius-small: 8px;
     --border-radius-medium: 12px;
     --border-radius-large: 16px;
     
-    /* Тени */
-    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);  /* Мягче тень */
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.1);
     
-    /* Отступы */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
 }
+/* :root {
+    --button-yellow: #ffc107;
+    --button-yellow-hover: #e0a800;
+    --button-text-dark: #1a1a1a;
+    
+    --background-dark: #1e1e1e;  
+    --background-card: #2a2a2a;   
+    --background-input: #3a3a3a;  
+    --footer-bg: #d3d3d3;
+    --footer-text: #1a1a1a;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;   
+    --text-dark: #1a1a1a;
+    
+    --border-color: #4a4a4a;    
+    
+    --border-radius-small: 8px;
+    --border-radius-medium: 12px;
+    --border-radius-large: 16px;
+    
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+} */

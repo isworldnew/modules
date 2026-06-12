@@ -135,14 +135,14 @@ export default function ReportPage() {
                     showBadge: false,
                 },
                 {
-                    label: 'Архив проишествий',
-                    href: '/archive',
-                    isActive: false,
-                    showBadge: false,
-                },
-                {
                     label: 'Уведомления',
                     href: '/events-to-document',
+                    isActive: false,
+                    showBadge: true,
+                },
+                {
+                    label: 'Архив проишествий',
+                    href: '/archive',
                     isActive: false,
                     showBadge: false,
                 },

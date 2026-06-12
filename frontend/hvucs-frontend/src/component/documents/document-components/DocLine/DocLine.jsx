@@ -10,7 +10,7 @@ export default function DocLine({
   width = '100%',
   multiline = false,
   rows = 2,
-  readOnly = false,
+  readOnly = false
 }) {
   const controlled = value !== undefined;
 
