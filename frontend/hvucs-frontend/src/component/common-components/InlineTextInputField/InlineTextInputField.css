@@ -14,7 +14,7 @@
 }
 
 .required-star {
-    color: var(--button-yellow);
+    color: var(--danger-red);
     margin-left: 2px;
 }
 
@@ -33,11 +33,11 @@
 .input-field:focus {
     outline: none;
     border-color: var(--button-yellow);
-    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+    box-shadow: 0 0 0 2px rgba(0, 85, 164, 0.2);
 }
 
 .input-field::placeholder {
-    color: #6c6c6c;
+    color: var(--text-secondary);
     opacity: 1;
 }
 
@@ -46,13 +46,11 @@
     cursor: not-allowed;
 }
 
-/* Стили для поля с маской даты */
 .input-field.date-mask {
     font-family: monospace;
     letter-spacing: 0.5px;
 }
 
-/* Для password полей */
 .input-field[type="password"] {
     letter-spacing: 0.0em;
     font-family: monospace;

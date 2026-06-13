@@ -14,12 +14,13 @@
 }
 
 .unprocessed-report-content {
-    background-color: #252525;
+    background-color: var(--background-input);
     border-radius: var(--border-radius-medium);
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    border: 1px solid var(--border-color);
 }
 
 .unprocessed-report-actions {

@@ -9,12 +9,18 @@
     --background-input: #e8edf2;
     --footer-bg: #1e2a3a;
     --footer-text: #f4f6f9;
+    --footer-link: #f4f6f9;
+    --footer-link-hover: #0055a4;
     
     --text-primary: #1a1a2e;
     --text-secondary: #4a5568;
     --text-dark: #f4f6f9;
     
     --border-color: #cbd5e0;
+
+    --loader-text: #ffffff;
+
+    --soft-blue: #e3f2fd;
     
     --border-radius-small: 8px;
     --border-radius-medium: 12px;
@@ -27,6 +33,15 @@
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
+
+    --status-processed-bg: #1b5e20;
+    --status-processed-text: #c8e6c9;
+    --status-unprocessed-bg: #b71c1c;
+    --status-unprocessed-text: #ffcdd2;
+    --status-unknown-bg: #6c757d;
+    --status-unknown-text: #ffffff;
+    --interpretation-real: #ef5350;
+    --interpretation-false: #4caf50;
 }
 /* :root {
     --button-yellow: #ffc107;

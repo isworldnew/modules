@@ -7,10 +7,10 @@
 }
 
 .area-creation-card {
-    background-color: #1e1e1e;
-    border-radius: 16px;
-    padding: 1.75rem;
-    border: 1px solid #2c2c2c;
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--border-color);
     width: 100%;
     box-sizing: border-box;
 }
@@ -18,35 +18,34 @@
 .area-creation-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
     color: var(--button-yellow);
 }
 
 .area-creation-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--spacing-lg);
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
 }
 
 .form-group label {
-    color: #ccc;
+    color: var(--text-secondary);
     font-size: 0.875rem;
     font-weight: 500;
 }
 
 .area-creation-actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xs);
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .area-creation-region {
         width: 100%;
@@ -54,7 +53,7 @@
     }
     
     .area-creation-card {
-        padding: 1rem;
+        padding: var(--spacing-md);
     }
     
     .area-creation-actions {

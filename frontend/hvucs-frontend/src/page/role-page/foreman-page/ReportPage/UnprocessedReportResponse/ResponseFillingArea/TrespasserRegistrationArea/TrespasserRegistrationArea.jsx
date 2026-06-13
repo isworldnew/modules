@@ -29,12 +29,12 @@ const TrespasserRegistrationArea = forwardRef(
             {
                 label: 'Внутренний сотрудник',
                 value: 'INNER_EMPLOYEE',
-                color: '#ef5350'
+                color: '#b71c1c'
             },
             {
                 label: 'Сотрудник внешней организации',
                 value: 'OUTER_EMPLOYEE',
-                color: '#ef5350'
+                color: '#b71c1c'
             }
         ];
 

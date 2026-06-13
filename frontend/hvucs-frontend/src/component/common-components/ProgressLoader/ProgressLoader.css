@@ -1,6 +1,5 @@
 @import '../../../variables.css';
 
-/* Затемнение всей страницы */
 .loader-overlay {
     position: fixed;
     top: 0;
@@ -15,7 +14,6 @@
     backdrop-filter: blur(3px);
 }
 
-/* Контейнер лоадера */
 .loader-container {
     display: flex;
     flex-direction: column;
@@ -24,25 +22,22 @@
     gap: var(--spacing-lg);
 }
 
-/* Крутящееся жёлтое кольцо */
 .loader-spinner {
     width: 60px;
     height: 60px;
-    border: 4px solid rgba(255, 193, 7, 0.2);
+    border: 4px solid rgba(0, 85, 164, 0.2);
     border-top: 4px solid var(--button-yellow);
     border-right: 4px solid var(--button-yellow);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
 
-/* Текст под спиннером */
 .loader-message {
-    color: var(--text-primary);
+    color: var(--loader-text);
     font-size: 1rem;
     text-align: center;
 }
 
-/* Анимация вращения */
 @keyframes spin {
     0% {
         transform: rotate(0deg);

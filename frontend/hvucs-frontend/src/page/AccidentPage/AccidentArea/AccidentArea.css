@@ -16,7 +16,6 @@
     flex-wrap: wrap;
 }
 
-/* Стили для пустого состояния */
 .accident-area-empty,
 .accident-area-error {
     display: flex;
@@ -35,7 +34,6 @@
     font-size: 1rem;
 }
 
-/* Плейсхолдер для видео */
 .video-placeholder {
     margin: var(--spacing-lg) 0;
     background-color: #0a0a0a;

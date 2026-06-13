@@ -21,18 +21,18 @@
 }
 
 .status-processed {
-    background-color: #1b5e20;
-    color: #c8e6c9;
+    background-color: var(--status-processed-bg);
+    color: var(--status-processed-text);
 }
 
 .status-unprocessed {
-    background-color: #b71c1c;
-    color: #ffcdd2;
+    background-color: var(--status-unprocessed-bg);
+    color: var(--status-unprocessed-text);
 }
 
 .status-unknown {
-    background-color: #6c757d;
-    color: #ffffff;
+    background-color: var(--status-unknown-bg);
+    color: var(--status-unknown-text);
 }
 
 .info-interpretation {
@@ -43,11 +43,11 @@
 }
 
 .interpretation-real {
-    color: #ef5350;
+    color: var(--status-unprocessed-bg);
 }
 
 .interpretation-false {
-    color: #4caf50;
+    color: var(--status-processed-bg);
 }
 
 .interpretation-unknown {

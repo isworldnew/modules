@@ -28,9 +28,9 @@ export default function ProcessedReportResponse({ response, trespasser, foreman 
     const getResponseTypeColor = (type) => {
         switch(type) {
             case 'RED_HANDED_CATCH':
-                return '#4caf50';
+                return '#1b5e20';
             case 'NOTED':
-                return '#ef5350';
+                return '#b71c1c';
             default:
                 return 'var(--text-primary)';
         }

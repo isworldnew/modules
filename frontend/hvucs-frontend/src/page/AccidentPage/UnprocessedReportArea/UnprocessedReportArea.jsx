@@ -85,8 +85,8 @@ export default function UnprocessedReportArea({ label, children }) {
     
     // Опции для radio buttons
     const radioOptions = [
-        { label: "Предположение модели подтверждено", value: "REAL_ALARM", color: "#ef5350" },
-        { label: "Ложное срабатывание", value: "FALSE_ALARM", color: "#4caf50" }
+        { label: "Предположение модели подтверждено", value: "REAL_ALARM", color: "#b71c1c" },
+        { label: "Ложное срабатывание", value: "FALSE_ALARM", color: "#1b5e20" }
     ];
     
     return (

@@ -1,10 +1,10 @@
 @import '../../../variables.css';
 
 .footer {
-    background-color: #1a1a1a;
+    background-color: var(--background-card);
     padding: var(--spacing-lg) var(--spacing-xl);
     margin-top: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-container {
@@ -22,7 +22,7 @@
 
 .footer-copyright,
 .footer-info {
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 0.875rem;
     margin: 0;
     opacity: 0.8;
@@ -36,7 +36,6 @@
     opacity: 0.6;
 }
 
-/* Стили для ссылки */
 .footer-link {
     color: var(--button-yellow);
     text-decoration: none;
@@ -50,7 +49,6 @@
     text-decoration: underline;
 }
 
-/* Адаптив для мобильных устройств */
 @media (max-width: 768px) {
     .footer {
         padding: var(--spacing-md) var(--spacing-lg);

@@ -3,7 +3,7 @@
 .trespasser-registration-area {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-medium);
-    background-color: var(--background-input);
+    background-color: var(--background-card);
     overflow: hidden;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .trespasser-registration-header:hover {
-    background-color: rgba(255, 193, 7, 0.1);
+    background-color: var(--soft-blue);
 }
 
 .trespasser-registration-title {

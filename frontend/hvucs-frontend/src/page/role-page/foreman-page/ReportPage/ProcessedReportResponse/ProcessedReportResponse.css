@@ -22,8 +22,9 @@
 }
 
 .processed-report-response__content {
-    background-color: #252525;
+    background-color: var(--background-input);
     border-radius: var(--border-radius-medium);
+    border: 2px solid var(--border-color);
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
