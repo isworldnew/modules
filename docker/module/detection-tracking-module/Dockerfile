@@ -23,7 +23,9 @@ RUN pip install --upgrade pip \
 COPY main.py .
 COPY kafka_consumer.py .
 COPY kafka_producer.py .
+COPY worker_pool.py .
 COPY models/ ./models/
+COPY config/ ./config/
 
 RUN mkdir -p /app/uploads
 
