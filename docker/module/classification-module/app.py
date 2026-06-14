@@ -259,7 +259,6 @@ def health():
 
 
 def start_kafka():
-    """Start Kafka consumer in a separate thread"""
     t = threading.Thread(target=start_consumer, daemon=True)
     t.start()
 

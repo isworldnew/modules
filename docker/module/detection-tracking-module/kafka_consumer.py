@@ -50,9 +50,6 @@ def download_video_from_minio(key: str, local_path: str) -> bool:
 
 
 def process_video_wrapper(local_path: str, key: str):
-    """
-    Выполняется внутри ThreadPoolExecutor.
-    """
 
     try:
         from main import process_video

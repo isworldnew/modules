@@ -259,11 +259,9 @@ def process_video(video_path, original_filename):
 
         frame_id += 1
 
-    # Обрабатываем оставшиеся активные треки в конце видео
     for pid, p in active.items():
         duration = p["end_time"] - p["start_time"]
         if duration >= MIN_PERSON_DURATION:
-            # Сохраняем в MongoDB и отправляем сообщение сразу
             result = collection.insert_one(p)
             object_id = str(result.inserted_id)
 
