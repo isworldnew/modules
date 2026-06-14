@@ -131,13 +131,10 @@ export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) 
         }
     };
 
-    // Запуск интервального опроса для страницы уведомлений
     useEffect(() => {
         if (isEventsToDocumentPage) {
-            // Первоначальная загрузка
             fetchEvents();
             
-            // Запускаем интервал каждые 3 секунды
             intervalRef.current = setInterval(() => {
                 console.log('Polling events for /events-to-document...');
                 fetchEvents();
@@ -153,7 +150,6 @@ export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) 
         }
     }, [isEventsToDocumentPage]);
 
-    // Только первоначальная загрузка для архива (без фильтров)
     useEffect(() => {
         isMounted.current = true;
         
@@ -168,9 +164,8 @@ export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) 
                 intervalRef.current = null;
             }
         };
-    }, []); // Пустой массив - только при монтировании
+    }, []);
 
-    // Запрос только при изменении searchTrigger (кнопка "Найти")
     useEffect(() => {
         if (searchTrigger > 0 && isArchivePage) {
             fetchEvents();

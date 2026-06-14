@@ -109,7 +109,6 @@ export default function EventsArchive() {
         localStorage.removeItem('archiveSelectedArea');
     };
     
-    // Загрузка сохраненных фильтров при монтировании
     useEffect(() => {
         const savedDateFrom = localStorage.getItem('archiveDateFrom');
         const savedDateTo = localStorage.getItem('archiveDateTo');
@@ -138,19 +137,16 @@ export default function EventsArchive() {
     };
     
     const handleSearch = () => {
-        // Проверка: если есть зона, но нет дат
         if (selectedArea && (!dateFrom || !dateTo)) {
             showErrorModal('При выборе зоны необходимо указать обе даты');
             return;
         }
         
-        // Проверка: если есть даты, но нет зоны
         if ((dateFrom || dateTo) && !selectedArea) {
             showErrorModal('При указании дат необходимо выбрать зону');
             return;
         }
         
-        // Проверка формата дат, если они указаны
         if (dateFrom && !validateDateFormat(dateFrom)) {
             showErrorModal('Неверный формат даты "От"\nДата должна быть в формате ДД/ММ/ГГГГ\nДень: 1-31, Месяц: 1-12, Год: 4 цифры');
             return;
@@ -161,7 +157,6 @@ export default function EventsArchive() {
             return;
         }
         
-        // Проверка, что дата "От" не позже даты "До"
         if (dateFrom && dateTo) {
             const dayFrom = parseInt(dateFrom.split('/')[0], 10);
             const monthFrom = parseInt(dateFrom.split('/')[1], 10);
@@ -180,24 +175,19 @@ export default function EventsArchive() {
             }
         }
         
-        // Сохраняем фильтры в localStorage
         if (selectedArea && dateFrom && dateTo) {
             saveFiltersToLocalStorage(selectedArea, dateFrom, dateTo);
         } else if (selectedArea && !dateFrom && !dateTo) {
-            // Если выбрана только зона без дат - очищаем даты из localStorage
             clearDatesFromLocalStorage();
             saveFiltersToLocalStorage(selectedArea, null, null);
         } else if (!selectedArea && dateFrom && dateTo) {
-            // Если указаны только даты без зоны - очищаем зону из localStorage
             clearAreaFromLocalStorage();
             saveFiltersToLocalStorage(null, dateFrom, dateTo);
         } else {
-            // Если ничего не выбрано - очищаем всё
             clearDatesFromLocalStorage();
             clearAreaFromLocalStorage();
         }
         
-        // Триггерим поиск
         setSearchTrigger(prev => prev + 1);
         console.log('Поиск:', {
             areaId: selectedArea?.areaId,
