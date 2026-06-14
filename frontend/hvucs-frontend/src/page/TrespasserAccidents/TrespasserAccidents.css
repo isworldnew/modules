@@ -1,0 +1,43 @@
+@import '../../variables.css';
+
+.trespasser-accidents-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.trespasser-accidents-page__layout {
+    display: flex;
+    flex: 1;
+}
+
+.trespasser-accidents-page__content {
+    flex: 1;
+    background-color: var(--background-dark);
+    overflow-y: auto;
+}
+
+.trespasser-accidents-page__content-inner {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.trespasser-accidents-page__content-inner > * {
+    margin-bottom: var(--spacing-xl);
+}
+
+.trespasser-accidents-page__content-inner > *:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .trespasser-accidents-page__layout {
+        flex-direction: column;
+    }
+    
+    .trespasser-accidents-page__content-inner {
+        padding: var(--spacing-md);
+    }
+}

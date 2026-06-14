@@ -177,13 +177,6 @@ export default function EventsArea({ dateFrom, dateTo, searchTrigger, areaId }) 
         }
     }, [searchTrigger]);
 
-    // УДАЛИТЬ этот useEffect - он вызывает запросы при каждом изменении полей
-    // useEffect(() => {
-    //     if (isArchivePage && (areaId || dateFrom || dateTo)) {
-    //         fetchEvents();
-    //     }
-    // }, [areaId, dateFrom, dateTo]);
-
     const handleCloseModal = () => {
         setShowModal(false);
         setModalMessage('');

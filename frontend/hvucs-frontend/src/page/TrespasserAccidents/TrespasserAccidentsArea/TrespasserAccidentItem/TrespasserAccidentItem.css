@@ -1,0 +1,82 @@
+@import '../../../../variables.css';
+
+.trespasser-accident-item {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.trespasser-accident-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--button-yellow);
+    box-shadow: var(--shadow-card);
+}
+
+.trespasser-accident-item__info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.trespasser-accident-item__area {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+}
+
+.trespasser-accident-item__datetime {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+}
+
+.trespasser-accident-item__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.3px;
+}
+
+.trespasser-accident-item__value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .trespasser-accident-item {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .trespasser-accident-item__info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        width: 100%;
+    }
+    
+    .trespasser-accident-item__area,
+    .trespasser-accident-item__datetime {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .trespasser-accident-item__label {
+        font-size: 0.75rem;
+    }
+    
+    .trespasser-accident-item__value {
+        font-size: 0.875rem;
+    }
+}

@@ -28,4 +28,6 @@ public interface AccidentReportService {
             OffsetDateTime dateFrom,
             OffsetDateTime dateTo
     );
+
+    List<AccidentReportShortcutResponse> getDocumentedEventsByTrespasserId(Long trespasserId);
 }

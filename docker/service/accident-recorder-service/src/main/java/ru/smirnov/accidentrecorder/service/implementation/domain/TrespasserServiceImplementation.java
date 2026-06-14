@@ -48,4 +48,10 @@ public class TrespasserServiceImplementation implements TrespasserService {
                  .toList();
     }
 
+    @Override
+    public TrespasserShortcutResponse getTrespasserShortcutById(Long trespasserId) {
+        return this.trespasserMapper.trespasserEntityToTrespasserShortcutResponse(
+                this.trespasserPreconditionService.safelyGetById(trespasserId)
+        );
+    }
 }

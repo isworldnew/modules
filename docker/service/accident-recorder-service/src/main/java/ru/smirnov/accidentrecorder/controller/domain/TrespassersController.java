@@ -33,4 +33,13 @@ public class TrespassersController {
         return this.trespasserService.trespassersSearch(searchRequest);
     }
 
+    @GetMapping("/{trespasserId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('SUPERVISOR', 'ADMIN', 'SUPERADMIN', 'FOREMAN')")
+    public TrespasserShortcutResponse getTrespasser(
+            @PathVariable("trespasserId") @NotNull @Positive Long trespasserId
+    ) {
+        return this.trespasserService.getTrespasserShortcutById(trespasserId);
+    }
+
 }

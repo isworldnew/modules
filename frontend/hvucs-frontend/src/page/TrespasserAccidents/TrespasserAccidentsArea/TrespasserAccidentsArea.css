@@ -1,0 +1,47 @@
+@import '../../../variables.css';
+
+.trespasser-accidents-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.trespasser-accidents-area-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.trespasser-accidents-area-empty p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.trespasser-accidents-area-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--error-color);
+}
+
+.trespasser-accidents-area-error p {
+    color: var(--error-color);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .trespasser-accidents-list {
+        gap: var(--spacing-xs);
+    }
+    
+    .trespasser-accidents-area-empty p {
+        font-size: 0.875rem;
+    }
+}

@@ -13,6 +13,7 @@ import ru.smirnov.accidentrecorder.entity.domain.PotentialAccident;
 import ru.smirnov.accidentrecorder.exception.ForbiddenException;
 import ru.smirnov.accidentrecorder.precondition.abstraction.AreaPreconditionService;
 import ru.smirnov.accidentrecorder.precondition.abstraction.PotentialAccidentPreconditionService;
+import ru.smirnov.accidentrecorder.precondition.abstraction.TrespasserPreconditionService;
 import ru.smirnov.accidentrecorder.projection.abstraction.AccidentReportShortcutResponse;
 import ru.smirnov.accidentrecorder.repository.domain.AccidentReportRepository;
 import ru.smirnov.accidentrecorder.service.abstraction.domain.AccidentReportService;
@@ -29,18 +30,21 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
     private final PotentialAccidentPreconditionService potentialAccidentPreconditionService;
     private final AreaService areaService;
     private final AreaPreconditionService areaPreconditionService;
+    private final TrespasserPreconditionService trespasserPreconditionService;
 
     @Autowired
     public AccidentReportServiceImplementation(
             AccidentReportRepository accidentReportRepository,
             PotentialAccidentPreconditionService potentialAccidentPreconditionService,
             AreaService areaService,
-            AreaPreconditionService areaPreconditionService
+            AreaPreconditionService areaPreconditionService,
+            TrespasserPreconditionService trespasserPreconditionService
     ) {
         this.accidentReportRepository = accidentReportRepository;
         this.potentialAccidentPreconditionService = potentialAccidentPreconditionService;
         this.areaService = areaService;
         this.areaPreconditionService = areaPreconditionService;
+        this.trespasserPreconditionService = trespasserPreconditionService;
     }
 
     @Override
@@ -182,5 +186,11 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
 
         // Если комбинация параметров не подходит ни под один случай, возвращаем пустой список
         return new ArrayList<>();
+    }
+
+    @Override
+    public List<AccidentReportShortcutResponse> getDocumentedEventsByTrespasserId(Long trespasserId) {
+        this.trespasserPreconditionService.safelyGetById(trespasserId);
+        return this.accidentReportRepository.getDocumentedEventsByTrespasserId(trespasserId);
     }
 }

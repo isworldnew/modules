@@ -10,8 +10,21 @@
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.header-left {
+    flex: 1;
+    display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
 }
 
 .header-logo {
@@ -31,7 +44,42 @@
     font-weight: 400;
 }
 
-/* Адаптив для мобильных устройств */
+.theme-toggle {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: #000000;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle.active .toggle-knob {
+    transform: translateX(20px);
+}
+
+.theme-toggle:hover {
+    opacity: 0.85;
+}
+
+.theme-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
 @media (max-width: 768px) {
     .header {
         padding: var(--spacing-md) var(--spacing-lg);
@@ -43,5 +91,21 @@
     
     .header-subtitle {
         font-size: 0.75rem;
+    }
+    
+    .theme-toggle {
+        width: 36px;
+        height: 18px;
+    }
+    
+    .toggle-knob {
+        width: 14px;
+        height: 14px;
+        top: 2px;
+        left: 2px;
+    }
+    
+    .theme-toggle.active .toggle-knob {
+        transform: translateX(18px);
     }
 }

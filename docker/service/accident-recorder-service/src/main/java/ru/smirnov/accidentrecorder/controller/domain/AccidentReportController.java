@@ -86,4 +86,13 @@ public class AccidentReportController {
         );
     }
 
+    @GetMapping("/trespasser/{trespasserId}/documents")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('SUPERVISOR', 'ADMIN', 'SUPERADMIN', 'FOREMAN')")
+    public List<AccidentReportShortcutResponse> getDocumentedEventsByTrespasserId(
+            @NotNull @Positive @PathVariable("trespasserId") Long trespasserId
+    ) {
+        return this.accidentReportService.getDocumentedEventsByTrespasserId(trespasserId);
+    }
+
 }

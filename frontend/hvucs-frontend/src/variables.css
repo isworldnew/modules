@@ -1,5 +1,5 @@
 /* новые синие (светлая тема) */
-/* :root {
+[data-theme="light"] {
     --button-yellow: #0055a4;
     --button-yellow-hover: #004488;
     --button-text-dark: #ffffff;
@@ -23,6 +23,8 @@
 
     --loader-text: #ffffff;
 
+    --item-amount: #e3f2fd;
+
     --soft-blue: #e3f2fd;
     
     --border-radius-small: 8px;
@@ -45,10 +47,10 @@
     --status-unknown-text: #ffffff;
     --interpretation-real: #ef5350;
     --interpretation-false: #4caf50;
-} */
+}
 
 /* новые жёлтые */
-:root { 
+[data-theme="dark"] { 
     --button-yellow: #ffc107;
     --button-yellow-hover: #e0a800;
     --button-text-dark: #1a1a1a;
@@ -71,6 +73,8 @@
     --border-color: #4a4a4a;
     
     --loader-text: #ffffff;
+
+    --item-amount: rgba(255, 193, 7, 0.1);
     
     --soft-blue: #1e3a5f;
     

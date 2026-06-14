@@ -14,7 +14,7 @@ export default function SearchResultItem({ id, name, post, relation, organizatio
     };
 
     const handleClick = () => {
-        window.location.href = `/trespasser/${id}`;
+        window.location.href = `/trespasser-accidents/${id}`;
     };
 
     return (

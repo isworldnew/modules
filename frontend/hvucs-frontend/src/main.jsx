@@ -38,6 +38,9 @@ import DocumentalCommiting from './page/role-page/supervisor-page/DocumentalComm
 import ForbiddenPage from './page/ForbiddenPage/ForbiddenPage.jsx';
 import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
 
+import TrespasserAccidents from './page/TrespasserAccidents/TrespasserAccidents.jsx';
+import TrespasserAccidentData from './page/TrespasserAccidentData/TrespasserAccidentData.jsx';
+
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -77,6 +80,8 @@ createRoot(document.getElementById('root')).render(
         <Route path='/stats' element={<StatsPage />}/>
         <Route path='/documental-commiting/:id' element={<DocumentalCommiting />}/>
         
+        <Route path='/trespasser-accidents/:id' element={<TrespasserAccidents />}/>
+        <Route path='/trespasser-accidents-data/:id' element={<TrespasserAccidentData />}/>
 
       </Routes>
     </Router>

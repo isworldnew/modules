@@ -251,7 +251,7 @@ export default function ReportPage() {
     };
 
     const showDocumentButton = userRole === 'SUPERVISOR' && incidentData.documented === 'NON_DOCUMENTED';
-    const showDocumentViewer = userRole === 'SUPERVISOR' && incidentData.documented === 'DOCUMENTED' && incidentData.response !== null;
+    const showDocumentViewer = userRole === ('SUPERVISOR' && incidentData.documented === 'DOCUMENTED' && incidentData.response !== null) || ('FOREMAN' && incidentData.documented === 'DOCUMENTED' && incidentData.response !== null);
 
     return (
         <div className="report-page-wrapper">
