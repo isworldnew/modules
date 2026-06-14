@@ -1,23 +1,20 @@
 import './DocumentItem.css';
+import { useState } from 'react';
+import ActionButton from '../../../../component/common-components/ActionButton/ActionButton';
 
 export default function DocumentItem({ documentId, fileName, dateTime, contentType, content }) {
-    const handleDownload = () => {
-        const byteCharacters = atob(content);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: contentType });
-        
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    
+    const documentUrl = `data:${contentType};base64,${content}`;
+
+    const handleDownload = (e) => {
+        e.stopPropagation();
         const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
+        link.href = documentUrl;
         link.download = fileName;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        URL.revokeObjectURL(url);
     };
 
     const formatDateTime = (dateTimeString) => {
@@ -40,21 +37,49 @@ export default function DocumentItem({ documentId, fileName, dateTime, contentTy
         return fullName;
     };
 
+    const isImage = contentType && contentType.startsWith('image/');
+
     return (
-        <div className="document-item" onClick={handleDownload}>
-            <div className="document-item__info">
-                <div className="document-item__name">
-                    <span className="document-item__label">Документ</span>
-                    <span className="document-item__value">{getFileNameShort(fileName)}</span>
+        <>
+            <div className="document-item">
+                <div className="document-item__info">
+                    <div className="document-item__name">
+                        <span className="document-item__label">Документ</span>
+                        <span className="document-item__value">{getFileNameShort(fileName)}</span>
+                    </div>
+                    <div className="document-item__date">
+                        <span className="document-item__label">Дата нарушения</span>
+                        <span className="document-item__value">{formatDateTime(dateTime)}</span>
+                    </div>
                 </div>
-                <div className="document-item__date">
-                    <span className="document-item__label">Дата нарушения</span>
-                    <span className="document-item__value">{formatDateTime(dateTime)}</span>
+                <div className="document-item__actions">
+                    {isImage && (
+                        <div className="document-item__preview" onClick={() => setIsModalOpen(true)}>
+                            <img 
+                                src={documentUrl} 
+                                alt="preview"
+                                className="document-preview-thumbnail"
+                            />
+                        </div>
+                    )}
+                    <ActionButton onClick={handleDownload} width="auto">
+                        Скачать
+                    </ActionButton>
                 </div>
             </div>
-            <div className="document-item__download">
-                <span className="download-text">Скачать</span>
-            </div>
-        </div>
+
+            {isModalOpen && (
+                <div className="document-modal" onClick={() => setIsModalOpen(false)}>
+                    <div className="document-modal__content" onClick={(e) => e.stopPropagation()}>
+                        <button className="document-modal__close" onClick={() => setIsModalOpen(false)}>×</button>
+                        <img 
+                            src={documentUrl} 
+                            alt="document full"
+                            className="document-modal__image"
+                        />
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
