@@ -26,6 +26,12 @@ export default function AccidentsPage() {
             showBadge: false 
         },
         {
+            label: 'Документы', 
+            href: '/documents', 
+            isActive: false,
+            showBadge: false,            
+        },
+        {
             label: 'Личный кабинет',
             href: '/safety-officer-user-page',
             isActive: false,

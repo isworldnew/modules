@@ -1,0 +1,65 @@
+@import '../../../variables.css';
+
+.documents-search-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.documents-filters {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.filter-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.documents-area-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--border-color);
+}
+
+.documents-area-empty p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .documents-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .documents-list {
+        gap: var(--spacing-xs);
+    }
+    
+    .documents-area-empty p {
+        font-size: 0.875rem;
+    }
+}

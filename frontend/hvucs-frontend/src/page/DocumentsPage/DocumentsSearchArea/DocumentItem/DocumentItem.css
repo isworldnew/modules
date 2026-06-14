@@ -1,0 +1,113 @@
+@import '../../../../variables.css';
+
+.document-item {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.document-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--button-yellow);
+    box-shadow: var(--shadow-card);
+}
+
+.document-item__info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.document-item__name {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+}
+
+.document-item__date {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+}
+
+.document-item__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.3px;
+}
+
+.document-item__value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.document-item__download {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--button-yellow);
+    color: var(--button-text-dark);
+    border-radius: var(--border-radius-small);
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.document-item:hover .document-item__download {
+    background-color: var(--button-yellow-hover);
+}
+
+.download-icon {
+    font-size: 1rem;
+}
+
+.download-text {
+    font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+    .document-item {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .document-item__info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        width: 100%;
+    }
+    
+    .document-item__name,
+    .document-item__date {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .document-item__label {
+        font-size: 0.75rem;
+    }
+    
+    .document-item__value {
+        font-size: 0.875rem;
+    }
+    
+    .document-item__download {
+        width: 100%;
+        justify-content: center;
+    }
+}

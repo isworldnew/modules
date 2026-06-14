@@ -10,4 +10,5 @@ public class DocumentResponse {
     private String contentType;
     private String fileName;
     private Long documentId;
+    private String dateTime;
 }

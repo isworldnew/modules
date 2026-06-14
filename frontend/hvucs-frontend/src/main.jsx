@@ -41,6 +41,7 @@ import NotFoundPage from './page/NotFoundPage/NotFoundPage.jsx';
 import TrespasserAccidents from './page/TrespasserAccidents/TrespasserAccidents.jsx';
 import TrespasserAccidentData from './page/TrespasserAccidentData/TrespasserAccidentData.jsx';
 
+import DocumentsPage from './page/DocumentsPage/DocumentsPage.jsx';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -56,6 +57,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/notifications' element={<NotificationsPage />}/>
         <Route path='/accidents' element={<AccidentsPage />}/>
         <Route path='/accident/:id' element={<AccidentPage />}/>
+        <Route path='/documents' element={<DocumentsPage />}/>
 
         {/* страницы для роли ADMIN */}
         <Route path='/admin-user-page' element={<AdminUserPage />}/>

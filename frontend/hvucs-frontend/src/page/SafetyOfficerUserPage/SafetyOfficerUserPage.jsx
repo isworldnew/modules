@@ -22,6 +22,12 @@ export default function SafetyOfficerUserPage() {
             showBadge: false,
         },
         {
+            label: 'Документы', 
+            href: '/documents', 
+            isActive: false,
+            showBadge: false,            
+        },
+        {
             label: 'Личный кабинет',
             href: '/safety-officer-user-page',
             isActive: true,
@@ -41,7 +47,6 @@ export default function SafetyOfficerUserPage() {
                     <div className="safety-officer-page__content-inner">
                         <PageName title="Личный кабинет" />
                         <PersonalDataCard />
-                        {/* TODO: список назначенных зон TODO: форма обновления пароля */}
                     </div>
                 </main>
             </div>
