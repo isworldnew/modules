@@ -116,7 +116,7 @@
 
 .timecode {
     font-size: 0.75rem;
-    color: var(--background-card);
+    color: var(--timecode);
     font-family: monospace;
     min-width: 100px;
     text-align: center;

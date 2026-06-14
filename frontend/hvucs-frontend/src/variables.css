@@ -1,4 +1,5 @@
-:root {
+/* новые синие (светлая тема) */
+/* :root {
     --button-yellow: #0055a4;
     --button-yellow-hover: #004488;
     --button-text-dark: #ffffff;
@@ -15,6 +16,8 @@
     --text-primary: #1a1a2e;
     --text-secondary: #4a5568;
     --text-dark: #f4f6f9;
+
+    --timecode: #ffffff;
     
     --border-color: #cbd5e0;
 
@@ -42,7 +45,58 @@
     --status-unknown-text: #ffffff;
     --interpretation-real: #ef5350;
     --interpretation-false: #4caf50;
+} */
+
+/* новые жёлтые */
+:root { 
+    --button-yellow: #ffc107;
+    --button-yellow-hover: #e0a800;
+    --button-text-dark: #1a1a1a;
+    --danger-red: #ef4444;
+    
+    --background-dark: #1e1e1e;
+    --background-card: #2a2a2a;
+    --background-input: #3a3a3a;
+    --footer-bg: #1a1a1a;
+    --footer-text: #e0e0e0;
+    --footer-link: #e0e0e0;
+    --footer-link-hover: #ffc107;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-dark: #1a1a1a;
+
+    --timecode: #ffffff;
+    
+    --border-color: #4a4a4a;
+    
+    --loader-text: #ffffff;
+    
+    --soft-blue: #1e3a5f;
+    
+    --border-radius-small: 8px;
+    --border-radius-medium: 12px;
+    --border-radius-large: 16px;
+    
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    --status-processed-bg: #1b5e20;
+    --status-processed-text: #a5d6a7;
+    --status-unprocessed-bg: #b71c1c;
+    --status-unprocessed-text: #ef9a9a;
+    --status-unknown-bg: #6c757d;
+    --status-unknown-text: #ffffff;
+    --interpretation-real: #ef5350;
+    --interpretation-false: #66bb6a;
 }
+
+/* старые стили */
 /* :root {
     --button-yellow: #ffc107;
     --button-yellow-hover: #e0a800;
