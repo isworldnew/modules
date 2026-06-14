@@ -9,7 +9,6 @@ export default function ReportNotificationArea() {
     const intervalRef = useRef(null);
     const isMounted = useRef(true);
 
-    // Функция для запроса списка необработанных уведомлений о нарушениях (для прораба)
     const fetchNotifications = async () => {
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
@@ -33,12 +32,10 @@ export default function ReportNotificationArea() {
 
             if (!isMounted.current) return;
 
-            // Обработка успешного ответа (статус 200)
             if (result.status === 200 && result.data) {
                 setNotifications(result.data);
                 setIsLoading(false);
             }
-            // Обработка 403 (Forbidden)
             else if (result.status === 403) {
                 window.location.href = '/forbidden';
             }
@@ -53,15 +50,12 @@ export default function ReportNotificationArea() {
     useEffect(() => {
         isMounted.current = true;
         
-        // Первоначальный запрос при монтировании компонента
         fetchNotifications();
 
-        // Настройка интервала для запросов каждые 2 секунды
         intervalRef.current = setInterval(() => {
             fetchNotifications();
         }, 2000);
 
-        // Очистка интервала при размонтировании компонента
         return () => {
             isMounted.current = false;
             if (intervalRef.current) {
@@ -70,7 +64,6 @@ export default function ReportNotificationArea() {
         };
     }, []);
 
-    // Отображение состояния загрузки
     if (isLoading) {
         return (
             <div className="report-notification-area-loading">
@@ -80,7 +73,6 @@ export default function ReportNotificationArea() {
         );
     }
 
-    // Отображение, если нет уведомлений
     if (notifications.length === 0) {
         return (
             <div className="report-notification-area-empty">
@@ -89,7 +81,6 @@ export default function ReportNotificationArea() {
         );
     }
 
-    // Отображение списка уведомлений
     return (
         <div className="report-notification-area">
             <div className="reports-list">

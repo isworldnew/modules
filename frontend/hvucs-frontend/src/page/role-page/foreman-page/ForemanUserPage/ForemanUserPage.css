@@ -24,7 +24,7 @@
     width: 100%;
 }
 
-/* Равные отступы для формы */
+
 .foreman-page__content-inner > * {
     margin-bottom: var(--spacing-xl);
 }
@@ -33,7 +33,7 @@
     margin-bottom: 0;
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
     .foreman-page__layout {
         flex-direction: column;

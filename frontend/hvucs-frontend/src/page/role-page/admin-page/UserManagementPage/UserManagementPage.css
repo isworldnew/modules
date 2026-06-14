@@ -38,7 +38,7 @@
     padding-top: var(--spacing-xl);
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
     .user-management-page__layout {
         flex-direction: column;

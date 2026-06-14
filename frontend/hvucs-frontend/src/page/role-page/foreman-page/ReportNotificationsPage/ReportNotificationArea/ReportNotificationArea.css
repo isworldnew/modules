@@ -10,7 +10,6 @@
     gap: var(--spacing-sm);
 }
 
-/* Стили для состояния загрузки */
 .report-notification-area-loading {
     display: flex;
     flex-direction: column;

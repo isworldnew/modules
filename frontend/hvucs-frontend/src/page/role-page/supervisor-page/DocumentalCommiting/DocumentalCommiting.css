@@ -38,7 +38,7 @@
     width: 100%;
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
     .documental-commiting-page__layout {
         flex-direction: column;

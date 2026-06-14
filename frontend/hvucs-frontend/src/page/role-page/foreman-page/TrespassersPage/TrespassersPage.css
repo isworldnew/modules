@@ -82,7 +82,6 @@
     font-size: 1rem;
 }
 
-/* Стили для полей ввода */
 .trespassers-search-input input {
     background-color: var(--background-input);
     color: var(--text-primary);

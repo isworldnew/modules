@@ -85,7 +85,6 @@ export default function TrespassersPage() {
             ];
         }
         
-        // Для роли FOREMAN и всех остальных
         return [
             { 
                 label: 'Нарушители', 
