@@ -148,13 +148,11 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
     ) {
         // Только для SUPERVISOR (проверка будет в контроллере через @PreAuthorize)
 
-        // Случай 1: Только documented (без дат и без areaId)
         if (areaId == null && dateFrom == null && dateTo == null) {
             return this.accidentReportRepository
                     .getProcessedAccidentReportsByDocumentedStatus(documented);
         }
 
-        // Случай 2: documented + даты (без areaId)
         if (areaId == null && dateFrom != null && dateTo != null) {
             return this.accidentReportRepository
                     .getProcessedAccidentReportsByDateTimeRangeAndDocumentedStatus(
@@ -162,9 +160,7 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
                     );
         }
 
-        // Случай 3: documented + areaId (без дат)
         if (areaId != null && dateFrom == null && dateTo == null) {
-            // Проверяем, что зона существует
             Area area = this.areaPreconditionService.safelyGetById(areaId);
 
             return this.accidentReportRepository
@@ -173,9 +169,7 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
                     );
         }
 
-        // Случай 4: documented + areaId + даты (все параметры)
         if (areaId != null && dateFrom != null && dateTo != null) {
-            // Проверяем, что зона существует
             Area area = this.areaPreconditionService.safelyGetById(areaId);
 
             return this.accidentReportRepository
@@ -184,7 +178,6 @@ public class AccidentReportServiceImplementation implements AccidentReportServic
                     );
         }
 
-        // Если комбинация параметров не подходит ни под один случай, возвращаем пустой список
         return new ArrayList<>();
     }
 
