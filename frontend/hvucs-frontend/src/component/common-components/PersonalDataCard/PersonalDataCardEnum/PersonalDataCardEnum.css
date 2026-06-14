@@ -8,7 +8,6 @@
     font-weight: 500;
 }
 
-/* Статусы */
 .personal-data-enum--enabled {
     background-color: #1b5e20;
     color: #c8e6c9;
@@ -19,7 +18,6 @@
     color: #ffcdd2;
 }
 
-/* Роли */
 .personal-data-enum--safety-officer {
     background-color: var(--button-yellow);
     color: var(--button-text-dark);

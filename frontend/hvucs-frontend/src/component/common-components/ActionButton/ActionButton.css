@@ -31,12 +31,10 @@
     transform: none;
 }
 
-/* Если передан hoverColor через атрибут data */
 .btn[data-hover-color]:hover:not(:disabled) {
     background-color: var(--button-yellow-hover) !important;
 }
 
-/* Дополнительные модификаторы */
 .btn-block {
     width: 100%;
     display: flex;

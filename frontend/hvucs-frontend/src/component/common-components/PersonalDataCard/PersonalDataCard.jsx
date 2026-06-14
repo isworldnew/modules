@@ -14,7 +14,6 @@ export default function PersonalDataCard() {
     const [error, setError] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     
-    // Загрузка данных пользователя
     useEffect(() => {
         const fetchUserData = async () => {
             setLoading(true);
@@ -59,7 +58,6 @@ export default function PersonalDataCard() {
         fetchUserData();
     }, []);
     
-    // Формирование ФИО из полей
     const getFullName = () => {
         const parts = [
             userData?.lastname,
@@ -70,22 +68,17 @@ export default function PersonalDataCard() {
         return parts.length > 0 ? parts.join(' ') : '—';
     };
     
-    // Обработчик выхода из системы
     const handleLogout = () => {
-        // Очищаем localStorage
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         
-        // Перенаправляем на страницу логина
         window.location.href = '/login';
     };
     
-    // Показываем лоадер во время загрузки
     if (loading) {
         return <ProgressLoader message="Загрузка данных пользователя..." />;
     }
     
-    // Показываем ошибку, если она есть
     if (error) {
         return (
             <div className="personal-data-card personal-data-card--error">
@@ -101,7 +94,6 @@ export default function PersonalDataCard() {
         );
     }
     
-    // Если данные не загружены, показываем пустое состояние
     if (!userData) {
         return (
             <div className="personal-data-card personal-data-card--empty">
@@ -142,7 +134,6 @@ export default function PersonalDataCard() {
                     </div>
                 </div>
                 
-                {/* Кнопка выхода */}
                 <div className="personal-data-card__logout">
                     <ActionButton
                         onClick={handleLogout}

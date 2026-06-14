@@ -1,9 +1,9 @@
 import './SideBarItem.css';
 
 export default function SideBarItem({ 
-    title,           // название пункта меню
-    href,            // адрес страницы для перехода
-    isActive = false, // активный ли пункт
+    title,
+    href,
+    isActive = false,
 }) {
     
     const handleClick = (e) => {

@@ -23,7 +23,6 @@
     margin-bottom: var(--spacing-xl);
 }
 
-/* Уменьшенное расстояние между key и value */
 .info-row {
     display: flex;
     align-items: baseline;
@@ -31,7 +30,6 @@
     flex-wrap: wrap;
 }
 
-/* Кнопка выхода */
 .personal-data-card__logout {
     margin-top: var(--spacing-xl);
     padding-top: var(--spacing-xl);

@@ -1,27 +1,24 @@
 import './ActionButton.css';
 
 export default function ActionButton({
-    children,           // текст или содержимое кнопки
-    onClick,           // функция при нажатии
-    width = 'auto',    // ширина кнопки
-    backgroundColor = 'var(--button-yellow)',  // цвет фона
-    textColor = 'var(--button-text-dark)',     // цвет текста
-    type = 'button',   // type: 'button', 'submit', 'reset'
+    children,
+    onClick,
+    width = 'auto',
+    backgroundColor = 'var(--button-yellow)',
+    textColor = 'var(--button-text-dark)',
+    type = 'button',
     disabled = false,
     className = '',
-    // Опциональные параметры для функции onClick
     onClickParams = null,
-    // Дополнительные параметры
-    hoverColor = null,  // цвет при наведении (опционально)
+    hoverColor = null,
     fontSize = '1rem',
-    padding = null      // можно переопределить отступы
+    padding = null
 }) {
     
     const handleClick = (e) => {
         if (disabled) return;
         
         if (onClick) {
-            // Если есть параметры, передаём их, иначе передаём событие
             if (onClickParams !== null) {
                 onClick(onClickParams);
             } else {
@@ -30,7 +27,6 @@ export default function ActionButton({
         }
     };
     
-    // Стили кнопки
     const buttonStyle = {
         width: width,
         backgroundColor: backgroundColor,
@@ -39,7 +35,6 @@ export default function ActionButton({
         padding: padding || undefined
     };
     
-    // Классы для кнопки
     const buttonClasses = ['btn', className].filter(Boolean).join(' ');
     
     return (

@@ -9,7 +9,6 @@ export default function NotificationBadge() {
     const intervalRef = useRef(null);
     const isMounted = useRef(true);
 
-    // Функция для получения эндпоинта в зависимости от роли
     const getEndpointByRole = (userRole) => {
         switch (userRole) {
             case 'SAFETY_OFFICER':
@@ -23,7 +22,6 @@ export default function NotificationBadge() {
         }
     };
 
-    // Функция для извлечения роли из токена
     const fetchUserRole = async () => {
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
@@ -43,7 +41,6 @@ export default function NotificationBadge() {
         }
     };
 
-    // Функция для запроса количества необработанных уведомлений
     const fetchUnprocessedAmount = async (userRole) => {
         if (!userRole) return;
         
@@ -63,15 +60,12 @@ export default function NotificationBadge() {
                 return { status: response.status, data: data };
             });
 
-            // Если запрос успешен (статус 200)
             if (result.status === 200 && isMounted.current) {
                 let count = 0;
                 
-                // Для SUPERVISOR - считаем размер массива
                 if (userRole === 'SUPERVISOR') {
                     count = Array.isArray(result.data) ? result.data.length : 0;
                 } else {
-                    // Для SAFETY_OFFICER и FOREMAN - число
                     count = typeof result.data === 'object' ? result.data.count : result.data;
                 }
                 
@@ -79,23 +73,18 @@ export default function NotificationBadge() {
             }
         } catch (error) {
             console.error('Error fetching unprocessed amount:', error);
-            // При ошибке не меняем состояние, бэйдж либо скроется, либо останется с предыдущим значением
         }
     };
 
-    // Основной эффект для инициализации
     useEffect(() => {
         isMounted.current = true;
         
         const initialize = async () => {
-            // Сначала получаем роль пользователя
             const userRole = await fetchUserRole();
             
             if (userRole) {
-                // Первоначальный запрос уведомлений
                 await fetchUnprocessedAmount(userRole);
 
-                // Настройка интервала для запросов каждые 2 секунды
                 intervalRef.current = setInterval(() => {
                     fetchUnprocessedAmount(userRole);
                 }, 2000);
@@ -104,24 +93,18 @@ export default function NotificationBadge() {
 
         initialize();
 
-        // Очистка интервала при размонтировании компонента
         return () => {
             isMounted.current = false;
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
             }
         };
-    }, []); // Пустой массив зависимостей - эффект выполняется только при монтировании
+    }, []); 
 
-    // Не показываем бэйдж, если:
-    // 1. Еще не было ни одного запроса (count === null)
-    // 2. Количество уведомлений === 0
-    // 3. Роль не определена
     if (unprocessedCount === null || unprocessedCount === 0 || role === null) {
         return null;
     }
 
-    // Определяем класс для стилизации в зависимости от количества цифр
     const badgeClassName = unprocessedCount >= 10 ? 'notification-badge wide' : 'notification-badge';
 
     return (

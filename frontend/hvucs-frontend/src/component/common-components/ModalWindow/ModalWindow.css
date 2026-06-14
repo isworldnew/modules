@@ -1,6 +1,5 @@
 @import '../../../variables.css';
 
-/* Затемнение всей страницы */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -16,7 +15,6 @@
     animation: fadeIn 0.2s ease;
 }
 
-/* Контейнер модального окна */
 .modal-container {
     background-color: var(--background-card);
     border-radius: var(--border-radius-large);
@@ -26,23 +24,20 @@
     animation: slideIn 0.3s ease;
 }
 
-/* Контент внутри модального окна */
 .modal-content {
     padding: var(--spacing-xl);
 }
 
-/* Текст сообщения */
 .modal-message {
     color: var(--text-primary);
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: var(--spacing-lg);
-    text-align: left;  /* Изменено с center на left */
+    text-align: left;
     word-wrap: break-word;
-    white-space: pre-wrap;  /* Сохраняет переносы строк из \n */
+    white-space: pre-wrap;
 }
 
-/* Кнопка закрытия */
 .modal-button {
     background-color: var(--button-yellow);
     color: var(--button-text-dark);
@@ -55,14 +50,13 @@
     transition: background-color 0.2s;
     min-width: 120px;
     display: block;
-    margin: 0 auto;  /* Центрируем кнопку */
+    margin: 0 auto;
 }
 
 .modal-button:hover {
     background-color: var(--button-yellow-hover);
 }
 
-/* Анимации */
 @keyframes fadeIn {
     from {
         opacity: 0;
