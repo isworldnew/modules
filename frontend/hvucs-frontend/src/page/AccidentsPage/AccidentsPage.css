@@ -17,7 +17,6 @@
     background-color: var(--background-dark);
 }
 
-/* Блок фильтров */
 .filters {
     display: flex;
     gap: var(--spacing-md);
@@ -37,7 +36,6 @@
     color: var(--text-secondary);
 }
 
-/* Адаптив для мобильных устройств */
 @media (max-width: 768px) {
     .accidents-content {
         padding: var(--spacing-lg);

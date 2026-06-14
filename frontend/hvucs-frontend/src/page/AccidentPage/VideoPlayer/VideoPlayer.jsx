@@ -10,7 +10,6 @@ export default function VideoPlayer({ recordType, record }) {
     const videoRef = useRef(null);
     const animationRef = useRef(null);
     
-    // Преобразование Base64 в URL
     useEffect(() => {
         if (record && recordType) {
             try {
@@ -35,7 +34,6 @@ export default function VideoPlayer({ recordType, record }) {
         }
     }, [record, recordType]);
     
-    // Автоматическое воспроизведение после загрузки метаданных
     useEffect(() => {
         if (videoRef.current && videoUrl) {
             const playPromise = videoRef.current.play();
@@ -59,7 +57,6 @@ export default function VideoPlayer({ recordType, record }) {
         };
     }, [videoUrl]);
     
-    // Плавное обновление времени через requestAnimationFrame
     const updateTime = () => {
         if (videoRef.current && !isSeeking) {
             setCurrentTime(videoRef.current.currentTime);
@@ -81,7 +78,6 @@ export default function VideoPlayer({ recordType, record }) {
         }
     };
     
-    // Обработчики видео
     const handlePlayPause = () => {
         if (videoRef.current) {
             if (isPlaying) {
@@ -131,7 +127,6 @@ export default function VideoPlayer({ recordType, record }) {
         }
     };
     
-    // Форматирование времени (секунды -> MM:SS)
     const formatTime = (seconds) => {
         if (isNaN(seconds) || !isFinite(seconds)) return '00:00';
         const mins = Math.floor(seconds / 60);
@@ -139,7 +134,6 @@ export default function VideoPlayer({ recordType, record }) {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
     
-    // Вычисляем процент воспроизведения
     const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
     
     if (!videoUrl) {

@@ -9,11 +9,11 @@
 .source-label {
     color: var(--text-secondary);
     font-size: 1rem;
-    font-weight: 400;  /* Тонкий шрифт */
+    font-weight: 400;
 }
 
 .source-value {
     color: var(--text-primary);
-    font-weight: 600;  /* Жирный шрифт */
+    font-weight: 600;
     font-size: 1rem;
 }

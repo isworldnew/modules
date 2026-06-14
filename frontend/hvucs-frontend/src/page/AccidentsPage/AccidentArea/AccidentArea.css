@@ -1,13 +1,11 @@
 @import '../../../variables.css';
 
-/* Список инцидентов */
 .accidents-list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
 }
 
-/* Стили для пустого состояния */
 .accident-area-empty {
     display: flex;
     align-items: center;
@@ -23,7 +21,6 @@
     font-size: 1rem;
 }
 
-/* Адаптив для мобильных устройств */
 @media (max-width: 768px) {
     .accidents-list {
         gap: var(--spacing-xs);

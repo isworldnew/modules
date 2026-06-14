@@ -51,7 +51,6 @@ export default function AccidentsPage() {
         setIsModalOpen(true);
     };
     
-    // Функция для валидации формата даты ДД/ММ/ГГГГ
     const validateDateFormat = (dateString) => {
         if (!dateString) return true;
         
@@ -71,7 +70,6 @@ export default function AccidentsPage() {
         return true;
     };
     
-    // Сохранение дат в localStorage
     const saveDatesToLocalStorage = (from, to) => {
         if (from && to) {
             localStorage.setItem('accidentsDateFrom', from);
@@ -79,13 +77,11 @@ export default function AccidentsPage() {
         }
     };
     
-    // Удаление дат из localStorage
     const clearDatesFromLocalStorage = () => {
         localStorage.removeItem('accidentsDateFrom');
         localStorage.removeItem('accidentsDateTo');
     };
     
-    // Загрузка дат из localStorage при старте
     useEffect(() => {
         const savedDateFrom = localStorage.getItem('accidentsDateFrom');
         const savedDateTo = localStorage.getItem('accidentsDateTo');
@@ -93,7 +89,6 @@ export default function AccidentsPage() {
         if (savedDateFrom && savedDateTo) {
             setDateFrom(savedDateFrom);
             setDateTo(savedDateTo);
-            // Триггер для поиска с сохранёнными датами
             setTimeout(() => {
                 setSearchTrigger(prev => prev + 1);
             }, 100);
@@ -102,7 +97,6 @@ export default function AccidentsPage() {
     }, []);
     
     const handleSearch = () => {
-        // Валидация: если обе даты пустые - всё окей
         if (!dateFrom && !dateTo) {
             console.log('Search accidents (no filters)');
             clearDatesFromLocalStorage(); // Удаляем даты из localStorage
@@ -110,25 +104,21 @@ export default function AccidentsPage() {
             return;
         }
         
-        // Валидация: если заполнена только одна из дат
         if ((dateFrom && !dateTo) || (!dateFrom && dateTo)) {
             showErrorModal('Пожалуйста, заполните обе даты для поиска по диапазону');
             return;
         }
         
-        // Валидация формата даты "От"
         if (dateFrom && !validateDateFormat(dateFrom)) {
             showErrorModal('Неверный формат даты "От"\nДата должна быть в формате ДД/ММ/ГГГГ\nДень: 1-31, Месяц: 1-12, Год: 4 цифры');
             return;
         }
         
-        // Валидация формата даты "До"
         if (dateTo && !validateDateFormat(dateTo)) {
             showErrorModal('Неверный формат даты "До"\nДата должна быть в формате ДД/ММ/ГГГГ\nДень: 1-31, Месяц: 1-12, Год: 4 цифры');
             return;
         }
         
-        // Валидация: дата "От" не может быть позже даты "До"
         if (dateFrom && dateTo) {
             const dayFrom = parseInt(dateFrom.split('/')[0], 10);
             const monthFrom = parseInt(dateFrom.split('/')[1], 10);
@@ -147,7 +137,6 @@ export default function AccidentsPage() {
             }
         }
         
-        // Если валидация прошла успешно, сохраняем даты в localStorage
         console.log('Search accidents with filters:', { dateFrom, dateTo });
         saveDatesToLocalStorage(dateFrom, dateTo);
         setSearchTrigger(prev => prev + 1);

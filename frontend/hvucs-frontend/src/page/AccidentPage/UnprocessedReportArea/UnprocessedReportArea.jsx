@@ -24,26 +24,21 @@ export default function UnprocessedReportArea({ label, children }) {
     };
     
     const handleSubmit = async () => {
-        // Получаем выбранное значение radio button
         const selectedInterpretation = radioAreaRef.current?.getSelectedValue();
         
-        // Валидация: проверяем, выбран ли radio button
         if (!selectedInterpretation) {
             showErrorModal('Пожалуйста, выберите интерпретацию инцидента');
             return;
         }
         
-        // Получаем описание из текстового поля
         const description = descriptionRef.current?.getValue() || null;
         
-        // Формируем данные для отправки
         const reportData = {
             type: "NO_HI_VIS_VEST_APPLIED",
             interpretation: selectedInterpretation,
             description: description
         };
         
-        // Запускаем лоадер
         setIsLoading(true);
         
         try {
@@ -67,11 +62,9 @@ export default function UnprocessedReportArea({ label, children }) {
                 return { status: response.status, data: data };
             });
             
-            // Обработка успешного ответа
             if (result.status === 200) {
                 window.location.href = '/notifications';
             } else {
-                // Отображаем ошибку от сервера
                 const errorMessage = result.data?.message || result.data?.error || 'Произошла ошибка при обработке инцидента';
                 showErrorModal(errorMessage);
             }
@@ -83,7 +76,6 @@ export default function UnprocessedReportArea({ label, children }) {
         }
     };
     
-    // Опции для radio buttons
     const radioOptions = [
         { label: "Предположение модели подтверждено", value: "REAL_ALARM", color: "#b71c1c" },
         { label: "Ложное срабатывание", value: "FALSE_ALARM", color: "#1b5e20" }

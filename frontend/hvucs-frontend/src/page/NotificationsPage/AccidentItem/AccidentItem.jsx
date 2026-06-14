@@ -2,7 +2,6 @@ import './AccidentItem.css';
 
 export default function AccidentItem({ id, areaName, uploadDateTime, status }) {
     
-    // Форматирование даты из ISO формата в "ЧЧ:ММ ДД/ММ/ГГГГ"
     const formatDateTime = (dateTimeString) => {
         if (!dateTimeString) return '';
         
@@ -17,7 +16,6 @@ export default function AccidentItem({ id, areaName, uploadDateTime, status }) {
         return `${hours}:${minutes} ${day}/${month}/${year}`;
     };
     
-    // Определение статуса на русском и CSS-класса
     const getStatusInfo = () => {
         switch(status) {
             case 'PROCESSED':

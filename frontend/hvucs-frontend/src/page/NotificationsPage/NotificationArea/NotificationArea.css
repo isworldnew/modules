@@ -10,7 +10,6 @@
     gap: var(--spacing-sm);
 }
 
-/* Стили для состояния загрузки */
 .notification-area-loading {
     display: flex;
     flex-direction: column;
@@ -34,7 +33,6 @@
     font-size: 0.875rem;
 }
 
-/* Стили для пустого состояния */
 .notification-area-empty {
     display: flex;
     align-items: center;
@@ -59,7 +57,6 @@
     }
 }
 
-/* Адаптив для мобильных устройств */
 @media (max-width: 768px) {
     .incidents-list {
         gap: var(--spacing-xs);

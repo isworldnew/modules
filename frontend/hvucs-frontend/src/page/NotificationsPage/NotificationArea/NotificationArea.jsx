@@ -9,7 +9,6 @@ export default function NotificationArea() {
     const intervalRef = useRef(null);
     const isMounted = useRef(true);
 
-    // Функция для запроса списка необработанных уведомлений
     const fetchNotifications = async () => {
         try {
             const result = await executeWithTokenRefresh(async (accessToken) => {
@@ -33,12 +32,10 @@ export default function NotificationArea() {
 
             if (!isMounted.current) return;
 
-            // Обработка успешного ответа (статус 200)
             if (result.status === 200 && result.data) {
                 setNotifications(result.data);
                 setIsLoading(false);
             }
-            // Обработка 403 (Forbidden)
             else if (result.status === 403) {
                 window.location.href = '/forbidden';
             }
@@ -53,15 +50,12 @@ export default function NotificationArea() {
     useEffect(() => {
         isMounted.current = true;
         
-        // Первоначальный запрос при монтировании компонента
         fetchNotifications();
 
-        // Настройка интервала для запросов каждые 2 секунды
         intervalRef.current = setInterval(() => {
             fetchNotifications();
         }, 2000);
 
-        // Очистка интервала при размонтировании компонента
         return () => {
             isMounted.current = false;
             if (intervalRef.current) {
@@ -70,7 +64,6 @@ export default function NotificationArea() {
         };
     }, []);
 
-    // Отображение состояния загрузки
     if (isLoading) {
         return (
             <div className="notification-area-loading">

@@ -17,7 +17,6 @@ export default function AccidentArea() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Функция для загрузки данных инцидента
     const fetchIncidentData = async () => {
         setIsLoading(true);
         setError(null);
@@ -42,15 +41,12 @@ export default function AccidentArea() {
                 return { status: response.status, data: data };
             });
 
-            // Обработка успешного ответа (статус 200)
             if (result.status === 200 && result.data) {
                 setIncidentData(result.data);
             }
-            // Обработка 404 (Not Found)
             else if (result.status === 404) {
                 window.location.href = '/not-found';
             }
-            // Обработка 403 (Forbidden)
             else if (result.status === 403) {
                 window.location.href = '/forbidden';
             }
@@ -71,12 +67,10 @@ export default function AccidentArea() {
         }
     }, [id]);
 
-    // Отображение лоадера
     if (isLoading) {
         return <ProgressLoader message="Загрузка данных инцидента..." />;
     }
 
-    // Отображение ошибки
     if (error) {
         return (
             <div className="accident-area-error">
@@ -85,7 +79,6 @@ export default function AccidentArea() {
         );
     }
 
-    // Если данных нет
     if (!incidentData) {
         return (
             <div className="accident-area-empty">
@@ -94,7 +87,6 @@ export default function AccidentArea() {
         );
     }
 
-    // Подготовка данных для MetaInfoArea
     const metaInfoItems = [
         { label: "Уведомление получено:", info: incidentData.uploadDateTime, infoType: "datetime" },
         { label: "Запись от:", info: incidentData.recordDateTime, infoType: "datetime" },
@@ -103,7 +95,6 @@ export default function AccidentArea() {
         { label: "Статус:", info: incidentData.status, infoType: "status" }
     ];
 
-    // Подготовка данных для ProcessedReportArea (если report существует)
     const reportItems = incidentData.report ? [
         { label: "Описание инцидента:", info: incidentData.report.description || "Нет описания", infoType: "description" },
         { label: "Интерпретация инцидента:", info: incidentData.report.accidentInterpretation, infoType: "interpretation" },
@@ -126,7 +117,6 @@ export default function AccidentArea() {
             
             <MetaInfoArea items={metaInfoItems} />
             
-            {/* Отображение обработанного отчёта или формы обработки */}
             {incidentData.report ? (
                 <ProcessedReportArea items={reportItems} />
             ) : (
